@@ -8,10 +8,12 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      maxWidth:{
+        "main-max-width": "1298px"
       },
+      backgroundColor:{
+        "main-bg": "var(--main-bg-color)"
+      }
     },
   },
   plugins: [],
