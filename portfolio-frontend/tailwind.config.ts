@@ -9,10 +9,15 @@ export default {
   theme: {
     extend: {
       maxWidth:{
-        "main-max-width": "1298px"
+        "main-max-width": "1298px",
+        "card-max-width": "416px"
       },
       backgroundColor:{
-        "main-bg": "var(--main-bg-color)"
+        "main-bg": "var(--main-bg-color)",
+        "bg-color": "var(--primary-color)"
+      },
+      colors:{
+        "primary-text-color": "var(--primary-color)"
       }
     },
   },

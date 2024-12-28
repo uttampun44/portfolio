@@ -1,4 +1,4 @@
-import FrontLayout from "Components/FrontLayout";
+import FrontLayout from "components/FrontLayout";
 
 export default function Login(){
     return(
