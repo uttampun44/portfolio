@@ -1,73 +1,100 @@
-     "use client"
- 
-import Button from "components/Button";
+"use client"
+
 import FrontLayout from "layout/FrontLayout";
-import Title from "components/Title";
 import Image from "next/image";
-import Profile from "../public/profile.png";
-import Bg from "../public/sectionbg.png";
-import { Roboto } from "next/font/google";
+import Profile from "../public/images/programmer.png";
+import aboutBg from "../public/images/programmerAbout.png";
+import Button from "components/Button";
+import Link from "next/link";
+import { FaLinkedin } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FaFacebookSquare } from "react-icons/fa";
+import Title from "components/Title";
+import ProgressBar from "components/ProgressBar";
 
 
-const roboto = Roboto({subsets: ['latin'], weight: "700"});
 export default function Home() {
   return (
     <>
       <FrontLayout>
         <main>
           <section className="heroSection">
-            <div className="heroContent max-w-main-max-width mx-auto w-full pt-16">
-              <div className="gridHero flex relative justify-center md:h-[690px] -z-10">
-                <div className="testimonial w-1/3 absolute top-1/2 left-0 ">
-                 <p className="text-lg font-medium"> Jenny’s Exceptional product design ensure our website’s success.Highly Recommended.</p>
-                </div>
-                <div className="mainDiv text-center relative h-screen ">
-                  <Button className="border-[1px] border-black">Hello !</Button>
-                  <div className={`title !font-semibold text-7xl ${roboto.className}`}>
-                      <Title title="I'm">
-                        <span className="text-[#FFD700]">Uttam</span>
-                      </Title>  
-                    
-                      <Title title="Front End Developer" className="md:min-w-[790px] max-w-fit w-full"/>
+            <div className="heroContent max-w-main-max-width mx-auto w-full py-28">
+              <div className="heroContainer flex gap-x-8">
+                <div className="personalDetails font-poppins-semi-bold w-1/2">
+                  <h6 className="text-2xl font-poppins">Hi I am</h6>
+                  <h5 className="text-primary-text-color font-poppins text-3xl ">Uttam Pun</h5>
+                  <h2 className="text-7xl font-poppins ">Front End</h2>
+                  <h2 className="text-7xl font-poppins text-end">Developer</h2>
 
-                      <div className="img absolute w-full top-44">
-                         <Image 
-                         src={Profile} 
-                         alt="profile"
-                          width={0}
-                           height={0}
-                            loading="lazy"
-                            quality={100}
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              objectFit: "contain",
-                            }}
-                             />
-                             {/* <div className=" inline-block w-[812px] h-[408px] bg-primary-text-color ">
-
-                             </div> */}
-                      </div>
+                  <div className="btnPara font-poppins">
+                    <p className="mt-6 mb-7 min-w-fit ">Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus pharetra</p>
+                    <Button className="bg-primary-text-color rounded-md text-white">Hire Me</Button>
                   </div>
                 </div>
-                <div className="experienceDiv w-48 absolute top-1/2 right-0"> 
-                  <div className="experienceContent">
-                    <h2 className="text-4xl font-bold">5 Years</h2>
-                    <p className="text-xl font-normal">Experience</p>
+                <div className="img w-1/2 flex flex-col">
+                   <div className="imgProfile">
+                   <Image src={Profile}
+                    alt="profile"
+                    className="w-full h-auto float-right"
+                    loading="lazy"
+                    quality={100}
+                    objectFit="contain"
+                  />
+                   </div>
+                  <div className="iconRow flex align-center justify-center  gap-x-4">
+                      <Link href="" aria-label="icons"><FaLinkedin /></Link>
+                      <Link href="" aria-label="icons"><FaGithub /></Link>
+                      <Link href="" aria-label="icons"><FaFacebookSquare /></Link>
                   </div>
+
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="bg-main-bg py-28 bg-no-repeat bg-cover" style={{ backgroundImage: `url(${Bg.src})` }}>
-             <div className="myServiceContainer max-w-main-max-width mx-auto">
-                 <div className="headingRow flex justify-between items-center">
-                    <h2>My <span>Services</span></h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales </p>
+          <section className="py-16">
+            <div className="myServiceContainer max-w-main-max-width mx-auto">
+              <div className="headingRow flex items-start justify-between">
+                 <div className="aboutImg w-1/3">
+                 <Image src={aboutBg}
+                    alt="profile"
+                    className="w-full h-auto float-right"
+                    loading="lazy"
+                    quality={100}
+                    objectFit="contain"
+                  />
                  </div>
-             </div>
+                 <div className="aboutDescription w-1/2">
+                   <h2 className="text-6xl font-semibold font-poppins">About Me</h2>
+                   <p className="mt-6 mb-7 min-w-fit ">Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus pharetra</p>
+                   <div className="skillList">
+                    
+                     <div className="react">
+                        <Title title="React" className="text-2xl font-medium font-poppins" />
+                        <ProgressBar value={85} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
+                     </div>
+                     <div className="nextjs">
+                        <Title title="Nextjs" className="text-2xl font-medium font-poppins" />
+                        <ProgressBar value={70} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
+                     </div>
+                   
+                     <div className="laravel">
+                        <Title title="Laravel" className="text-2xl font-medium font-poppins" />
+                        <ProgressBar value={75} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
+                     </div>
+                     <div className="mysql">
+                        <Title title="Mysql" className="text-2xl font-medium font-poppins" />
+                        <ProgressBar value={70} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
+                     </div>
+                     <div className="git">
+                        <Title title="Git" className="text-2xl font-medium font-poppins" />
+                        <ProgressBar value={80} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
+                     </div>
+                   </div>
+                 </div>
+              </div>
+            </div>
           </section>
         </main>
       </FrontLayout>

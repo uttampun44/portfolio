@@ -9,18 +9,24 @@ export default {
   theme: {
     extend: {
       maxWidth:{
-        "main-max-width": "1298px",
+        "main-max-width": "1199px",
         "card-max-width": "416px"
       },
       backgroundColor:{
         "main-bg": "var(--main-bg-color)",
-        "bg-color": "var(--primary-color)"
+        "bg-color": "var(--primary-color)",
+        "bg-secondary": "var(--secondary-color)"
       },
       colors:{
         "primary-text-color": "var(--primary-color)"
       },
       fontFamily:{
-        'lufga': ['Lufga', 'sans-serif']
+        'poppins': "var(--primary-font)",
+      },
+      fontWeight:{
+        "poppins-bold": "var(--font-bold)",
+        "poppins-light": "var(--font-light)",
+        "poppins-semi-bold": "var(--semi-bold)"
       }
     },
   },

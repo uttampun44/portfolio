@@ -9,9 +9,10 @@ interface tileProps  {
 
 const Title: React.FC<tileProps> = ({title, className, children}) => {
   return(
-    <div className="title">
+    <> 
       <h1 className={className}>{title}{children}</h1>
-    </div>
+   
+    </>
   )
 }
 

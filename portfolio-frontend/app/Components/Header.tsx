@@ -19,7 +19,7 @@ export default function Header(){
                           navData.map((data, index) => {
                             return(
                                 <div className="menuLink" key={index}>
-                                   <Link href={`${data.link}`} aria-label={data.name} className="text-white">{data.name}</Link>
+                                   <Link href={`${data.link}`} aria-label={data.name} className="text-white font-poppins font-poppins-light">{data.name}</Link>
                                 </div>
                             )
                           })
