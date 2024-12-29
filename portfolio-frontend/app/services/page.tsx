@@ -1,6 +1,6 @@
    "use client"
 
-import FrontLayout from "components/FrontLayout";
+import FrontLayout from "layout/FrontLayout";
 
 export default function Service(){
     return(

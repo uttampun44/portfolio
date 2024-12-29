@@ -18,6 +18,9 @@ export default {
       },
       colors:{
         "primary-text-color": "var(--primary-color)"
+      },
+      fontFamily:{
+        'lufga': ['Lufga', 'sans-serif']
       }
     },
   },

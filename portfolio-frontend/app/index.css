@@ -1,0 +1,14 @@
+@font-face{
+    font-family: 'Lufga';
+    src: url('../public/fonts/lufga/lufga-bold.otf') format('trueType'),;
+}
+
+:root{
+    --main-bg-color: #171717;
+    --primary-color: #FD853A
+    
+}
+
+h2{
+    font-weight: 500;
+}

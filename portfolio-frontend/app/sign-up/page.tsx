@@ -1,4 +1,6 @@
-import FrontLayout from "components/FrontLayout";
+     "use client"
+
+import FrontLayout from "layout/FrontLayout";
 
 export default function SignUp(){
     return(
