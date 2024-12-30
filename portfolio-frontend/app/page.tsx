@@ -43,10 +43,10 @@ export default function Home() {
                     objectFit="contain"
                   />
                    </div>
-                  <div className="iconRow flex align-center justify-center  gap-x-4 my-4">
-                      <Link href="" aria-label="icons"><FaLinkedin /></Link>
-                      <Link href="" aria-label="icons"><FaGithub /></Link>
-                      <Link href="" aria-label="icons"><FaFacebookSquare /></Link>
+                  <div className="iconRow flex align-center justify-center text-xl  gap-x-4 my-4">
+                      <Link href="https://www.linkedin.com/in/uttam-pun-35a533194/" aria-label="icons" target="__blank"><FaLinkedin /></Link>
+                      <Link href="https://github.com/uttampun44/" aria-label="icons" target="__blank"><FaGithub /></Link>
+                      <Link href="https://www.facebook.com/upun3" aria-label="icons" target="__blank"><FaFacebookSquare /></Link>
                   </div>
 
                 </div>
