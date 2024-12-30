@@ -15,7 +15,9 @@ export default {
       backgroundColor:{
         "main-bg": "var(--main-bg-color)",
         "bg-color": "var(--primary-color)",
-        "bg-secondary": "var(--secondary-color)"
+        "bg-secondary": "var(--secondary-color)",
+        "bg-card": "var(--third-color)",
+        "bg-fourth": "var(--fourth-color)"
       },
       colors:{
         "primary-text-color": "var(--primary-color)"
