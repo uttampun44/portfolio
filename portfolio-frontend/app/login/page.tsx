@@ -1,14 +1,14 @@
        "use client"
  
-import Button from "components/Button";
-import Input from "components/Input";
-import Title from "components/Title";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import Title from "@/components/Title";
 import LoginImage from "../../public/images/loginImage.png";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
-import Google from "../../public/images/google.png";
-import Github from "../../public/images/github.png";
+import Google from "@/public/images/google.png";
+import Github from "@/public/images/github.png";
 
 
 interface loginForm{

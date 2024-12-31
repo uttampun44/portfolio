@@ -1,16 +1,16 @@
 "use client"
 
-import FrontLayout from "layout/FrontLayout";
+import FrontLayout from "@/layout/FrontLayout";
 import Image from "next/image";
-import Profile from "../public/images/profile.png";
-import Button from "components/Button";
+import Profile from "@/public/images/profile.png";
+import Button from "@/components/Button";
 import Link from "next/link";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";
-import About from "layout/sectionlayout/about/About";
-import Project from "layout/sectionlayout/projects/Project";
-import DesignTogether from "layout/sectionlayout/design-together/DesginTogether";
+import About from "@/layout/sectionlayout/about/About";
+import Project from "@/layout/sectionlayout/projects/Project";
+import DesignTogether from "@/layout/sectionlayout/design-together/DesginTogether";
 
 
 
@@ -37,10 +37,10 @@ export default function Home() {
                    <div className="imgProfile">
                    <Image src={Profile}
                     alt="profile"
-                    className="w-full h-auto float-right"
+                    className="w-full h-auto float-right object-contain"
                     loading="lazy"
                     quality={100}
-                    objectFit="contain"
+                  
                   />
                    </div>
                   <div className="iconRow flex align-center justify-center text-xl  gap-x-4 my-4">

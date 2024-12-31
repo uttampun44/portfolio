@@ -1,9 +1,9 @@
    
       "use client"
 import Image from "next/image";
-import aboutBg from "../../../../public/images/programmerAbout.png";
-import Title from "components/Title";
-import ProgressBar from "components/ProgressBar";
+import aboutBg from "@/public/images/programmerAbout.png";
+import Title from "@/components/Title";
+import ProgressBar from "@/components/ProgressBar";
 
 export default function About(){
     return(
@@ -13,10 +13,10 @@ export default function About(){
      <div className="aboutImg w-1/3">
      <Image src={aboutBg}
         alt="profile"
-        className="w-full h-auto float-right"
+        className="w-full h-auto float-right object-contain"
         loading="lazy"
         quality={100}
-        objectFit="contain"
+        
       />
      </div>
      <div className="aboutDescription w-1/2">
