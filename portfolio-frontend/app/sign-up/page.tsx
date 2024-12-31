@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import LoginImage from "../../public/images/loginImage.png";
+import LoginImage from "@/public/images/loginImage.png";
 import Title from "@/components/Title";
 import Input from "@/components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";

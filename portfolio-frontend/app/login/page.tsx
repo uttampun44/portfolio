@@ -3,7 +3,7 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Title from "@/components/Title";
-import LoginImage from "../../public/images/loginImage.png";
+import LoginImage from "@/public/images/loginImage.png";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
