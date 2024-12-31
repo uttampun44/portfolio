@@ -20,16 +20,9 @@
     ],
     "baseUrl": "./app",
     "paths": {
-      "@/components/*": ["./app/*"],
-      "@/pages/*": ["./app/*"],
-      "@/styles/*": ["./app/*"],
-      "@/utils/*": ["./app/*"],
-      "@/types/*": ["./app/*"],
-      "@/hooks/*": ["./app/*"],
-      "@/public/*": ["./public/*"],
-      "@/api/*": ["./app/*"],
-      "@/context/*": ["./app/*"],
-      "@layout/*": ["./app/*"]
+      "components/*": ["./app/components/*"],
+      "public/*": ["./public/*"],
+      "layout/*": ["./app/layout/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
