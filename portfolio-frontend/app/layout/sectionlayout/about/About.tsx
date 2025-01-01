@@ -2,6 +2,7 @@
       "use client"
 import Image from "next/image";
 import aboutBg from "@/public/images/programmerAbout.png";
+
 import Title from "@/components/Title";
 import ProgressBar from "@/components/ProgressBar";
 
@@ -25,7 +26,8 @@ export default function About(){
        <div className="skillList">
         
          <div className="react">
-            <Title title="React" className="text-2xl font-semibold" />
+            
+            <Title  title="React" className="text-2xl font-semibold"/>
             <ProgressBar value={85} maxValue={100} className={`bg-primary-color w-full rounded-md`} />
          </div>
          <div className="nextjs">
