@@ -19,8 +19,9 @@ export default function About(){
                            <Button className="bg-primary-text-color text-white rounded-md my-4">Join With me</Button>
                     </div>
 
-                    <div className="rowDevelop grid grid-cols-3 gap-4 justify-center">
-                          <div className="developOne text-center">
+                    <div className="rowDevelop grid grid-cols-3 gap-4 my-5 justify-center">
+                          <div className="developOne text-center grid">
+                              <div className="img w-20 h-20 mx-auto">
                               <Image
                                 src={DevelopOne}
                                 alt="developOne"
@@ -29,9 +30,11 @@ export default function About(){
                                 quality={100}
                                 
                               />
-                              <Title title="From Zero To One" className="text-primary-text-color font-bold text-4xl" />
+                              </div>
+                              <Title title="From Zero To One" className="text-primary-text-color font-bold text-4xl mt-6" />
                           </div>
-                          <div className="developThree text-center">
+                          <div className="developThree text-center grid">
+                          <div className="img w-20 h-20 mx-auto">
                               <Image
                                 src={DevelopTwo}
                                 alt="developOne"
@@ -39,9 +42,11 @@ export default function About(){
                                 loading="lazy"
                                 quality={100}
                               />
-                              <Title title="From Zero To One" className="text-primary-text-color font-bold text-4xl" />
+                              </div>
+                              <Title title="One Level Up" className="text-primary-text-color font-bold text-4xl min-h-10 mt-6" />
                           </div>
-                          <div className="developOne text-center">
+                          <div className="developOne text-center grid">
+                          <div className="img w-20 h-20 mx-auto">
                               <Image
                                 src={DevelopThree}
                                 alt="developOne"
@@ -49,11 +54,18 @@ export default function About(){
                                 loading="lazy"
                                 quality={100}
                               />
-                              <Title title="From Zero To One" className="text-primary-text-color font-bold text-4xl" />
+                              </div>
+                              <Title title="Your Satisfaction" className="text-primary-text-color font-bold text-4xl mt-6" />
                           </div>
                     </div>
                </div>
            </section>
+
+          <section>
+          <div className="sectionUsed max-w-main-max-width w-full mx-auto py-48">
+            
+            </div>
+          </section>
         </FrontLayout>
     )
 }
