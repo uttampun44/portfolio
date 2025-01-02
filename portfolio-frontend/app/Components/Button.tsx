@@ -1,3 +1,4 @@
+import React from "react";
 
 type buttonType = "button" | "submit" | "reset";
 interface ButtonProps {

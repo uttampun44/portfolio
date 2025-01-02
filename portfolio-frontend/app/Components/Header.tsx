@@ -2,8 +2,6 @@
 
 import { navData } from "../data/NavData/Navdata";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { RootState } from "../../lib/store";
 import { usePathname } from "next/navigation";
 
 export default function Header(){
