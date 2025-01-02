@@ -1,6 +1,6 @@
    'use client'
 
-import { navData } from "../data/NavData/Navdata";
+import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

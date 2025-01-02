@@ -1,4 +1,4 @@
-import { navData } from "@/data/NavData/Navdata";
+import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";

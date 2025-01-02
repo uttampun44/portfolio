@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import LoginImage from "@/public/images/loginImage.png";
-import Title from "@/components/Title";
-import Input from "@/components/Input";
+import Title from "components/Title";
+import Input from "components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Button from "@/components/Button";
-import Google from "@/public/images/google.png";
-import Github from "@/public/images/github.png";
+import Button from "components/Button";
+import Google from "public/images/google.png";
+import Github from "public/images/github.png";
 import Link from "next/link";
 
 
