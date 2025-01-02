@@ -7,12 +7,13 @@ import Image from "next/image";
 import DevelopOne from "@/public/images/rocket.png";
 import DevelopTwo from "@/public/images/Group.png";
 import DevelopThree from "@/public/images/satisfaction.png";
+import Js from "@/public/images/javascript.png";
 
 export default function About(){
     return(
         <FrontLayout>
            <section>
-               <div className="aboutHeroSection max-w-main-max-width w-full mx-auto py-48">
+               <div className="aboutHeroSection max-w-main-max-width w-full mx-auto py-36">
                     <div className="heroContent text-center">
                            <h2 className="text-5xl font-bold">Develop your Innovation</h2>
                            <p className="text-lg font-normal my-1">“The innovation consists in seeing what everyone has seen and in thinking what no one has thought.”</p>
@@ -62,8 +63,15 @@ export default function About(){
            </section>
 
           <section>
-          <div className="sectionUsed max-w-main-max-width w-full mx-auto py-48">
-            
+          <div className="sectionUsed max-w-main-max-width w-full mx-auto py-8">
+                  <Title title="Technology I Work" className="font-bold text-4xl text-center" />
+
+                  <div className="technologyIcon my-8 ">
+                    <ul className="flex">
+                       <li> <Image src={Js} alt="js" width={80} height={80} quality={100} /></li>
+                    </ul>
+                     
+                  </div>
             </div>
           </section>
         </FrontLayout>
