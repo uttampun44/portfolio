@@ -24,9 +24,9 @@ export default function Home() {
               <div className="heroContainer flex gap-x-8 justify-between">
                 <div className="personalDetails  w-1/2 pt-24">
                   <h6 className="text-2xl ">Hi I am</h6>
-                  <h5 className="text-primary-text-color  text-3xl ">Uttam Pun</h5>
-                  <h2 className="text-7xl ">Front End</h2>
-                  <h2 className="text-7xl text-end">Developer</h2>
+                  <h5 className="text-primary-text-color  text-3xl  font-bold">Uttam Pun</h5>
+                  <h2 className="text-7xl  font-bold">Front End</h2>
+                  <h2 className="text-7xl text-end font-bold">Developer</h2>
 
                   <div className="btnPara">
                     <p className="mt-6 mb-7 min-w-fit ">Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus pharetra</p>

@@ -12,12 +12,12 @@ export const navData = [
    {
       id: 2,
       name: "Services",
-      link: "services"
+      link: "#"
    },
    {
       id: 3,
       name: "Blogs",
-      link: "blogs"
+      link: "#"
    },
    {
      id: 4,
