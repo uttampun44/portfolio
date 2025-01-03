@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import LoginImage from "@/public/images/loginImage.png";
+import LoginImage from "public/images/loginImage.png";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Google from "public/images/google.png";
 import Github from "public/images/github.png";
