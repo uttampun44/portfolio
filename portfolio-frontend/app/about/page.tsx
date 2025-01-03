@@ -1,17 +1,19 @@
      "use client"
 
-import Button from "components/Button";
+
 import FrontLayout from "layout/FrontLayout";
 import Image from "next/image";
 import DevelopOne from "public/images/rocket.png";
 import DevelopTwo from "public/images/Group.png";
 import DevelopThree from "public/images/satisfaction.png";
 import Js from "public/images/javascript.png";
-import Title from "components/Title";
+
 import React from "public/images/react.png";
 import Php from "public/images/php.png";
 import Mysql from "public/images/mysql.png";
 import Wordpress from "public/images/wordpress.png";
+import Button from "components/Button";
+import Title from "components/Title";
 
 
 export default function About(){

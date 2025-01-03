@@ -1,10 +1,10 @@
    
       "use client"
+import ProgressBar from "components/ProgressBar";
+import Title from "components/Title";
 import Image from "next/image";
 import aboutBg from "public/images/programmerAbout.png";
 
-import Title from "components/Title";
-import ProgressBar from "components/ProgressBar";
 
 export default function About(){
     return(

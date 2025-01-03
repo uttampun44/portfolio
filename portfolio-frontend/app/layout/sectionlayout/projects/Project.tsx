@@ -1,7 +1,5 @@
 "use client"
 
-import Card from "components/Card";
-import Title from "components/Title";
 import Image from "next/image";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import Sainstream from "public/images/saintstream.png";
@@ -9,7 +7,10 @@ import Exclusive from "public/images/exclusivestore.png";
 import Office from "public/images/Office.png"
 import Amazon from "public/images/amazonprime.png";
 import Link from "next/link";
+import Title from "components/Title";
+import Card from "components/Card";
 import Button from "components/Button";
+
 
 export default function Project() {
     return (
