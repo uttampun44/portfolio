@@ -11,81 +11,85 @@ import Input from "components/Input";
 import Button from "components/Button";
 
 
-interface signupForm{
-    name:string,
-    email:string,
-    password:string,
-    confirmPassword:string
+interface signupForm {
+  name: string,
+  email: string,
+  password: string,
+  confirmPassword: string
 }
 
 export default function SignUp() {
 
-    const {handleSubmit, register} = useForm<signupForm>()
+  const { handleSubmit, register } = useForm<signupForm>()
 
-    const onSubmit: SubmitHandler<signupForm> = () =>{
-        try {
-            
-        } catch (error) {
-            
-        }
+  const onSubmit: SubmitHandler<signupForm> = () => {
+    try {
+
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Error fetching data:', error.message);
+      } else {
+        console.error('Unknown error occurred while fetching data.');
+      }
     }
+  }
 
   return (
     <section className="signup">
       <div className="signupContainer flex flex-col md:flex-row">
         <div className="form w-full md:w-1/2 py-40 px-44">
-        <Title title="Signup" className="text-2xl font-bold mb-3"/>
-         <form onSubmit={handleSubmit(onSubmit)}>
+          <Title title="Signup" className="text-2xl font-bold mb-3" />
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Input type="text"
-             {...register("name")}
+              {...register("name")}
               label="Name"
               compulsary={true}
-              className={{label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md"}}
+              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Name"
-              />
-               <Input type="email"
-             {...register("email")}
+            />
+            <Input type="email"
+              {...register("email")}
               label="Email"
-              className={{label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md"}}
+              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Email"
               compulsary={true}
-              />
-               <Input type="password"
-             {...register("password")}
-              label="Password" 
-              className={{label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md"}}
+            />
+            <Input type="password"
+              {...register("password")}
+              label="Password"
+              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Password"
               compulsary={true}
-              />
-                <Input type="password"
-             {...register("confirmPassword")}
-              label="Confirm Password" 
-              className={{label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md"}}
+            />
+            <Input type="password"
+              {...register("confirmPassword")}
+              label="Confirm Password"
+              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Confirm Password"
               compulsary={true}
-              />
-              <div className="checkbox my-5">
-                 <Input type="checkbox" className={{
-                    input: "border-2 border-bg-secondary"
-                 }} /> <span className="font-medium">I agree to the terms & policy</span>
-              </div>
+            />
+            <div className="checkbox my-5">
+              <Input type="checkbox" className={{
+                input: "border-2 border-bg-secondary"
+              }} /> <span className="font-medium">I agree to the terms & policy</span>
+            </div>
 
-              <div className="button">
-                <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Signup</Button>
-              </div>
-         </form>
+            <div className="button">
+              <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Signup</Button>
+            </div>
+          </form>
 
-         <div className="or flex items-center gap-x-1 my-10">
-             <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
-         </div>
-         <div className="signup flex justify-between gap-x-2">
+          <div className="or flex items-center gap-x-1 my-10">
+            <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
+          </div>
+          <div className="signup flex justify-between gap-x-2">
             <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Google} alt="google" />Signup with Google</Button>
             <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Github} alt="google" width={24} height={24} objectFit="contain" />Signup with Github</Button>
-         </div>
+          </div>
 
-         <div className="haveAccount text-center my-2 text-primary-text-color text-lg font-medium">
+          <div className="haveAccount text-center my-2 text-primary-text-color text-lg font-medium">
             <span>Have an account ? </span><Link href="/login" className="text-blue-700">Login In</Link> Or <Link href="/" aria-label="home" className=" text-blue-700 text-center">Home</Link>
-         </div>
+          </div>
         </div>
         <div className="image w-full md:w-1/2 relative">
           <div className="overlay absolute w-full h-full inset-0 bg-main-bg opacity-70 rounded-l-[42px]"></div>

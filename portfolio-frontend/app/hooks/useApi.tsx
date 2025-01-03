@@ -27,10 +27,12 @@ export default function useApi<T>(apiUrl:string){
 
             return response
 
-        } catch (error) {
-            
-        }finally{
-
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error('Error fetching data:', error.message);
+              } else {
+                console.error('Unknown error occurred while fetching data.');
+              }
         }
      }
     
