@@ -19,7 +19,7 @@ interface loginForm{
 
 export default function Login(){
 
-    const {handleSubmit, register, setError, clearErrors, reset, resetField} = useForm<loginForm>()
+    const {handleSubmit, register} = useForm<loginForm>()
 
     const onSubmit: SubmitHandler<loginForm> = () =>{
 

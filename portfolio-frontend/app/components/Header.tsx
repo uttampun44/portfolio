@@ -2,13 +2,12 @@
 
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 
 export default function Header(){
     
-   const pathname = usePathname().split("/").slice(1);
 
-  
+
     return(
         <header>
              <div className="headerRow max-w-main-max-width mx-auto w-full py-10">

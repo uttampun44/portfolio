@@ -20,7 +20,7 @@ interface signupForm{
 
 export default function SignUp() {
 
-    const {handleSubmit, register, reset, setError, clearErrors, resetField} = useForm<signupForm>()
+    const {handleSubmit, register} = useForm<signupForm>()
 
     const onSubmit: SubmitHandler<signupForm> = () =>{
         try {

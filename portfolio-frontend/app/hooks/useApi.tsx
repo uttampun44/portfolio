@@ -1,21 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 
-export default function useApi(apiUrl:string){
-     const [fetchData, setData] = useState(null);
+
+interface ApiResponse<T> {
+    data: T
+}
+export default function useApi<T>(apiUrl:string){
+     const [fetchData, setData] = useState<T|null>(null);
    
      const getData = async() =>{
         try {
-             const response = await axios.get(apiUrl);
-             setData(response.data);
-        } catch (error:any) {
-            throw new error
-        }finally{
-
+             const response = await axios.get<ApiResponse<T>>(apiUrl);
+             setData(response.data.data);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error('Error fetching data:', error.message);
+              } else {
+                console.error('Unknown error occurred while fetching data.');
+              }
         }
      }
-
-     const postData = async(payload:any) =>{
+    
+     const postData = async (payload: T): Promise<any> =>{
         try {
             const response = await axios.post(apiUrl, payload);
 
@@ -27,8 +33,10 @@ export default function useApi(apiUrl:string){
 
         }
      }
-    useEffect(() =>{
+    
+     useEffect(() =>{
          getData()
     }, [apiUrl])
+    
     return {fetchData, setData, getData, postData}
 }
