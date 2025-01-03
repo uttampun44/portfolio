@@ -21,11 +21,11 @@ export default function useApi<T>(apiUrl:string){
         }
      }
     
-     const postData = async (payload: T): Promise<any> =>{
+     const postData = async (payload: T) =>{
         try {
-            const response = await axios.post(apiUrl, payload);
+            const response = await axios.post<ApiResponse<T>>(apiUrl, payload);
 
-            return response
+            return response.data
 
         } catch (error: unknown) {
             if (error instanceof Error) {
