@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "context/ContextApi";
 import { Provider } from "react-redux";
 import { store } from "store/store";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
           <AuthProvider>
             <QueryClientProvider client={queryClinet}>
               {children}
+              <Toaster />
             </QueryClientProvider>
           </AuthProvider>
         </Provider>
