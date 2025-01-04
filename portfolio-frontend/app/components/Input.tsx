@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label,placeholde
             )
            }
             <input type={type}  className={className?.input} placeholder={placeholder}
-             {...register(name)}
+             {...register(name || "")}
              ref={ref}
             {...props} 
              autoComplete={autocomplete}
@@ -25,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label,placeholde
         
              {
                 errors && (
-                    <p className="error text-red-700 font-normal"> {errors[name]?.message as string}</p>
+                    <p className="error text-red-700 font-normal"> {errors[name || ""]?.message as string}</p>
                 )
              }
          </React.Fragment>
