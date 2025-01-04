@@ -11,7 +11,7 @@ export interface InputProps {
     };
     errors?: Record<string, string>;
     compulsaryField?: boolean,
-    [key: string]: any;
+    [key: string]: unknown;
     autocomplete?: string;
     required?: boolean;
     readonly?: boolean;
