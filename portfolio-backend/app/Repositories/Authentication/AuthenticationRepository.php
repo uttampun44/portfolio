@@ -23,12 +23,17 @@ class AuthenticationRepository implements AuthenticationInterface
         return true;
     }
 
-    public function loginAuthentication(array $credentials): String
+    public function loginAuthentication(array $credentials): array
     {
         
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            return $user->createToken('auth_token')->plainTextToken;
+            $user = User::where('id', Auth::id())->select('id', 'name', 'email')->first();
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return [
+                'token' => $token,
+                'user' => $user
+            ];
         }
 
         throw new \Exception('Invalid credentials');

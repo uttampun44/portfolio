@@ -10,8 +10,8 @@ export default function About(){
     return(
         <section className="py-16">
 <div className="myServiceContainer max-w-main-max-width mx-auto">
-  <div className="headingRow flex items-start justify-between">
-     <div className="aboutImg w-1/3">
+  <div className="headingRow flex items-start justify-between max-md:flex-wrap max-md:p-5">
+     <div className="aboutImg w-1/3 max-md:w-full">
      <Image src={aboutBg}
         alt="profile"
         className="w-full h-auto float-right object-contain"
@@ -20,7 +20,7 @@ export default function About(){
         
       />
      </div>
-     <div className="aboutDescription w-1/2">
+     <div className="aboutDescription w-1/2 max-md:w-full max-md:mt-5">
        <h2 className="text-6xl font-semibold">About Me</h2>
        <p className="mt-6 mb-7 min-w-fit ">Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus pharetra</p>
        <div className="skillList">

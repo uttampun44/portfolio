@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import LoginImage from "public/images/loginImage.png";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Google from "public/images/google.png";
 import Github from "public/images/github.png";
 import Link from "next/link";
@@ -20,7 +20,14 @@ interface signupForm {
 
 export default function SignUp() {
 
-  const { handleSubmit, register } = useForm<signupForm>()
+  const methods = useForm<signupForm>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    }
+  })
 
   const onSubmit: SubmitHandler<signupForm> = () => {
     try {
@@ -36,37 +43,42 @@ export default function SignUp() {
 
   return (
     <section className="signup">
-      <div className="signupContainer flex flex-col md:flex-row">
-        <div className="form w-full md:w-1/2 py-40 px-44">
+      <div className="signupContainer flex flex-col md:flex-row max-md:flex-wrap md:h-screen">
+        <div className="form w-full md:w-1/2 py-40 px-44 max-md:w-full max-md:p-5">
           <Title title="Signup" className="text-2xl font-bold mb-3" />
-          <form onSubmit={handleSubmit(onSubmit)}>
+         <FormProvider {...methods}>
+         <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Input type="text"
-              {...register("name")}
+              {...methods.register("name")}
               label="Name"
-              compulsary={true}
+              compulsaryField={true}
               className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Name"
+             
             />
             <Input type="email"
-              {...register("email")}
+              {...methods.register("email")}
               label="Email"
               className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Email"
-              compulsary={true}
+              compulsaryField={true}
+             
             />
             <Input type="password"
-              {...register("password")}
+              {...methods.register("password")}
               label="Password"
               className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Password"
-              compulsary={true}
+              compulsaryField={true}
+              
             />
             <Input type="password"
-              {...register("confirmPassword")}
+              {...methods.register("confirmPassword")}
               label="Confirm Password"
               className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
               placeholder="Enter Your Confirm Password"
-              compulsary={true}
+              compulsaryField={true}
+             
             />
             <div className="checkbox my-5">
               <Input type="checkbox" className={{
@@ -78,21 +90,22 @@ export default function SignUp() {
               <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Signup</Button>
             </div>
           </form>
+          </FormProvider>
 
           <div className="or flex items-center gap-x-1 my-10">
             <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
           </div>
-          <div className="signup flex justify-between gap-x-2">
+          <div className="signup flex justify-between gap-x-2 max-md:grid max-md:grid-cols-1 max-md:gap-y-5">
             <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Google} alt="google" />Signup with Google</Button>
             <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Github} alt="google" width={24} height={24} objectFit="contain" />Signup with Github</Button>
           </div>
 
           <div className="haveAccount text-center my-2 text-primary-text-color text-lg font-medium">
-            <span>Have an account ? </span><Link href="/login" className="text-blue-700">Login In</Link> Or <Link href="/" aria-label="home" className=" text-blue-700 text-center">Home</Link>
+            <span>Have an account ? </span><Link href="/login" className="text-blue-700">Login</Link> Or <Link href="/" aria-label="home" className=" text-blue-700 text-center">Home</Link>
           </div>
         </div>
-        <div className="image w-full md:w-1/2 relative">
-          <div className="overlay absolute w-full h-full inset-0 bg-main-bg opacity-70 rounded-l-[42px]"></div>
+        <div className="image w-full md:w-1/2 relative max-md:w-full max-md:hidden ">
+          <div className="overlay absolute w-full h-full inset-0 bg-main-bg opacity-70 rounded-l-[42px] z-10"></div>
           <div className="content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-center px-4">
             <h2 className="text-white text-4xl font-bold mb-4">
               Welcome to My Community

@@ -27,7 +27,7 @@ export default function About(){
                            <Button className="bg-primary-text-color text-white rounded-md my-4">Join With me</Button>
                     </div>
 
-                    <div className="rowDevelop grid grid-cols-3 gap-4 my-5 justify-center">
+                    <div className="rowDevelop grid grid-cols-3 max-md:grid-cols-1 max-md:gap-y-5 max-md:p-5 gap-4 my-5 justify-center">
                           <div className="developOne text-center">
                               <div className="img w-10 h-20 mx-auto">
                               <Image
@@ -80,7 +80,7 @@ export default function About(){
                   <Title title="Technology I Work" className="font-bold text-4xl text-center" />
 
                   <div className="technologyIcon my-8 ">
-                    <ul className="flex justify-center items-center gap-x-4">
+                    <ul className="flex justify-center items-center gap-x-4 max-md:grid max-md:grid-cols-2 max-md:justify-items-center max-md:gap-4">
                        <li> <Image src={Js} alt="js" width={80} height={80} quality={100} /></li>
                        <li> <Image src={React} alt="js" width={80} height={80} quality={100} /></li>
                        <li> <Image src={Php} alt="js" width={80} height={80} quality={100} /></li>

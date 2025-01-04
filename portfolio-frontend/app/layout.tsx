@@ -1,7 +1,13 @@
+"use client"
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./index.css"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "context/ContextApi";
+import { Provider } from "react-redux";
+import { store } from "store/store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,10 +19,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Uttam Pun | Developer",
-  description: "Uttam pun developer",
-};
+const queryClinet = new QueryClient();
+
+// export const metadata: Metadata = {
+//   title: "Uttam Pun | Developer",
+//   description: "Uttam pun developer",
+// };
 
 export default function RootLayout({
   children,
@@ -25,10 +33,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Uttam Pun | Developer</title>
+        <meta name='title' content='Uttam Pun | Developer' />
+        <meta name='description' content='Uttam pun developer' />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider store={store}>
+          <AuthProvider>
+            <QueryClientProvider client={queryClinet}>
+              {children}
+            </QueryClientProvider>
+          </AuthProvider>
+        </Provider>
       </body>
     </html>
   );

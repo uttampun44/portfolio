@@ -8,7 +8,7 @@ interface AuthenticationInterface
 {
     public function getAuthentication();
 
-    public function loginAuthentication(array $credentials): string;
+    public function loginAuthentication(array $credentials): array;
 
     public function logoutAuthentication(string $token): bool;
 

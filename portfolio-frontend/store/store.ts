@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  storeSlice  from "../redux-toolkit/StoreProvider";
+import  AuthSlice  from "../lib/features/auth/Auth";
 
 export const store = configureStore({
   reducer:{
-    toggleFun: storeSlice
+    auth: AuthSlice
   }
 })
 

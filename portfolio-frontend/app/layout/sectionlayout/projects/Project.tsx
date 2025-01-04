@@ -30,7 +30,7 @@ export default function Project() {
 
                             <TabPanel>
                                 {/* all */}
-                                <div className="projectGrid grid grid-cols-3 gap-4 my-4">
+                                <div className="projectGrid grid grid-cols-3 gap-4 my-4 max-md:grid max-md:grid-cols-1 max-md:gap-y-4">
                                    
                                 <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
@@ -91,7 +91,7 @@ export default function Project() {
                             <TabPanel>
 
                                 {/* react */}
-                                <div className="projectGrid grid grid-cols-3 gap-x-4 my-4">
+                                <div className="projectGrid grid grid-cols-3 max-md:grid max-md:grid-cols-1 max-md:gap-y-4 gap-x-4 my-4">
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
@@ -136,7 +136,7 @@ export default function Project() {
 
                             <TabPanel>
                                 {/* laravel */}
-                                <div className="projectGrid grid grid-cols-3 gap-x-4 my-4">
+                                <div className="projectGrid grid grid-cols-3 max-md:grid max-md:grid-cols-1 max-md:gap-y-4 gap-x-4 my-4">
                                     <Card className=" px-4 rounded-md">
                                         <div className="image bg-bg-card">
 

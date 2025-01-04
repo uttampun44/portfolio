@@ -23,7 +23,8 @@
       "components/*": ["./app/components/*"],
       "public/*": ["./public/*"],
       "layout/*": ["./app/layout/*"],
-      "data/*" : ["./app/data/*"]
+      "data/*" : ["./app/data/*"],
+      "utils/*": ["./app/utils/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

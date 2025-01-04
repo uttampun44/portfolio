@@ -11,7 +11,7 @@ export default function Header(){
     return(
         <header>
              <div className="headerRow max-w-main-max-width mx-auto w-full py-10">
-                  <div className="navLink p-5 bg-main-bg rounded-full flex justify-between ">
+                  <div className="navLink p-5 bg-main-bg rounded-full flex justify-between max-md:flex-wrap">
                        {
                           navData.map((data, index) => {
                             return(
