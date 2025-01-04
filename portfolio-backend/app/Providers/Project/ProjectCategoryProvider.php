@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Provider\Projects;
+namespace App\Providers\Project;
 
 use App\Repositories\ProjectCategoryInterface;
 use App\Repositories\Projects\ProjectCategoryRepository;
@@ -13,7 +13,7 @@ class ProjectCategoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ProjectCategoryInterface::class, ProjectCategoryRepository::class);
+        $this->app->bind(ProjectCategoryRepository::class, ProjectCategoryInterface::class);
     }
 
     /**

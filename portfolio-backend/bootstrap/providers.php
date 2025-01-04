@@ -2,6 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\Provider\Authentication\AuthenticationProvider::class,
-    App\Providers\Provider\Projects\ProjectCategoryProvider::class,
+    App\Providers\Authentication\AuthenticationProvider::class,
+    App\Providers\Project\ProjectCategoryProvider::class,
 ];

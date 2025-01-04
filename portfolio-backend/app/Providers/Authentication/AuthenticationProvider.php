@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Provider\Authentication;
+namespace App\Providers\Authentication;
 
 use App\Repositories\Authentication\AuthenticationRepository;
 use App\Repositories\AuthenticationInterface;
