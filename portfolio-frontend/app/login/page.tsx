@@ -48,8 +48,8 @@ export default function Login() {
        
        document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
 
-        console.log( dispatch(setToken(response?.token)))
-        dispatch(setToken(response?.token)); 
+        console.log( dispatch(setToken(response?.token || "")))
+        dispatch(setToken(response?.token || "")); 
         // Set cookie
         
         redirect("/dashboard");

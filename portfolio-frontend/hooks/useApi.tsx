@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 interface ApiResponse<T> {
     data: T,
     status: number,
+    token:string,
 }
 export default function useApi<T>(apiUrl:string){
      const [fetchData, setData] = useState<T|null>(null);
