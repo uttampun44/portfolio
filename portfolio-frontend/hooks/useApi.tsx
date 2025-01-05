@@ -22,7 +22,7 @@ export default function useApi<T>(apiUrl:string){
         }
      }
     
-     const postData = async (payload: T): Promise<ApiResponse<T> | void> =>{
+     const postData = async (payload: T): Promise<ApiResponse<T> | undefined> =>{
         try {
             const response = await axios.post<ApiResponse<T>>(apiUrl, payload);
 
