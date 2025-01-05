@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface toggles {
+interface token {
   token:string | null,
 }
-const initialState:toggles = {
+const initialState:token = {
    token:null,
 }
 
@@ -12,6 +12,8 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
        setToken: (state, action: PayloadAction<string>) => {
+
+        
         state.token = action.payload
       },
       clearToken: (state) => {

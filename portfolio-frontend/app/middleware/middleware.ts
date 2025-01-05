@@ -3,13 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
-  const isLoggedIn = request.cookies.get("authToken");
+  const token = request.cookies.get("token");
 
-  if (pathname.startsWith("/dashboard") && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/portfolio-frontend", request.url));
+ 
+  if (pathname.startsWith("/dashboard") && !token) {
+    console.log('Redirecting to login');
+    return NextResponse.rewrite(new URL("/login", request.url));
   }
 
-  if (pathname.startsWith("/dashboard") && isLoggedIn) {
+  if (pathname.startsWith("/dashboard") && token) {
     return NextResponse.rewrite(new URL("/dashboard", request.url));
   }
 
