@@ -30,7 +30,7 @@ export default function Home() {
 
                   <div className="btnPara">
                     <p className="mt-6 mb-7 min-w-fit ">Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus pharetra</p>
-                    <Button className="bg-primary-text-color rounded-md text-white">Hire Me</Button>
+                    <Button className="bg-primary-text-color rounded-md text-white">Download CV</Button>
                   </div>
                 </div>
                 <div className="img w-1/2 flex flex-col max-md:w-full max-md:mt-5">
