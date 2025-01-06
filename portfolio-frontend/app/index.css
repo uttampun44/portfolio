@@ -55,3 +55,7 @@ progress {
   input[type="number"] {
       -moz-appearance: textfield;
   }
+
+  .hamburgerSlide{
+    overflow: hidden;
+  }
