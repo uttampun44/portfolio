@@ -2,16 +2,15 @@
 
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Header(){
     
 
-
     return(
         <header>
-             <div className="headerRow max-w-main-max-width mx-auto w-full py-10">
-                  <div className="navLink p-5 bg-main-bg rounded-full flex justify-between max-md:flex-wrap">
+             <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:px-6 max-md:py-6 ">
+                  <div className="navLink p-5 bg-main-bg rounded-full flex justify-between max-md:hidden">
                        {
                           navData.map((data, index) => {
                             return(
@@ -22,6 +21,10 @@ export default function Header(){
                           })
                        }
                     </div>  
+                    <div className="hamBurger  md:hidden flex justify-end">
+                       <GiHamburgerMenu className="w-6 h-6" />
+                    </div>
+
              </div>
         </header>
     )
