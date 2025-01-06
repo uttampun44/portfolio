@@ -3,8 +3,7 @@
 import { AuthContext } from "context/ContextApi";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 
