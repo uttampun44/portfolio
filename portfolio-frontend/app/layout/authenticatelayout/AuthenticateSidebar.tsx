@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import Dashboard from "public/images/dashboard.png";
-import Image from "next/image";
 import Title from "components/Title";
 import Link from "next/link";
 import { SidebarData } from "data/BackendNavData/SidebarData";

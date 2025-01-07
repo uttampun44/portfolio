@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import Button from "components/Button";
 import useApi from "hooks/useApi";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 
