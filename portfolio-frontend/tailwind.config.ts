@@ -17,10 +17,12 @@ export default {
         "bg-color": "var(--primary-color)",
         "bg-secondary": "var(--secondary-color)",
         "bg-card": "var(--third-color)",
-        "bg-fourth": "var(--fourth-color)"
+        "bg-fourth": "var(--fourth-color)",
+        "bg-dashboard": "var(--bg-dashboard)"
       },
       colors:{
-        "primary-text-color": "var(--primary-color)"
+        "primary-text-color": "var(--primary-color)",
+        "backend-primary-color": "var(--backend-primary-color)",
       },
       fontFamily:{
         'poppins': "var(--primary-font)",

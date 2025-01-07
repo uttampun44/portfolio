@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from "next/server";
 
 const middleware = (request: NextRequest) => {
@@ -5,6 +6,7 @@ const middleware = (request: NextRequest) => {
   
   const token = request.cookies.get("token");
 
+  console.log(token);
  
   if (!token) {
     console.log('Redirecting to login');

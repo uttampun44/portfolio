@@ -9,6 +9,8 @@
     --font-bold: 700;
     --semi-bold: 600;
     --primary-font: "Poppins", serif;
+    --bg-dashboard: #F9FBFF;
+    --backend-primary-color: #9197B3;
 }
 
 body{

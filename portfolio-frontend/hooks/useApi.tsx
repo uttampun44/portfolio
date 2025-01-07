@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 
 interface ApiResponse<T> {
@@ -8,12 +8,11 @@ interface ApiResponse<T> {
     token:string,
 }
 export default function useApi<T>(apiUrl:string){
-     const [fetchData, setData] = useState<T|null>(null);
-   
+    
      const getData = async() =>{
         try {
              const response = await axios.get<ApiResponse<T>>(apiUrl);
-             setData(response.data.data);
+             return response.data
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.error('Error fetching data:', error.message);
@@ -42,5 +41,5 @@ export default function useApi<T>(apiUrl:string){
          getData()
     }, [apiUrl])
     
-    return {fetchData, setData, getData, postData}
+    return { getData, postData}
 }

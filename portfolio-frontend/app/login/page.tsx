@@ -46,17 +46,15 @@ export default function Login() {
     try {
       const response = await postData(data);
       console.log(response);
- 
-       
+      
+    
+     
        document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
 
         console.log( dispatch(setToken(response?.token || "")))
         dispatch(setToken(response?.token || "")); 
-        // Set cookie
-        
+      
         redirect("/dashboard");
-  
-
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error fetching data:', error.message);
