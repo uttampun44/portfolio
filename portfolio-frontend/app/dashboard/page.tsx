@@ -38,7 +38,7 @@ export default  function Dashboard(){
       
     }
 
-  const {isLoading, data, error} = useQuery({
+  const {isLoading,  error} = useQuery({
     queryKey: ["users"],   
     queryFn: fetchUsers
   });
