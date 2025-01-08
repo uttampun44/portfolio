@@ -11,7 +11,6 @@ import ProfilePic from "public/images/ProfilePic.png";
 
 export default function AuthenticateSidebar() {
 
-    
     return (
         <>
 
