@@ -26,7 +26,7 @@ export default function AuthenticateSidebar() {
                              SidebarData.map((item, index:number)=>{
                                return (
                                  <li key={index} className="menuItem flex items-center gap-4 my-2">
-                                  <Icon iconName={item.iconName} className="w-8 h-auto" /> <Link href={item.href} className="text-base font-medium text-backend-primary-color">{item.name}</Link>
+                                   <Link href={item.href} className="text-base font-medium text-backend-primary-color">{item.name}</Link>
                                  </li>
                                )
                              })
