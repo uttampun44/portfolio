@@ -1,45 +1,35 @@
-   "use client"
+"use client"
 import { useQuery } from "@tanstack/react-query";
-import Button from "components/Button";
-import useApi from "hooks/useApi";
+import useGet from "hooks/api/useGet";
+import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
-import { redirect } from "next/navigation";
-import { GiHamburgerMenu } from "react-icons/gi";
 
 
-
-interface users{
-    id:number,
-    name:string,
-    email:string,
+interface users {
+  id: number,
+  name: string,
+  email: string,
 }
 
-export default  function Dashboard(){
+interface dashboardResponse {
+  users: users[]
+}
 
-    const url = process.env.NEXT_PUBLIC_API_URL;    
-     
-    const {getData} = useApi<{users: []}>(`${url}/api/dashboard`);
-    const {postData} = useApi(`${url}/api/logout`);
+export default function Dashboard() {
 
-    const fetchUsers = async(): Promise<users[]> => {
-      
-      const response = await getData(); 
-      
-      return response?.users;
-    }
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
-    const handleLogout = async() => {
-       const response = await postData({});
+  const { getData } = useGet<dashboardResponse>(`${url}/api/dashboard`);
 
-       if(response?.status === 200){
-        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-         redirect("/login");
-       }
-      
-    }
+  const fetchUsers = async (): Promise<users[] | undefined> => {
+    const response = await getData();
+    return response?.users;
+  }
 
-  const {isLoading,  error} = useQuery({
-    queryKey: ["users"],   
+
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["users"],
     queryFn: fetchUsers
   });
 
@@ -47,17 +37,29 @@ export default  function Dashboard(){
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
-   
 
-    return(
-        <>
-          <AuthenticateSidebar />
-            <div className="dashboardContainer absolute  w-full h-full bg-bg-dashboard lg:py-10">
-                 <div className="navlink flex justify-center">
-                      <GiHamburgerMenu className="w-6 h-6"  /> <Button onClick={handleLogout} >Logout</Button>
-                 </div>
+
+  return (
+    <>
+      <AuthenticateSidebar />
+      <AuthenticateNavLink >
+        <div className="dashboardContainer min-h-full  w-full bg-bg-dashboard h-screen lg:p-10 ">
+          <div className="dashboardBox ml-64 mr-0 ">
+
+            <div className="row bg-white rounded-md p-5 ">
+              <div className="first">
+                total
+              </div>
+              <div className="second">
+                customers
+              </div>
+              <div className="active">
+                active
+              </div>
             </div>
-         
-        </>
-    )
+          </div>
+        </div>
+      </AuthenticateNavLink>
+    </>
+  )
 }

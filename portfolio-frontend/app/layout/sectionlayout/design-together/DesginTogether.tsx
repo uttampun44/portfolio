@@ -3,7 +3,7 @@
 import Button from "components/Button"
 import Input from "components/Input"
 import Title from "components/Title"
-import useApi from "hooks/useApi"
+import usePost from "hooks/api/usePost"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 
 type formData = {
@@ -20,7 +20,7 @@ export default function DesignTogether() {
 
     const url = process.env.NEXT_PUBLIC_API_URL;
 
-    const { postData } = useApi<formData>(`${url}/api/contact`)
+    const { postData } = usePost<formData>(`${url}/api/contact`)
 
 
 

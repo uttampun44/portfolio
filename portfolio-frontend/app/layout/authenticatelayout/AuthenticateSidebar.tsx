@@ -5,7 +5,8 @@ import Title from "components/Title";
 import Link from "next/link";
 import { SidebarData } from "data/BackendNavData/SidebarData";
 import Icon from "components/Icon";
-
+import Image from "next/image";
+import ProfilePic from "public/images/ProfilePic.png";
 
 
 export default function AuthenticateSidebar() {
@@ -32,6 +33,11 @@ export default function AuthenticateSidebar() {
                              })
                            }
                         </ul>
+                    </div>
+
+                    <div className="profilePic absolute bottom-8 left-6 flex items-center gap-x-4">
+                        <Image src={ProfilePic} alt="Profile Picture" width={40} height={40} objectFit="contain" />
+                        <h6 className="text-backend-primary-color text-base font-medium">Uttam Pun</h6>
                     </div>
                 </div>
             </aside>

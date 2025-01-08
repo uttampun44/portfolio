@@ -10,11 +10,11 @@ import Github from "public/images/github.png";
 import Title from "components/Title";
 import Input from "components/Input";
 import Button from "components/Button";
-import useApi from "hooks/useApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
 import { setToken } from "lib/features/auth/Auth";
 import { redirect } from "next/navigation";
+import usePost from "hooks/api/usePost";
 
 
 interface loginForm {
@@ -39,7 +39,7 @@ export default function Login() {
 
 
 
-  const { postData } = useApi<loginForm>(`${url}/api/login`)
+  const { postData } = usePost<loginForm>(`${url}/api/login`)
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
 

@@ -3,7 +3,7 @@
 import Button from "components/Button";
 import Input from "components/Input";
 import Title from "components/Title";
-import useApi from "hooks/useApi";
+import usePost from "hooks/api/usePost";
 import FrontLayout from "layout/FrontLayout";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -30,7 +30,7 @@ export default function ContactMe() {
         }
     })
     
-    const {postData} = useApi<contatcForm>(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`);
+    const {postData} = usePost<contatcForm>(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`);
 
     const onSubmit: SubmitHandler<contatcForm> = async (data) => {
          try {
