@@ -3,7 +3,7 @@ import Button from "components/Button";
 import usePost from "hooks/api/usePost";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {useForm } from "react-hook-form";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { toast } from "sonner";
 
