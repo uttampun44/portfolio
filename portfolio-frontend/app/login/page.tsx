@@ -13,7 +13,6 @@ import Button from "components/Button";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
 import { setToken } from "lib/features/auth/Auth";
-import { redirect } from "next/navigation";
 import usePost from "hooks/api/usePost";
 import { useRouter } from "next/navigation";
 

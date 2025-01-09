@@ -27,6 +27,7 @@ export default function DesignTogether() {
     const onSubmit: SubmitHandler<formData> = async (data) => {
         try {
             const response = await postData(data);
+            return response?.data
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error fetching data:', error.message);
