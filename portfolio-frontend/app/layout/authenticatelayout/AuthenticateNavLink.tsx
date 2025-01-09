@@ -7,16 +7,16 @@ import {useForm } from "react-hook-form";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { toast } from "sonner";
 
-interface LogoutResponse {
+interface LogoutResponse<T> {
     message: string;
-    data: any;
+    data: T;
   }
 
   
 type childrenProps = {
     children: React.ReactNode
 }
-export default function AuthenticateNavLink(props: childrenProps) {
+export default function AuthenticateNavLink<T>(props: childrenProps) {
 
     const router = useRouter()
 
@@ -24,7 +24,7 @@ export default function AuthenticateNavLink(props: childrenProps) {
 
     const {handleSubmit} = useForm();
 
-    const { postData } = usePost<LogoutResponse>(`${url}/api/logout`);
+    const { postData } = usePost<LogoutResponse<T>>(`${url}/api/logout`);
     
       const mutation = useMutation({
         mutationFn: () => postData({}),
