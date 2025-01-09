@@ -15,6 +15,7 @@ import { AppDispatch } from "store/store";
 import { setToken } from "lib/features/auth/Auth";
 import { redirect } from "next/navigation";
 import usePost from "hooks/api/usePost";
+import { useRouter } from "next/navigation";
 
 
 interface loginForm {
@@ -26,6 +27,7 @@ export default function Login() {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
 
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>()
 
 
@@ -45,16 +47,12 @@ export default function Login() {
 
     try {
       const response = await postData(data);
-      console.log(response);
-      
     
-     
        document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
 
-        console.log( dispatch(setToken(response?.token || "")))
         dispatch(setToken(response?.token || "")); 
+        router.push("/dashboard");
       
-        redirect("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error fetching data:', error.message);
@@ -111,7 +109,7 @@ export default function Login() {
                 <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
               </div>
               <div className="login flex justify-between gap-x-2  max-md:grid max-md:grid-cols-1 max-md:gap-y-5">
-                <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Google} alt="google" />Signup with Google</Button>
+                <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2" ><Image src={Google} alt="google" />Signup with Google</Button>
                 <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Github} alt="google" width={24} height={24} objectFit="contain" />Signup with Github</Button>
               </div>
             </form>

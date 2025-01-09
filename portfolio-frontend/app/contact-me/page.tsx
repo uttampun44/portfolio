@@ -35,7 +35,7 @@ export default function ContactMe() {
     const onSubmit: SubmitHandler<contatcForm> = async (data) => {
          try {
             const response = await postData(data);
-            console.log(response);
+             return response?.data
          } catch (error) {
             if (error instanceof Error) {
                 console.error('Error fetching data:', error.message);

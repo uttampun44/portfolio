@@ -44,7 +44,6 @@ export default function Header(){
                   setToggle(false)
                   document.getElementsByTagName("html")[0].classList.remove('hamburgerSlide');
 
-                  console.log(isToggle)
                }} className="absolute top-4 right-4 text-white cursor-pointer text-3xl" />
             
                 <div className="menuMobileContainer absolute top-36 -translate-y-1/1 left-1/2 transform -translate-x-1/2">
