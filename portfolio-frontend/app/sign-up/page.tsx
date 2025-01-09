@@ -9,28 +9,44 @@ import Link from "next/link";
 import Title from "components/Title";
 import Input from "components/Input";
 import Button from "components/Button";
+import usePost from "hooks/api/usePost";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 
 interface signupForm {
   name: string,
   email: string,
   password: string,
-  confirmPassword: string
+  password_confirmation: string
 }
 
 export default function SignUp() {
 
-  const methods = useForm<signupForm>({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    }
-  })
+  const methods = useForm<signupForm>()
 
-  const onSubmit: SubmitHandler<signupForm> = () => {
+  const url = process.env.NEXT_PUBLIC_API_URL;
+
+  const router = useRouter();
+
+  const { postData } = usePost<signupForm>(`${url}/api/sign-up`)
+
+  const mutation = useMutation({
+    mutationFn: (data: signupForm) => postData(data),
+    onSuccess: (response) => {
+      if(!response?.data) return;
+      toast.success("Signup Successfully");
+      router.push("/login");
+    },
+    onError: () => {
+      toast.error("Signup Failed");
+    }
+  });
+  const onSubmit: SubmitHandler<signupForm> = (data) => {
     try {
+
+      mutation.mutate(data);
 
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -46,50 +62,50 @@ export default function SignUp() {
       <div className="signupContainer flex flex-col md:flex-row max-md:flex-wrap md:h-screen">
         <div className="form w-full md:w-1/2 py-40 px-44 max-md:w-full max-md:p-5">
           <Title title="Signup" className="text-2xl font-bold mb-3" />
-         <FormProvider {...methods}>
-         <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <Input type="text"
-              {...methods.register("name")}
-              label="Name"
-              compulsaryField={true}
-              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
-              placeholder="Enter Your Name"
-             
-            />
-            <Input type="email"
-              {...methods.register("email")}
-              label="Email"
-              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
-              placeholder="Enter Your Email"
-              compulsaryField={true}
-             
-            />
-            <Input type="password"
-              {...methods.register("password")}
-              label="Password"
-              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
-              placeholder="Enter Your Password"
-              compulsaryField={true}
-              
-            />
-            <Input type="password"
-              {...methods.register("confirmPassword")}
-              label="Confirm Password"
-              className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
-              placeholder="Enter Your Confirm Password"
-              compulsaryField={true}
-             
-            />
-            <div className="checkbox my-5">
-              <Input type="checkbox" className={{
-                input: "border-2 border-bg-secondary"
-              }} /> <span className="font-medium">I agree to the terms & policy</span>
-            </div>
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <Input type="text"
+                {...methods.register("name")}
+                label="Name"
+                compulsaryField={true}
+                className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
+                placeholder="Enter Your Name"
+                required
+              />
+              <Input type="email"
+                {...methods.register("email")}
+                label="Email"
+                className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
+                placeholder="Enter Your Email"
+                compulsaryField={true}
+                required
+              />
+              <Input type="password"
+                {...methods.register("password")}
+                label="Password"
+                className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
+                placeholder="Enter Your Password"
+                compulsaryField={true}
+                required
+              />
+              <Input type="password"
+                {...methods.register("password_confirmation")}
+                label="Confirm Password"
+                className={{ label: "block font-medium", input: "w-full focus:outline-none mb-2 py-1 px-2 border-2 border-bg-secondary rounded-md" }}
+                placeholder="Enter Your Confirm Password"
+                compulsaryField={true}
+                required
+              />
+              <div className="checkbox my-5">
+                <Input type="checkbox" className={{
+                  input: "border-2 border-bg-secondary"
+                }} /> <span className="font-medium">I agree to the terms & policy</span>
+              </div>
 
-            <div className="button">
-              <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Signup</Button>
-            </div>
-          </form>
+              <div className="button">
+                <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Signup</Button>
+              </div>
+            </form>
           </FormProvider>
 
           <div className="or flex items-center gap-x-1 my-10">

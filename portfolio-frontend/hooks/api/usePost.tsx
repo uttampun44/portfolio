@@ -10,8 +10,10 @@ interface postData<T> {
 
 export default function usePost<Type>(apiUrl:string){
     
-   const postData = useCallback(async (payload: unknown, token?:string): Promise<postData<Type> | undefined> =>{
+   const postData = useCallback(async (payload: unknown): Promise<postData<Type> | undefined> =>{
         try {
+
+           
              const response = await axios.post<postData<Type>>(apiUrl, payload)
 
              if(response.status === 200){

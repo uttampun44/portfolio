@@ -26,11 +26,12 @@ export default function Dashboard() {
     return response?.users;
   }
 
-
+// refetching on windows focus will not rerender the data on the page
 
   const { isLoading, error } = useQuery({
     queryKey: ["users"],
-    queryFn: fetchUsers
+    queryFn: fetchUsers,
+    refetchOnWindowFocus: false,
   });
 
 

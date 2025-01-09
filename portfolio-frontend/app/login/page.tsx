@@ -15,6 +15,8 @@ import { AppDispatch } from "store/store";
 import { setToken } from "lib/features/auth/Auth";
 import usePost from "hooks/api/usePost";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 
 interface loginForm {
@@ -42,16 +44,25 @@ export default function Login() {
 
   const { postData } = usePost<loginForm>(`${url}/api/login`)
 
+  const mutation = useMutation({
+    mutationFn: (data: loginForm) => postData(data),
+    onSuccess: (response) => {
+      console.log(response);
+         toast.success("Login Successfully");
+         document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
+   
+         dispatch(setToken(response?.token || ""));
+         router.push("/dashboard");
+    },
+    onError: () => {
+      toast.error("Login Failed");
+    }
+  })
+
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
 
     try {
-      const response = await postData(data);
-    
-       document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
-
-        dispatch(setToken(response?.token || "")); 
-        router.push("/dashboard");
-      
+      mutation.mutate(data);
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error fetching data:', error.message);
