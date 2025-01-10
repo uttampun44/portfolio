@@ -49,6 +49,7 @@ export default function Login() {
     onSuccess: (response) => {
       console.log(response);
          toast.success("Login Successfully");
+
          document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
    
          dispatch(setToken(response?.token || ""));
