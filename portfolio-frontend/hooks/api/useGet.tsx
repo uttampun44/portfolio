@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -7,7 +8,14 @@ export default function useGet<Type>(apiUrl:string){
     
     const getData = async (): Promise<Type | undefined> =>{
         try {
-             const response = await axios.get<Type>(apiUrl);
+            const token = Cookies.get("token");
+
+             const response = await axios.get<Type>(apiUrl, {
+                 headers: {
+                     Authorization: `Bearer ${token}`,
+                     "Content-Type": "application/json",
+                 },
+             });
               if(response.status === 200){
 
                 toast.success("Data Fetched Successfully");
