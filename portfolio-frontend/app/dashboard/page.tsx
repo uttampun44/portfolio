@@ -51,8 +51,8 @@ export default function Dashboard() {
         <div className="dashboardContainer min-h-full  w-full bg-bg-dashboard h-screen lg:p-10 ">
           <div className="dashboardBox ml-64 mr-0 ">
 
-            <div className="row bg-white rounded-md p-5 grid grid-cols-3 gap-x-4 gap-y-2 ">
-              <div className="users flex gap-x-6">
+            <div className="row bg-white rounded-md p-5 grid grid-cols-3  gap-x-4 gap-y-2 ">
+              <div className="users flex gap-x-6 border-r-[1px]">
 
                 <Icon iconName="users" className="w-auto h-full" />
 
@@ -62,7 +62,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="second flex gap-x-6">
+              <div className="second flex gap-x-6 border-r-[1px]">
                 <Icon iconName="users" className="w-auto h-full" />
 
                 <div className="totalUsers w-full">
