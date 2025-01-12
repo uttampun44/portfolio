@@ -8,12 +8,18 @@ export default function useGet<Type>(apiUrl:string){
     
     const getData = async (): Promise<Type | undefined> =>{
         try {
+
             const token = Cookies.get("token");
+
+            //  get token from cookie if the token is not exists then return
+
+            if(!token) return;
 
              const response = await axios.get<Type>(apiUrl, {
                  headers: {
                      Authorization: `Bearer ${token}`,
                      "Content-Type": "application/json",
+                     ...(token ? { Authorization: `Bearer ${token}` } : {}), 
                  },
              });
               if(response.status === 200){

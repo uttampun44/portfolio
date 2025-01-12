@@ -33,7 +33,6 @@ class AuthenticationController extends Controller
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $loginData['token'],
-                'user' => $loginData['user']
             ], 200);
 
         } catch (\Throwable $th) {

@@ -45,7 +45,7 @@ export default function Login() {
   const { postData } = usePost<loginForm>(`${url}/api/login`)
 
   const mutation = useMutation({
-    mutationFn: (data: loginForm) => postData(data),
+    mutationFn: (data: loginForm) => postData(data,),
     onSuccess: (response) => {
       console.log(response);
          toast.success("Login Successfully");
@@ -63,7 +63,17 @@ export default function Login() {
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
 
     try {
-      mutation.mutate(data);
+      mutation.mutate(data, {
+        onSuccess: (response) => {
+          if(!response?.data) return;
+          document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
+          toast.success("Login Successfully");
+          router.push("/dashboard");
+        },
+        onError: () => {
+          toast.error("Login Failed");
+        }
+      });
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error fetching data:', error.message);

@@ -1,27 +1,30 @@
 import axios from "axios";
 import { useCallback} from "react";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
 
+type methodType = "POST" | "PUT";
 
 interface postData<T> {
     data: T,
     status: number,
-    token:string
+    token:string,
+    method?: methodType
+    headers?: Record<string, string>
+   
 }
 
 export default function usePost<Type>(apiUrl:string){
     
-   const postData = useCallback(async (payload: unknown): Promise<postData<Type> | undefined> =>{
+   const postData = useCallback(async (payload: unknown, customHeaders:Record<string, string> = {}): Promise<postData<Type> | undefined> =>{
         try {
 
-         const token = Cookies.get("token");
-
-           
+      
              const response = await axios.post<postData<Type>>(apiUrl, payload,{
+               
+               // headers it will take atomatically post data as bearer token
                headers:{
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`
+                  ...customHeaders
                }
              })
 

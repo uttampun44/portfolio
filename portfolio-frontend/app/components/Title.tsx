@@ -2,7 +2,7 @@
 import React from "react";
 
 interface tileProps  {
-    title: string;
+    title: string | undefined;
     className?: string;
     children?: React.ReactNode
 };

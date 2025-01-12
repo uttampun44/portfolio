@@ -11,10 +11,12 @@ class DashboardController extends Controller
     public function getDashboard()
     {
         
-            $users = User::select("id", "name", "email")->get();
+            $users = User::count();
+            $auth_user = Auth::user();
     
             return response()->json([
-                "users" => $users
+                "users" => $users,
+                "auth_user" => $auth_user
             ], 200);
 
        
