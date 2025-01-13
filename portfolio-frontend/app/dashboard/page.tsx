@@ -23,7 +23,7 @@ export default function Dashboard() {
   const { getData } = useGet<usersResponse | undefined>(`${url}/api/dashboard`);
   const [users, setUsers] = useState<usersResponse | undefined>(undefined);
 
-  console.log(users);
+
   const fetchUsers = async (): Promise<usersResponse | undefined> => {
     const response = await getData();
     setUsers(response);
@@ -36,6 +36,7 @@ export default function Dashboard() {
     queryKey: ["users"],
     queryFn: fetchUsers,
     refetchOnWindowFocus: false,
+    staleTime: 30000
   });
 
 

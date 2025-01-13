@@ -18,11 +18,12 @@ export default {
         "bg-secondary": "var(--secondary-color)",
         "bg-card": "var(--third-color)",
         "bg-fourth": "var(--fourth-color)",
-        "bg-dashboard": "var(--bg-dashboard)"
+        "bg-dashboard": "var(--bg-dashboard)",
+        "bg-backend-secondary-color": "var(--backend-secondary-color)",
       },
       colors:{
         "primary-text-color": "var(--primary-color)",
-        "backend-primary-color": "var(--backend-primary-color)",
+        "backend-primary-text-color": "var(--backend-text-primary-color)",
       },
       fontFamily:{
         'poppins': "var(--primary-font)",

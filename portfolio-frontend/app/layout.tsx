@@ -4,6 +4,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./index.css"
+import 'rsuite-table/dist/css/rsuite-table.css';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "context/ContextApi";
 import { Provider } from "react-redux";
@@ -47,7 +48,7 @@ export default function RootLayout({
                 <ReactQueryDevtools initialIsOpen={false} />
 
                 {children}
-                <Toaster />
+                <Toaster richColors />
               </QueryClientProvider>
             </ThemeProvider>
           </AuthProvider>

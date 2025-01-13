@@ -16,9 +16,9 @@ class ProjectCategoryRepository implements ProjectCategoryInterface
         //
     }
 
-    public function getProjectCategory(): Collection
+    public function getProjectCategory()
     {
-        return ProjectCategory::all();
+        return ProjectCategory::select('id', 'name')->get();
     }
 
     public function postProjectCategory(array $data): ProjectCategory

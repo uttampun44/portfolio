@@ -18,7 +18,11 @@ class ProjectCategoryController extends Controller
      */
     public function index()
     {
-        //
+       $project_categories = $this->projectCategoryInterface->getProjectCategory();
+
+       return response()->json([
+           "project_categories" => $project_categories
+       ], 200);
     }
 
     /**

@@ -3,11 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\ProjectCategory;
-use Illuminate\Database\Eloquent\Collection;
 
 interface ProjectCategoryInterface
 {
-    public function getProjectCategory(): Collection;
+    public function getProjectCategory();
 
     public function postProjectCategory(array $data): ProjectCategory;
 

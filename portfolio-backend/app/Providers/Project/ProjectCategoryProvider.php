@@ -13,7 +13,7 @@ class ProjectCategoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ProjectCategoryRepository::class, ProjectCategoryInterface::class);
+        $this->app->bind(ProjectCategoryInterface::class, ProjectCategoryRepository::class);
     }
 
     /**
