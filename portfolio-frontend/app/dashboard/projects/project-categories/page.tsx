@@ -40,6 +40,7 @@ export default function ProjectCategory() {
         staleTime: 30000
     })
 
+    if (error instanceof Error) return <div>Error: {error.message}</div>;
 
     return (
          <AuthenticateNavLink>
@@ -67,7 +68,7 @@ export default function ProjectCategory() {
                                 <Cell>
                                   {(rowData: project_categories) => {   
                                     return (
-                                      <BiEditAlt className="cursor-pointer text-lg"/>
+                                      <BiEditAlt className="cursor-pointer text-lg" key={rowData.id}/>
                                     )
                                   }}
                                 </Cell>
