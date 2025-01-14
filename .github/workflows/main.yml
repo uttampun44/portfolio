@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./portfolio-frontend
     steps:
      # Step 1: Checkout the repository
       - name: Checkout repository
@@ -23,7 +26,7 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm install
-        working-directory: ../portfolio-frontend
+        working-directory: ./portfolio-frontend
 
       - name: Run build 
         run: npm run build
