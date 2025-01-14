@@ -17,19 +17,16 @@ jobs:
         working-directory: ./portfolio-frontend
     steps:
      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: github.com/actions/setup-node@v3
+      - uses: actions/checkout@v3
         # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: github.com/actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - name: Install dependencies
-        run: npm install
+      
+      - run: npm install
         working-directory: ./portfolio-frontend
 
-      - name: Run build 
-        run: npm run build
+      - run: npm run build
 
 
 
