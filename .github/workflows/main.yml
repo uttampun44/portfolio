@@ -1,1 +1,22 @@
+name: portfolio
+
+on:
+ push:
+   branches:
+     -main
+
+jobs:
+# frontend: setup-node, install-dependencies, build, test
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+       with:
+          node-version: '22'
+      -name: Install dependencies
+       run: npm install
+       working-directory: ./frontend
+      -name: frontend build
+      -run: npm run build
+      -run: npm run test
+
 
