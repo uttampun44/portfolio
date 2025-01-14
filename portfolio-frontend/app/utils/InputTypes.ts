@@ -1,4 +1,4 @@
-type inputType = "email" | "text" | "password" | "number" | "checkbox" | "radio"; 
+type inputType = "email" | "text" | "password" | "number" | "checkbox" | "radio" | "file"; 
 
 export interface InputProps {
     label?: string;

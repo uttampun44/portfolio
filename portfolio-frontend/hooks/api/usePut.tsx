@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useCallback} from "react";
 
 export default function usePut<T>(apiUrl:string){
    
-    const putData = async (): Promise<T | undefined> =>{
+    const putData = useCallback( async (): Promise<T | undefined> =>{
         try {
              const response = await axios.put<T>(apiUrl);
               if(response.status === 200){
@@ -16,11 +16,7 @@ export default function usePut<T>(apiUrl:string){
                 console.error('Unknown error occurred while fetching data.');
               }
         }
-      } 
+      }, []) 
 
-      useEffect(() =>{
-        putData()   
-      }, [apiUrl])
-      
       return { putData }    
 }

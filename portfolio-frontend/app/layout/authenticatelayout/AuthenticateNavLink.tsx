@@ -52,7 +52,7 @@ export default function AuthenticateNavLink<T>(props: childrenProps) {
 
   return (
     <React.Fragment>
-      <nav className="navlink bg-bg-dashboard flex justify-between items-center  ml-56 pl-14 p-5">
+      <nav className="navlink bg-white border-b-[1px] flex justify-between items-center  ml-56 pl-14 p-5">
         <div className="navlinkToogle flex gap-x-4">
           <GiHamburgerMenu className="w-6 h-6" /><h6 className={props.className?.title}>{props?.title}</h6>
         </div>

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useCallback} from "react";
 
 export default function useDelete<T>(apiUrl:string){
     
-     const deleteData = async () =>{
+     const deleteData = useCallback( async () =>{
         try {
             const response = await axios.delete<T>(apiUrl);
 
@@ -18,9 +18,6 @@ export default function useDelete<T>(apiUrl:string){
                 console.error('Unknown error occurred while fetching data.');
               }
         }
-     }
-   useEffect(() =>{
-       deleteData()
-    }, [apiUrl])
+     }, [])
     return { deleteData }
 }   

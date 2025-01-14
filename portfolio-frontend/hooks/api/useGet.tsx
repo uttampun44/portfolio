@@ -1,12 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useCallback} from "react";
 import { toast } from "sonner";
 
 
 export default function useGet<Type>(apiUrl:string){
     
-    const getData = async (): Promise<Type | undefined> =>{
+    const getData = useCallback(  async (): Promise<Type | undefined> =>{
         try {
 
             const token = Cookies.get("token");
@@ -34,11 +34,9 @@ export default function useGet<Type>(apiUrl:string){
                 toast.error("Unknown Error Occured While Fetching Data");
               }
         }
-      }
+      }, [])
 
-      useEffect(() =>{
-        getData()   
-      }, [apiUrl])
+     
       
       return { getData }
 }   
