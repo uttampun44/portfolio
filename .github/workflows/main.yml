@@ -7,11 +7,13 @@ on:
  pull_request:
    branches:
      -main
- workflow_dispatch:
-
+  # Allows you to run this multiple os
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest]
     defaults:
       run:
         working-directory: ./portfolio-frontend
