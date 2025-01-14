@@ -3,6 +3,7 @@
 use App\Http\Controllers\Authentication\AuthenticationController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Project\ProjectCategoryController;
+use App\Http\Controllers\Project\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboard']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/project-categories', [ProjectCategoryController::class, 'index']);
+    Route::resource('/projects', ProjectController::class)->only(['index']);
 });
