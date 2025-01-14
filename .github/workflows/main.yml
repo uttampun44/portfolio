@@ -18,11 +18,10 @@ jobs:
     steps:
      # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
-
+        uses: github.com/actions/setup-node@v3
         # Step 2: Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: github.com/actions/setup-node@v3
         with:
           node-version: '20'
       - name: Install dependencies
