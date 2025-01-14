@@ -15,23 +15,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
             matrix:
-                os: [ubuntu-latest, windows-latest]
+                os: [ubuntu-latest, windows-latest, macos-latest]
     defaults:
       run:
         working-directory: ./portfolio-frontend
     steps:
+
      # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
         # Step 2: Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
       - name: Install dependencies
         run: npm install
         working-directory: ./portfolio-frontend
-
+        
+        # Step 3: Run the build script
       - name: Run build 
         run: npm run build
 
