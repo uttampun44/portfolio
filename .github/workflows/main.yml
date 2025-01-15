@@ -28,10 +28,11 @@ jobs:
     # step 2: copy .env file from .env.example to .env
       - name: Copy .env file
         run:  |
+          cd portfolio-frontend
           if [ $RUNNER_OS == 'Windows' ]; then
-             copy ./portfolio-frontend/.env.example .env  # Windows uses 'copy'
+             copy .env.example .env  # Windows uses 'copy'
           else
-             cp ./portfolio-frontend/.env.example .env  # Other OSs use 'cp'
+          cp .env.example .env  # Other OSs use 'cp'
           fi
         
         # Step 3: Set up Node.js
