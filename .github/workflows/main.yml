@@ -25,17 +25,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-    # step 2: copy .env file from .env.example to .env
+   
+      # Step 2: List directory contents (for debugging)
+      - name: List directory contents (for debugging)
+        run: ls -la ./portfolio/portfolio-frontend  # Make sure the frontend directory has the .env.example file
+
+      # Step 3: Copy .env file
       - name: Copy .env file
-        run:  |
-          cd portfolio-frontend
+        run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-             copy .env.example .env  # Windows uses 'copy'
+            copy .env.example .env  # Windows uses 'copy'
           else
-          cp .env.example .env  # Other OSs use 'cp'
+            cp .env.example .env  # Other OSs use 'cp'
           fi
         
-        # Step 3: Set up Node.js
+        # Step 4: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -44,7 +48,7 @@ jobs:
         run: npm install
         working-directory: ./portfolio-frontend
         
-        # Step 4: Run the build script
+        # Step 5: Run the build script
       - name: Run build 
         run: npm run build
 
