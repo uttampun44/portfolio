@@ -1,8 +1,5 @@
 <!-- Fullstack Project -->
 
-<img src="https://github.com/uttam-dev/portfolio/blob/main/portfolio-frontend/public/images/portfolio-logo.png" alt="portfolio logo" width="200" height="200">
-<br>
-
 <!-- About the project -->
 ### About the project
 This is a portfolio website that showcases work and skills. It is built using Next.js and laravel mysql.
