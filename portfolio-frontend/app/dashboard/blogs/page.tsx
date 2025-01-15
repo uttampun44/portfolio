@@ -38,7 +38,6 @@ export default function Blogs() {
         }
     });
 
-    const url = process.env.NEXT_PUBLIC_API_URL;
 
     const handleClick = () => {
         setIsOpen(true);
