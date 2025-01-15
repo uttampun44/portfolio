@@ -25,7 +25,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-        # Step 2: Set up Node.js
+    # step 2: copy .env file from .env.example to .env
+      - name: Copy .env file
+        run:  |
+          if [ $RUNNER_OS == 'Windows' ]; then
+             copy ./portfolio-frontend/.env.example ./portfolio-frontend/.env  # Windows uses 'copy'
+          else
+             cp ./portfolio-frontend/.env.example ./portfolio-frontend/.env  # Other OSs use 'cp'
+          fi
+        
+        # Step 3: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -34,7 +43,7 @@ jobs:
         run: npm install
         working-directory: ./portfolio-frontend
         
-        # Step 3: Run the build script
+        # Step 4: Run the build script
       - name: Run build 
         run: npm run build
 

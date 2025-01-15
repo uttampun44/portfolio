@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  portfolio-frontend:
+    build:
+      context: ./portfolio-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./portfolio-frontend:/app
+  
