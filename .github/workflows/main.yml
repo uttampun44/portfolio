@@ -28,7 +28,7 @@ jobs:
    
       # Step 2: List directory contents (for debugging)
       - name: List directory contents (for debugging)
-        run: ls -la ./portfolio/portfolio-frontend  # Make sure the frontend directory has the .env.example file
+        run: ls   # Make sure the frontend directory has the .env.example file
 
       # Step 3: Copy .env file
       - name: Copy .env file
