@@ -1,3 +1,4 @@
+    "use client"
 import { useMutation } from "@tanstack/react-query";
 import Button from "components/Button";
 import usePost from "hooks/api/usePost";

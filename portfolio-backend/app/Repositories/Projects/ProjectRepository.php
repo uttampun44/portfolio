@@ -20,18 +20,17 @@ class ProjectRepository implements ProjectInterface
     public function getProjects()
     {
         $project_categories = ProjectCategory::select('id', 'name')->get();
-        $projects =  Project::select('id', 'name', 'imgae', 'link')->get();
-
-        return [
+        return response()->json( [
             'project_categories' => $project_categories,
-            'projects' => $projects
-        ];
+        ], 200);
     }
 
     public function postProjects(array $data):Project
     {
-        if(isset($data['image']) && $data['image'] instanceof UploadedFile){
-            $data['image'] = uploadImage($data['image']);
+      
+      
+        if(isset($data['image']) && $data['image']){
+            $data['image'] = $data['image']->storeAs('public/images', 'projects');
         }
 
         return $this->project->create($data);

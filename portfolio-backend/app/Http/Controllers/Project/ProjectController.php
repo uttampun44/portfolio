@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Project;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\ProjectRequest;
 use App\Repositories\ProjectInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -31,9 +33,16 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+       
+        try {
+          
+          return response()->json($this->projectInterface->postProjects($request->all()), 201);
+        } catch (\Throwable $th) {
+            Log::error("error" .$th->getMessage());
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
     }
 
     /**
