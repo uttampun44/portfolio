@@ -29,7 +29,7 @@ type blogs = {
 type blogCategoryResponse = {
     blogs: blogs[]
 }
-export default function () {
+export default function blogCategoryIndex() {
 
     const token = Cookies.get("token")
     const { isOpen, setIsOpen } = useToggle();
