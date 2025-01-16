@@ -54,7 +54,7 @@ jobs:
         
         # Step 2 copy .env
       - name: Copy.env
-        uses: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
         
 
         #step 3 install php
