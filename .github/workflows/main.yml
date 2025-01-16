@@ -73,12 +73,7 @@ jobs:
         # step 5 geneate key
       - name: Generate key
         run: php artisan key:generate
-      
-       # step 6 create database
-      - name: create database
-        run: |
-             mkdir -p database
-             touch database/database.mysql  
+    
 
         # step 7 migrations
       - name: Run migrations
