@@ -34,25 +34,37 @@ export const SidebarData:SideNav[]   = [
     },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
     {   id:5,
         name: "Blogs",
-        href: "/dashboard/blogs",
+        href: "#",
+        subNav:[
+            {
+                id: 6,
+                name: "Blog Category",
+                href: "/dashboard/blogs/blog-categories"
+            },
+            {
+                id: 7,
+                name: "Blogs",
+                href: "/dashboard/blogs",
+            }
+        ]
     },
   
-    {   id:6,
+    {   id:8,
         name: "Settings",
         href: "#",
         subNav:[
             {
-                id:7,
+                id:9,
                 name: "Profile",
                 href: "/dashboard/settings/profile",
             },
             {
-                id:8,
+                id:10,
                 name: "Roles",
                 href: "/dashboard/settings/roles",
             },
             {
-                id:8,
+                id:10,
                 name: "Backup",
                 href: "/dashboard/settings/back-up",
             }

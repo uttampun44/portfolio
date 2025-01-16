@@ -15,10 +15,10 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        $blogs = BlogCategory::select('id', 'name')->get();
+       
          
         return response()->json([
-            'data' => $blogs,
+            'blogs' => BlogCategory::select('id', 'name')->get(),
         ], 200);
     }
 
@@ -97,6 +97,16 @@ class BlogCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $blog_category = BlogCategory::find($id);
+        if ($blog_category) {
+            $blog_category->delete();
+            return response()->json([
+                'message' => 'Blog Category deleted successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Blog Category not found'
+            ], 404);
+        }
     }
 }

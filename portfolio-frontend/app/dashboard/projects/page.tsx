@@ -81,7 +81,6 @@ export default function Projects() {
 
     const fetchProjects = async (): Promise<projectCategoryResponse | undefined> => {
         const response = await getData();
-        console.log(response)
         setProjectCategory(response);
         return response;
     }

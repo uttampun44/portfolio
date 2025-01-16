@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/project-categories', [ProjectCategoryController::class, 'index']);
     Route::resource('/projects', ProjectController::class)->only(['index', 'store']);
-    Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store']);
+    Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
 });

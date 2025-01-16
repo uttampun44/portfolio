@@ -5,6 +5,7 @@ import useGet from "hooks/api/useGet";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 type usersResponse = {
@@ -20,6 +21,8 @@ export default function Dashboard() {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
 
+  console.log(url);
+
   const { getData } = useGet<usersResponse | undefined>(`${url}/api/dashboard`);
   const [users, setUsers] = useState<usersResponse | undefined>(undefined);
 
@@ -27,6 +30,7 @@ export default function Dashboard() {
   const fetchUsers = async (): Promise<usersResponse | undefined> => {
     const response = await getData();
     setUsers(response);
+    toast.success("Successfully fetched users");
     return response;
   }
 

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useCallback} from "react";
-import { toast } from "sonner";
 
 type methodType = "POST" | "PUT";
 
@@ -25,18 +24,19 @@ export default function usePost<Type>(apiUrl:string){
                headers:{
                   "Content-Type": "application/json",
                   ...customHeaders
-               }
+               },
+               ...customHeaders
              })
 
              if(response.status === 200){
-                toast.success("Data Post Successfully");
+          
                 return response.data
              }
         } catch (error) {
             if (error instanceof Error) {
-               toast.error("Error Occured While Posting Data");
+               console.log(error.message);
               } else {
-                toast.error("Unknown Error Occured While Posting Data");
+                console.log(error);
               }
         }
    }, [apiUrl])
