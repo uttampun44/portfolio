@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Authentication\AuthenticationController;
+use App\Http\Controllers\Blog\BlogCategory;
+use App\Http\Controllers\Blog\BlogCategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Project\ProjectCategoryController;
 use App\Http\Controllers\Project\ProjectController;
@@ -19,4 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/project-categories', [ProjectCategoryController::class, 'index']);
     Route::resource('/projects', ProjectController::class)->only(['index', 'store']);
+    Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store']);
 });
