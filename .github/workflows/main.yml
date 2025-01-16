@@ -54,8 +54,10 @@ jobs:
         
         # Step 2 copy .env
       - name: Copy.env
-        run: php "file_exists('.env') || copy('.env.example', '.env');"
-        
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
        # Step 3 Install PHP and dependencies os
       - name: Install PHP and dependencies (Ubuntu)
         if: runner.os == 'Linux'
