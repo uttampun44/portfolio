@@ -55,6 +55,7 @@ jobs:
         # Step 2 copy .env
       - name: Copy.env
         uses: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        
 
         #step 3 install php
       - name: Install PHP
@@ -72,20 +73,26 @@ jobs:
         # step 5 geneate key
       - name: Generate key
         run: php artisan key:generate
+      
+       # step 6 create database
+      - name: create database
+        run: |
+             mkdir -p database
+             touch database/database.mysql  
 
-        # step 5 migrations
+        # step 7 migrations
       - name: Run migrations
         run: php artisan migrate --seed
 
-        #step 7 storage link
+        #step 8 storage link
       - name: Storage link
         run: php artisan storage:link
 
-        #step 8 permission
+        #step 9 permission
       - name: Permission
         run: chmod -R 777 storage bootstrap/cache
 
-      # Step 9 run tests
+      # Step 10 run tests
       - name: Run tests
         run: php artisan test
 
