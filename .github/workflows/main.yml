@@ -82,7 +82,7 @@ jobs:
 
         # step 7 migrations
       - name: Run migrations
-        run: php artisan migrate --seed
+        run: php artisan migrate 
 
         #step 8 storage link
       - name: Storage link
