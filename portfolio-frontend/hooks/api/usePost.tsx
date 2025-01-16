@@ -21,6 +21,8 @@ export default function usePost<Type>(apiUrl:string){
              const response = await axios.post<postData<Type>>(apiUrl, payload,{
                
                // headers it will take atomatically post data as bearer token
+               //  just pass the token in the header 
+               // Authorization : `Bearer ${token}` for example not need to define headers
                headers:{
                   "Content-Type": "application/json",
                   ...customHeaders

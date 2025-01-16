@@ -51,10 +51,7 @@ export default function BlogCategoryIndex() {
 
     const mutate = useMutation({
         mutationFn: (data: blogCategoryForm) => postData(data, {
-            headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
-            }
         }),
         onSuccess: (response) => {
             if (!response) return
