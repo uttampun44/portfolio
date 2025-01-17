@@ -118,8 +118,8 @@ export default function Blogs({ placeholder }: { placeholder: string }) {
                                                 value={content}
                                                 config={config}
                                                 
-                                                onBlur={(newContent: string)  => setContent(newContent)}
-                                                onChange={(content: string) => {
+                                                onBlur={(newContent)  => setContent(newContent)}
+                                                onChange={(content) => {
                                                     console.log(content)
                                                  }}
                                             />
