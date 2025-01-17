@@ -59,12 +59,12 @@ export default function AuthenticateNavLink<T>(props: childrenProps) {
           <GiHamburgerMenu className="w-6 h-6" /><h6 className={props.className?.title}>{props?.title}</h6> 👋🏼,
         </div>
 
-        <div className="logout flex gap-x-1 items-center"> 
-          <Icon iconName="logout" />
+        <div className="logout flex items-center"> 
+          <Icon iconName="logout" className="w-5 h-5" />
           <form onSubmit={handleSubmit(onSubmit)}>
             <Button onClick={() => {
               router.push("/login")
-            }} className="text-lg font-medium">Logout</Button>
+            }} className="text-lg font-medium text-backend-primary-text-color">Logout</Button>
           </form>
         </div>
       </nav>
