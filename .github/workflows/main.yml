@@ -11,7 +11,7 @@ on:
 
   # Allows you to run this multiple os
 jobs:
-  build:
+  frontend:
     runs-on: ${{ matrix.os }}
     strategy:
             matrix:
@@ -37,6 +37,54 @@ jobs:
         # Step 3: Run the build script
       - name: Run build 
         run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./portfolio-backend
+
+    timeout-minutes: 30
+    steps:
+
+     # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+        # Step 2 copy .env
+      - name: Copy.env
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+       # Step 3 Install PHP and dependencies os
+
+      - name: Install PHP 8.2 and dependencies (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          sudo add-apt-repository ppa:ondrej/php -y
+          sudo apt update
+          sudo apt install -y php8.2 php8.2-cli php8.2-fpm php8.2-mbstring php8.2-xml php8.2-mysql php8.2-pgsql php8.2-gd php8.2-curl php8.2-zip php8.2-bcmath php8.2-soap php8.2-intl
+
+       # step 4 install dependencies
+      - name: Install composer dependencies
+        run: composer install -n --prefer-dist
+      
+        # step 5 geneate key
+      - name: Generate key
+        run: php artisan key:generate
+    
+        #step 8 storage link
+      - name: Storage link
+        run: php artisan storage:link
+
+        #step 9 permission
+      - name: Permission
+        run: chmod -R 777 storage bootstrap/cache
+
+      # Step 10 run tests
+      - name: Run tests
+        run: php artisan test
 
 
 
