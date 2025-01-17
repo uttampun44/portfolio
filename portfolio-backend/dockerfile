@@ -1,7 +1,7 @@
-#base image php:8.2-apache
+# Base image
 FROM php:8.2-apache
 
-#working directory
+# Set working directory
 WORKDIR /var/www/html
 
 # Install system dependencies and PHP extensions
@@ -15,19 +15,21 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-#installing composer globally
+# Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Copy application source code
 COPY . .
 
-#permission for localstorage and other folders e.g. bootstrap/cache and localstorage
+# Set permissions for storage and bootstrap/cache directories
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-#run composer install
+# Install PHP dependencies (no-dev for production)
 RUN composer install --no-dev --no-interaction --optimize-autoloader
 
-EXPOSE 8000   
+# Expose Laravel's development server port
+EXPOSE 8000
 
-#run command to start project in development mode
-CMD ["php","artisan","serve", "--host=0.0.0.0", "--port=8000"]
+# Command to run Laravel server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

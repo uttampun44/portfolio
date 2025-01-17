@@ -1,5 +1,5 @@
 #node version
-FROM node:22.0.0-alpine3.17
+FROM node:20.0.0-alpine3.17
 
 # Create app directory
 WORKDIR /app
