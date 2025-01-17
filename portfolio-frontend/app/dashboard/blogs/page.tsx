@@ -14,7 +14,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import React, { useMemo, useRef, useState } from "react";
 import JoditEditor from 'jodit-react';
-
+import dynamic from 'next/dynamic';
 
 
 type blogPost = {
@@ -27,6 +27,8 @@ type blogPost = {
 
 
 export default function Blogs() {
+
+    const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
@@ -116,11 +118,9 @@ export default function Blogs() {
                                                 ref={editor}
                                                 value={content}
                                                 config={config}
-                                                
-                                                onBlur={(newContent)  => setContent(newContent)}
-                                                onChange={(content) => {
-                                                    console.log(content)
-                                                 }}
+                                                tabIndex={1}
+                                                onBlur={(newContent) => setContent(newContent)} 
+                                                onChange={(newContent) => setContent(newContent)}
                                             />
 
                                             <div className="button my-2">
