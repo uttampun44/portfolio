@@ -118,7 +118,6 @@ export default function Blogs() {
                                                 ref={editor}
                                                 value={content}
                                                 config={config}
-                                                tabIndex={1}
                                                 onBlur={(newContent) => setContent(newContent)} 
                                                 onChange={(newContent) => setContent(newContent)}
                                             />
