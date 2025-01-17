@@ -10,18 +10,12 @@ import useToggle from "hooks/useToggle";
 import Cookies from "js-cookie";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
-import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
+import React, { useMemo, useRef, useState } from "react";
+import JoditEditor from 'jodit-react';
 
-import { useState } from 'react';
-import {
-    BtnBold,
-    BtnItalic,
-    Editor,
-    EditorProvider,
-    Toolbar
-} from 'react-simple-wysiwyg';
+
 
 type blogPost = {
     title: string,
@@ -32,20 +26,24 @@ type blogPost = {
 }
 
 
-export default function Blogs() {
-
-    const [value, setValue] = useState('simple text');
-
-
-    function onChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-        setValue(e.target.value);
-    }
-    
-
+export default function Blogs({ placeholder }: { placeholder?: string }) {
 
 
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
+
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+
+    const config = useMemo(
+        () => ({
+            readonly: false,
+            placeholder: placeholder || 'Start typings...',
+        }),
+        [placeholder]
+    );
+    
+
 
     const methods = useForm<blogPost>({
         defaultValues: {
@@ -66,6 +64,7 @@ export default function Blogs() {
         console.log(data);
     }
 
+    
     return <div>
         {
             token && (
@@ -76,7 +75,7 @@ export default function Blogs() {
                             <React.Fragment>
                                 <Overlary />
                                 <Modal className={{
-                                    modalContainer: "max-w-md w-full mx-auto bg-white rounded-md p-5 min-h-fit translate-y-1/2"
+                                    modalContainer: "max-w-lg w-full mx-auto bg-white rounded-md p-5 left-0 top-0 min-h-max translate-y-1/2"
                                 }}>
                                     <Label name="Blogs" htmlFor="name" className="text-lg font-bold" />
                                     <FormProvider {...methods}>
@@ -101,16 +100,8 @@ export default function Blogs() {
                                                     label: "text-backend-primary-text-color"
                                                 }}
                                             />
-                                            <Input
-                                                type="text"
-
-                                                name="Tags"
-                                                placeholder="Tags"
-                                                className={{
-                                                    input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
-                                                    label: "text-backend-primary-text-color"
-                                                }}
-                                            />
+                                            
+                                            
                                             <Input
                                                 type="file"
 
@@ -121,14 +112,17 @@ export default function Blogs() {
                                                     label: "text-backend-primary-text-color"
                                                 }}
                                             />
-                                            <EditorProvider>
-                                                <Editor value={value} onChange={onChange}>
-                                                    <Toolbar>
-                                                        <BtnBold />
-                                                        <BtnItalic />
-                                                    </Toolbar>
-                                                </Editor>
-                                            </EditorProvider>
+
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={content}
+                                                config={config}
+                                                
+                                                onBlur={(newContent: string)  => setContent(newContent)}
+                                                onChange={(content: string) => {
+                                                    console.log(content)
+                                                 }}
+                                            />
 
                                             <div className="button my-2">
                                                 <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">Submit</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
@@ -149,7 +143,10 @@ export default function Blogs() {
                             </div>
 
                             <div className="tableBox">
-                                <Table>
+                                <Table 
+                                 cellBordered
+                                 bordered
+                                >
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">ID</HeaderCell>
                                         <Cell>1</Cell>
