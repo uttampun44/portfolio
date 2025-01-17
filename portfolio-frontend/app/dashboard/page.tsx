@@ -21,8 +21,6 @@ export default function Dashboard() {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
 
-  console.log(url);
-
   const { getData } = useGet<usersResponse | undefined>(`${url}/api/dashboard`);
   const [users, setUsers] = useState<usersResponse | undefined>(undefined);
 
@@ -52,7 +50,7 @@ export default function Dashboard() {
   return (
     <>
       <AuthenticateSidebar />
-      <AuthenticateNavLink title={users?.auth_user?.name} className={{title: "text-lg font-semibold capitalize"}} >
+      <AuthenticateNavLink title={`Hello ${users?.auth_user?.name} !`} className={{title: "text-lg font-semibold capitalize"}} > 
         <div className="dashboardContainer min-h-full  w-full bg-bg-dashboard h-screen lg:p-10 ">
           <div className="dashboardBox ml-64 mr-0 ">
 

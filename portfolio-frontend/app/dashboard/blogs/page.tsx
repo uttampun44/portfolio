@@ -138,7 +138,7 @@ export default function Blogs({ placeholder }: { placeholder: string }) {
                     <div className="blogsContainer min-h-full  w-full bg-bg-dashboard h-screen lg:p-10 ">
                         <div className="blogBox ml-64 mr-0 bg-white rounded-md p-5">
 
-                            <div className="row flex justify-between items-center text-backend-primary-text-color">
+                            <div className="row flex justify-between items-center text-backend-primary-text-color mb-2">
                                 <Title title="Blogs" /> <Button onClick={handleClick} className="bg-bg-backend-secondary-color p-5 rounded-md text-white font-medium">Create Blog</Button>
                             </div>
 

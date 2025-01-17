@@ -1,6 +1,7 @@
-    "use client"
+"use client"
 import { useMutation } from "@tanstack/react-query";
 import Button from "components/Button";
+import Icon from "components/Icon";
 import usePost from "hooks/api/usePost";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -55,13 +56,17 @@ export default function AuthenticateNavLink<T>(props: childrenProps) {
     <React.Fragment>
       <nav className="navlink bg-white border-b-[1px] flex justify-between items-center  ml-56 pl-14 p-5">
         <div className="navlinkToogle flex gap-x-4">
-          <GiHamburgerMenu className="w-6 h-6" /><h6 className={props.className?.title}>{props?.title}</h6>
+          <GiHamburgerMenu className="w-6 h-6" /><h6 className={props.className?.title}>{props?.title}</h6> 👋🏼,
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Button onClick={() => {
-            router.push("/login")
-          }} className="text-lg font-medium">Logout</Button>
-        </form>
+
+        <div className="logout flex gap-x-1 items-center"> 
+          <Icon iconName="logout" />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Button onClick={() => {
+              router.push("/login")
+            }} className="text-lg font-medium">Logout</Button>
+          </form>
+        </div>
       </nav>
       <main>{props.children}</main>
     </React.Fragment>
