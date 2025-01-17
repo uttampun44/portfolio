@@ -14,6 +14,15 @@ import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 
+import { useState } from 'react';
+import {
+    BtnBold,
+    BtnItalic,
+    Editor,
+    EditorProvider,
+    Toolbar
+} from 'react-simple-wysiwyg';
+
 type blogPost = {
     title: string,
     content: string,
@@ -24,6 +33,15 @@ type blogPost = {
 
 
 export default function Blogs() {
+
+    const [value, setValue] = useState('simple text');
+
+
+    function onChange(e: any) {
+        setValue(e.target.value);
+    }
+
+
 
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
@@ -86,7 +104,7 @@ export default function Blogs() {
                                                 type="text"
 
                                                 name="Tags"
-                                                placeholder="Semi Title"
+                                                placeholder="Tags"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
@@ -102,16 +120,15 @@ export default function Blogs() {
                                                     label: "text-backend-primary-text-color"
                                                 }}
                                             />
-                                            <Input
-                                                type="text"
+                                            <EditorProvider>
+                                                <Editor value={value} onChange={onChange}>
+                                                    <Toolbar>
+                                                        <BtnBold />
+                                                        <BtnItalic />
+                                                    </Toolbar>
+                                                </Editor>
+                                            </EditorProvider>
 
-                                                name="name"
-                                                placeholder="Detail"
-                                                className={{
-                                                    input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
-                                                    label: "text-backend-primary-text-color"
-                                                }}
-                                            />
                                             <div className="button my-2">
                                                 <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">Submit</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
                                                     setIsOpen(false);
