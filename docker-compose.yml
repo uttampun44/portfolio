@@ -20,17 +20,20 @@ services:
       context: ./portfolio-backend
       dockerfile: Dockerfile
       dockerignore: .dockerignore
+    env_file:
+      - ./portfolio-backend/.env
     ports:
       - "8000:8000"
     depends_on:
       - db  # Ensures db service is started before backend
+  db:
+    image: mysql:8.0  
     environment:
-      DB_CONNECTION: ${DB_CONNECTION}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      - MYSQL_HOST=${DB_HOST}
+      - MYSQL_PORT=${DB_PORT}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./portfolio-backend:/var/www/html
     ports:

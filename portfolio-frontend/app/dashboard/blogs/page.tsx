@@ -28,14 +28,13 @@ type blogPost = {
 
 export default function Blogs() {
 
-               "use client"
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
 
     const editor = useRef(null);
     const [content, setContent] = useState('');
 
-    const config = useMemo(
+    const config: Record<string, {}> = useMemo(
         () => ({
             readonly: false,
             placeholder: 'Start typings...',
