@@ -38,7 +38,7 @@ export default function Blogs({ placeholder }: { placeholder: string }) {
     const config = useMemo(
         () => ({
             readonly: false,
-          
+            placeholder: 'Start typings...',
         }),
         [placeholder]
     );
