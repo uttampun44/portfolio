@@ -26,7 +26,7 @@ type blogPost = {
 }
 
 
-export default function Blogs({ placeholder }: { placeholder?: string }) {
+export default function Blogs({ placeholder }: { placeholder: string }) {
 
 
     const token = Cookies.get("token");
