@@ -1,0 +1,33 @@
+#base image php:8.2-apache
+FROM php:8.2-apache
+
+#working directory
+WORKDIR /var/www/html
+
+# Install system dependencies and PHP extensions
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    && docker-php-ext-install pdo_mysql zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+#installing composer globally
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY . .
+
+#permission for localstorage and other folders e.g. bootstrap/cache and localstorage
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+#run composer install
+RUN composer install --no-dev --no-interaction --optimize-autoloader
+
+EXPOSE 8000   
+
+#run command to start project in development mode
+CMD ["php","artisan","serve", "--host=0.0.0.0", "--port=8000"]

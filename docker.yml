@@ -1,12 +1,59 @@
 version: "3.9"
 
 services:
+  # Frontend project running on port 3000
   portfolio-frontend:
     build:
       context: ./portfolio-frontend
       dockerfile: Dockerfile
+      dockerignore: .dockerignore
     ports:
       - "3000:3000"
     volumes:
       - ./portfolio-frontend:/app
-  
+    networks:
+      - portfolio-network
+
+  # Backend project running on port 8000
+  portfolio-backend:
+    build:
+      context: ./portfolio-backend
+      dockerfile: Dockerfile
+      dockerignore: .dockerignore
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db  # Ensures db service is started before backend
+    environment:
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./portfolio-backend:/var/www/html
+    networks:
+      - portfolio-network
+
+  # Database service (MySQL)
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"  # Exposes MySQL port to host
+    networks:
+      - portfolio-network
+
+# Defines volumes for persisting data
+volumes:
+  dbdata:
+
+# Defines network for service communication
+networks:
+  portfolio-network:
