@@ -26,7 +26,7 @@ type blogPost = {
 }
 
 
-export default function Blogs({ placeholder }: { placeholder: string }) {
+export default function Blogs() {
 
 
     const token = Cookies.get("token");
@@ -40,7 +40,7 @@ export default function Blogs({ placeholder }: { placeholder: string }) {
             readonly: false,
             placeholder: 'Start typings...',
         }),
-        [placeholder]
+        []
     );
     
 
