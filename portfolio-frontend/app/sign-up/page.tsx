@@ -108,7 +108,7 @@ export default function SignUp() {
             </form>
           </FormProvider>
 
-          <div className="or flex items-center gap-x-1 my-10">
+          <div className="or flex items-center gap-x-1 my-10 max-md:my-5">
             <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
           </div>
           <div className="signup flex justify-between gap-x-2 max-md:grid max-md:grid-cols-1 max-md:gap-y-5">

@@ -35,7 +35,7 @@ export default function Project() {
                                 <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
                                             <h6 className="text-primary-text-color font-poppins text-lg font-">React / Laravel</h6>
@@ -48,7 +48,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
                                             <h6 className="text-primary-text-color font-poppins text-lg font-">React / Node</h6>
@@ -62,7 +62,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
                                             <h6 className="text-primary-text-color font-poppins text-lg font-">React</h6>
@@ -75,7 +75,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
                                             <h6 className="text-primary-text-color font-poppins text-lg font-">Laravel</h6>
@@ -95,7 +95,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
                                             <h6 className="text-primary-text-color font-poppins text-lg font-">React / Laravel</h6>
@@ -108,7 +108,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
                                             <h6 className="text-primary-text-color text-lg font-">React / Node</h6>
@@ -122,7 +122,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md cursor-pointer">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100}  layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
                                             <h6 className="text-primary-text-color text-lg font-">React</h6>
@@ -140,7 +140,7 @@ export default function Project() {
                                     <Card className=" px-4 rounded-md">
                                         <div className="image bg-bg-card">
 
-                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} />
+                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={300} height={300} />
                                         </div>
                                         <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
                                             <h6 className="text-primary-text-color  text-lg font-">Laravel</h6>

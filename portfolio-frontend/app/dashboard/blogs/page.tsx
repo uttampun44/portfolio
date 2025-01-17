@@ -37,9 +37,10 @@ export default function Blogs() {
     const [value, setValue] = useState('simple text');
 
 
-    function onChange(e: any) {
+    function onChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
         setValue(e.target.value);
     }
+    
 
 
 

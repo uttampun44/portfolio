@@ -40,6 +40,8 @@ export default function Home() {
                     className="w-full h-auto float-right object-contain"
                     quality={100}
                     priority={true}
+                    layout="responsive" width={300} height={300}
+              
                   />
                    </div>
                   <div className="iconRow flex align-center justify-center text-xl  gap-x-4 my-4">
