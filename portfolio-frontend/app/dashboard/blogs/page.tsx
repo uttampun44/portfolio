@@ -26,9 +26,9 @@ type blogPost = {
 }
 
 
-const  Blogs = ({ placeholder }: { placeholder: string }) => {
+export default function Blogs() {
 
-
+               "use client"
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
 
@@ -40,7 +40,7 @@ const  Blogs = ({ placeholder }: { placeholder: string }) => {
             readonly: false,
             placeholder: 'Start typings...',
         }),
-        [placeholder]
+        []
     );
     
 
@@ -184,5 +184,3 @@ const  Blogs = ({ placeholder }: { placeholder: string }) => {
         }
     </div>;
 }
-
-export default Blogs;
