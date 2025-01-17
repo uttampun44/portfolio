@@ -26,7 +26,7 @@ type blogPost = {
 }
 
 
-export default function Blogs({ placeholder }: { placeholder: string }) {
+export default function Blogs() {
 
 
     const token = Cookies.get("token");
@@ -38,9 +38,9 @@ export default function Blogs({ placeholder }: { placeholder: string }) {
     const config = useMemo(
         () => ({
             readonly: false,
-            placeholder: placeholder || 'Start typings...',
+          
         }),
-        [placeholder]
+        []
     );
     
 
