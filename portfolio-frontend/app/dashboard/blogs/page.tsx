@@ -10,18 +10,17 @@ import useToggle from "hooks/useToggle";
 import Cookies from "js-cookie";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
-import React, { useMemo, useRef, useState } from "react";
-import JoditEditor from 'jodit-react';
+import React, { useMemo, useRef} from "react";
 import dynamic from 'next/dynamic';
 
 
 type blogPost = {
     title: string,
+    semi_title: string,
     content: string,
     image: string,
-    link: string,
     blog_category_id: number,
 }
 
@@ -34,8 +33,7 @@ export default function Blogs() {
     const { isOpen, setIsOpen, } = useToggle();
 
     const editor = useRef(null);
-    const [content, setContent] = useState('');
-
+   
     const config: Record<string, {}> = useMemo(
         () => ({
             readonly: false,
@@ -51,7 +49,6 @@ export default function Blogs() {
             title: "",
             content: "",
             image: "",
-            link: "",
             blog_category_id: 0
         }
     });
@@ -83,8 +80,8 @@ export default function Blogs() {
                                         <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-y-2 w-full mt-2">
                                             <Input
                                                 type="text"
-
-                                                name="name"
+                                                {...methods.register("title")}
+                                             
                                                 placeholder="Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -93,20 +90,22 @@ export default function Blogs() {
                                             />
                                             <Input
                                                 type="text"
+                                                {...methods.register("semi_title")}
 
-                                                name="name"
                                                 placeholder="Semi Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
                                             />
+
+                                            
                                             
                                             
                                             <Input
                                                 type="file"
-
-                                                name="name"
+                                                 {...methods.register("image")}
+                                               
                                                 placeholder="Semi Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -114,13 +113,24 @@ export default function Blogs() {
                                                 }}
                                             />
 
-                                            <JoditEditor
-                                                ref={editor}
-                                                value={content}
-                                                config={config}
-                                                onBlur={(newContent) => setContent(newContent)} 
-                                                onChange={(newContent) => setContent(newContent)}
-                                            />
+                                          <Controller 
+
+                                            control={methods.control}
+                                            name="content"
+                                            render={({ field }) => (
+                                                <JoditEditor
+                                                    ref={editor}
+                                                    value={field.value}
+                                                    config={config}
+                                                    onBlur={(newContent) => field.onChange(newContent)} 
+                                                    onChange={(newContent) => field.onChange(newContent)}
+                                                />
+                                            )}  
+                                          />
+
+                                          <select className="my-2 border-[1px] border-backend-primary-text-color p-2 rounded-md" name="blog_category_id">
+                                              <option>Blog Category</option>
+                                          </select>
 
                                             <div className="button my-2">
                                                 <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">Submit</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
