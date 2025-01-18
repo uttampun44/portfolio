@@ -145,7 +145,8 @@ export default function BlogCategoryIndex() {
                                     loading={isLoading}
                                     cellBordered
                                     bordered
-                                
+                                  height={innerHeight - 300}
+                                  loadAnimation={true}
                                 >
                                     <Column>
                                         <HeaderCell align="center" >S.No</HeaderCell>

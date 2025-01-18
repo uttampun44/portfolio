@@ -12,16 +12,42 @@ import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
-import React, { useMemo, useRef} from "react";
+import React, { useMemo, useRef, useState } from "react";
 import dynamic from 'next/dynamic';
+import useGet from "hooks/api/useGet";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import usePost from "hooks/api/usePost";
+import { toast } from "sonner";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
 
 
 type blogPost = {
     title: string,
-    semi_title: string,
+    mini_title: string,
+    tags: string,
     content: string,
     image: string,
+    blog_category_id: string,
+}
+
+type blogCategories = {
+    id: number,
+    name: string,
+}
+
+type postResponse = {
+    id: number,
+    title: string,
+    mini_title: string,
+    tags: string,
+    content: string,
+    image: string,  
     blog_category_id: number,
+}
+
+type blogCategoryResponse = {
+    posts: postResponse[],
+    blog_categories: blogCategories[]
 }
 
 
@@ -29,11 +55,17 @@ export default function Blogs() {
 
     const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
 
     const editor = useRef(null);
-   
+
+    const [blogCategory, setBlogCategory] = useState<blogCategoryResponse | undefined>(undefined);
+
+
+
     const config: Record<string, {}> = useMemo(
         () => ({
             readonly: false,
@@ -41,17 +73,34 @@ export default function Blogs() {
         }),
         []
     );
-    
+
 
 
     const methods = useForm<blogPost>({
         defaultValues: {
             title: "",
+            mini_title: "",
+            tags: "",
             content: "",
             image: "",
-            blog_category_id: 0
+            blog_category_id: ""
         }
     });
+
+    const { postData } = usePost<blogPost>(`${url}/api/posts`);
+
+    const mutation = useMutation({
+        mutationFn: (data: blogPost) => postData(data, {
+            Authorization: `Bearer ${token}`,
+        }),
+        onSuccess: (response) => {
+            if (!response?.data) return;
+            toast.success("Blog Created");
+        },
+        onError: () => {
+            toast.error("Blog Creation Failed");
+        }
+    })
 
 
     const handleClick = () => {
@@ -59,10 +108,34 @@ export default function Blogs() {
     };
 
     const onSubmit: SubmitHandler<blogPost> = async (data) => {
-        console.log(data);
+        try {
+            mutation.mutate(data);
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error fetching data:${error.message}`);
+            } else {
+                toast.error('Unknown error occurred while fetching data.');
+            }
+        }
     }
 
-    
+
+    const { getData } = useGet<blogCategoryResponse | undefined>(`${url}/api/posts`);
+
+    const fetchBlogCategories = async (): Promise<blogCategoryResponse | undefined> => {
+        const response = await getData();
+        setBlogCategory(response);
+        return response;
+    }
+
+   const {isLoading} =  useQuery({
+        queryFn: fetchBlogCategories,
+        queryKey: ["blog_categories"],
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+    })
+
+  
     return <div>
         {
             token && (
@@ -73,7 +146,7 @@ export default function Blogs() {
                             <React.Fragment>
                                 <Overlary />
                                 <Modal className={{
-                                    modalContainer: "max-w-lg w-full mx-auto bg-white rounded-md p-5 left-0 top-0 min-h-max translate-y-1/2"
+                                    modalContainer: "max-w-xl w-full mx-auto bg-white rounded-md p-5 min-h-fit top-10"
                                 }}>
                                     <Label name="Blogs" htmlFor="name" className="text-lg font-bold" />
                                     <FormProvider {...methods}>
@@ -81,7 +154,7 @@ export default function Blogs() {
                                             <Input
                                                 type="text"
                                                 {...methods.register("title")}
-                                             
+
                                                 placeholder="Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -90,7 +163,7 @@ export default function Blogs() {
                                             />
                                             <Input
                                                 type="text"
-                                                {...methods.register("semi_title")}
+                                                {...methods.register("mini_title")}
 
                                                 placeholder="Semi Title"
                                                 className={{
@@ -99,13 +172,21 @@ export default function Blogs() {
                                                 }}
                                             />
 
-                                            
-                                            
-                                            
+                                            <Input
+                                                type="text"
+                                                {...methods.register("tags")}
+
+                                                placeholder="Tags"
+                                                className={{
+                                                    input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
+                                                    label: "text-backend-primary-text-color"
+                                                }}
+                                            />
+
                                             <Input
                                                 type="file"
-                                                 {...methods.register("image")}
-                                               
+                                                {...methods.register("image")}
+
                                                 placeholder="Semi Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -113,24 +194,34 @@ export default function Blogs() {
                                                 }}
                                             />
 
-                                          <Controller 
 
-                                            control={methods.control}
-                                            name="content"
-                                            render={({ field }) => (
-                                                <JoditEditor
-                                                    ref={editor}
-                                                    value={field.value}
-                                                    config={config}
-                                                    onBlur={(newContent) => field.onChange(newContent)} 
-                                                    onChange={(newContent) => field.onChange(newContent)}
-                                                />
-                                            )}  
-                                          />
+                                            <Controller
 
-                                          <select className="my-2 border-[1px] border-backend-primary-text-color p-2 rounded-md" name="blog_category_id">
-                                              <option>Blog Category</option>
-                                          </select>
+                                                control={methods.control}
+                                                name="content"
+                                                render={({ field }) => (
+                                                    <JoditEditor
+                                                        ref={editor}
+                                                        value={field.value}
+                                                        config={config}
+                                                        onBlur={(newContent) => field.onChange(newContent)}
+                                                        onChange={(newContent) => field.onChange(newContent)}
+                                                    />
+                                                )}
+                                            />
+
+                                            <select className="my-2 border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
+                                                <option>Blog Category</option>
+                                                {
+                                                    blogCategory?.blog_categories?.map((category: blogCategories,) => {
+                                                        return (
+
+                                                            <option key={category.id} value={category.id}>{category.name}</option>
+
+                                                        )
+                                                    })
+                                                }
+                                            </select>
 
                                             <div className="button my-2">
                                                 <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">Submit</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
@@ -151,9 +242,13 @@ export default function Blogs() {
                             </div>
 
                             <div className="tableBox">
-                                <Table 
-                                 cellBordered
-                                 bordered
+                                <Table
+                                 data={blogCategory?.posts}
+                                    cellBordered
+                                    bordered
+                                  loading={isLoading}
+                                  loadAnimation={true}
+                                  height={innerHeight - 350}
                                 >
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">ID</HeaderCell>
@@ -161,27 +256,51 @@ export default function Blogs() {
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Title</HeaderCell>
-                                        <Cell>1</Cell>
+                                        <Cell dataKey="id" />
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Semi Title</HeaderCell>
-                                        <Cell>1</Cell>
+                                        <Cell dataKey="mini_title" />
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Tags</HeaderCell>
-                                        <Cell>1</Cell>
+                                        <Cell dataKey="tags" />
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Image</HeaderCell>
-                                        <Cell>1</Cell>
+                                        <Cell dataKey="image" />
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Content</HeaderCell>
-                                        <Cell>1</Cell>
+                                        <Cell dataKey="content" />
                                     </Column>
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">Blog Category</HeaderCell>
                                         <Cell>1</Cell>
+                                    </Column>
+                                    <Column>
+                                        <HeaderCell className="text-primary-text-color">Edit</HeaderCell>
+                                        <Cell>
+                                            {
+                                                (rowData: postResponse) => {
+                                                    return (
+                                                        <BiEditAlt className="cursor-pointer text-lg" key={rowData.id} />
+                                                    )
+                                                }
+                                            }
+                                        </Cell>
+                                    </Column>
+                                    <Column>
+                                        <HeaderCell className="text-primary-text-color">Delete</HeaderCell>
+                                        <Cell>
+                                            {
+                                                (rowData: postResponse) => {
+                                                    return (
+                                                        <BiTrash className="cursor-pointer text-lg" key={rowData.id} />
+                                                    )
+                                                }
+                                            }
+                                        </Cell>
                                     </Column>
                                 </Table>
                             </div>

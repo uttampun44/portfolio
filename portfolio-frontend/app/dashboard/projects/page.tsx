@@ -170,7 +170,8 @@ export default function Projects() {
                         <Button className="bg-bg-backend-secondary-color rounded-md text-white cursor-pointer" onClick={handleModal}>Create Project</Button>
                     </div>
                     <Table
-
+                        height={innerHeight - 350}
+                        loadAnimation={true}
                         cellBordered
                         bordered
                     >

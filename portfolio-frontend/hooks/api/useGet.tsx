@@ -11,8 +11,6 @@ export default function useGet<Type>(apiUrl:string){
             const token = Cookies.get("token");
 
             //  get token from cookie if the token is not exists then return
-
-            console.log(token)
             if(!token) return;
 
              const response = await axios.get<Type>(apiUrl, {
