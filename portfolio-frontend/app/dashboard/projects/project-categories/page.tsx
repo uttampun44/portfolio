@@ -52,7 +52,7 @@ export default function ProjectCategory() {
                     <Table
                         loading={isLoading}
                         data={projectCategory?.project_categories}
-                        height={innerHeight - 350}
+                     
                         loadAnimation={true}
                         cellBordered
                         bordered
