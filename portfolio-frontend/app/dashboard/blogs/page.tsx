@@ -248,7 +248,7 @@ export default function Blogs() {
                                     bordered
                                   loading={isLoading}
                                   loadAnimation={true}
-                                  height={innerHeight - 350}
+                                
                                 >
                                     <Column>
                                         <HeaderCell className="text-primary-text-color">ID</HeaderCell>
