@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Project;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\ProjectCategoryRequest;
 use App\Repositories\ProjectCategoryInterface;
 use Illuminate\Http\Request;
 
@@ -36,9 +37,22 @@ class ProjectCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectCategoryRequest $request)
     {
-        //
+
+        try {
+            
+
+            $project_category = $this->projectCategoryInterface->postProjectCategory($request->all());
+
+            return response()->json([
+                "data" => $project_category,
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "message" => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -62,7 +76,19 @@ class ProjectCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $project_category = $this->projectCategoryInterface->editProjectCategory($this->projectCategoryInterface->projectCategory->find($id));
+            $project_category->update($request->all());
+            return response()->json([
+                "data" => $project_category,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            
+            return response()->json([
+                "message" => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -70,6 +96,11 @@ class ProjectCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project_category = $this->projectCategoryInterface->editProjectCategory($this->projectCategoryInterface->projectCategory->find($id));
+
+        $this->projectCategoryInterface->deleteProjectCategory($project_category);
+        return response()->json([
+            "message" => "Project Category deleted successfully",
+        ],  200);
     }
 }

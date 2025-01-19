@@ -24,6 +24,7 @@ class ProjectRequest extends FormRequest
         return [
             'name' => 'string|max:255',
             'link' => 'string|max:255',
+            'image' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
             'project_category_id' => 'required|integer|exists:project_categories,id',
         ];
     }

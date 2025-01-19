@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Repositories\ProjectInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class ProjectRepository implements ProjectInterface
 {
@@ -20,34 +21,34 @@ class ProjectRepository implements ProjectInterface
     public function getProjects()
     {
         $project_categories = ProjectCategory::select('id', 'name')->get();
-        return response()->json( [
+        return response()->json([
             'project_categories' => $project_categories,
         ], 200);
     }
 
-    public function postProjects(array $data):Project
+    public function postProjects(array $data): Project
     {
-      
-      
-        if(isset($data['image']) && $data['image']){
-            $data['image'] = $data['image']->storeAs('public/images', 'projects');
-        }
+        Log::info('Uploaded file path: ' . $data['image']);
+
+
+
+        $data['image'] = $data['image']->store('images', 'public');
 
         return $this->project->create($data);
     }
 
-    public function editProjects(Project $project):Project
+    public function editProjects(Project $project): Project
     {
         return $project;
     }
 
-    public function updateProjects(Project $project, array $data):bool
+    public function updateProjects(Project $project, array $data): bool
     {
         return $project->update($data);
     }
-    
+
     public function deleteProjects(Project $project)
     {
-       return $project->delete();
+        return $project->delete();
     }
 }

@@ -19,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-       return $this->projectInterface->getProjects();
+        return $this->projectInterface->getProjects();
     }
 
     /**
@@ -35,12 +35,13 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-       
+
         try {
-          
-          return response()->json($this->projectInterface->postProjects($request->all()), 201);
+
+            return response()->json($this->projectInterface->postProjects($request->all()), 201);
         } catch (\Throwable $th) {
-            Log::error("error" .$th->getMessage());
+            
+            Log::error("error" . $th->getMessage());
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
@@ -66,7 +67,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       try {
+        //code...
+       } catch (\Throwable $th) {
+        //throw $th;
+       }
     }
 
     /**
@@ -74,6 +79,12 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $projects = $this->projectInterface->editProjects($this->projectInterface->project->find($id));
+
+         $this->projectInterface->deleteProjects($projects);
+
+         return response()->json([
+             "message" => "Project deleted successfully",
+         ], 200);
     }
 }

@@ -75,12 +75,16 @@ class BlogCategoryController extends Controller
     public function update(BlogCategoryRequest $request, string $id)
     {
        try {
-             $blog_category_update = BlogCategory::updated([
-                     'name' => $request->name
-                           ]);
+            
+           $blog_categories = BlogCategory::find($id);
+
+
+           $blog_categories->update([
+                'name' => $request->name,
+            ]);
 
               return response()->json([
-                'data' => $blog_category_update
+                'data' => $blog_categories
               ], 201);             
 
        } catch (\Throwable $th) {
