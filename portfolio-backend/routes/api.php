@@ -20,8 +20,8 @@ Route::post('/sign-up', [AuthenticationController::class, 'signup']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboard']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
-    Route::get('/project-categories', [ProjectCategoryController::class, 'index']);
-    Route::resource('/projects', ProjectController::class)->only(['index', 'store']);
+    Route::resource('/project-categories', ProjectCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('/projects', ProjectController::class)->only(['index', 'store' ,'edit', 'update', 'destroy']);
     Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
     Route::resource('/posts', PostController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
 });

@@ -4,7 +4,8 @@ namespace App\Repositories\Projects;
 
 use App\Models\ProjectCategory;
 use App\Repositories\ProjectCategoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
+
 
 class ProjectCategoryRepository implements ProjectCategoryInterface
 {
@@ -23,6 +24,7 @@ class ProjectCategoryRepository implements ProjectCategoryInterface
 
     public function postProjectCategory(array $data): ProjectCategory
     {
+        $data['slug'] = Str($data['name']);
         return ProjectCategory::create($data);
     }
 
@@ -33,6 +35,7 @@ class ProjectCategoryRepository implements ProjectCategoryInterface
 
     public function updateProjectCategory(ProjectCategory $projectCategory, array $data):bool
     {
+        $data['slug'] = Str($data['name']);
         return $projectCategory->update($data);
     }
 
