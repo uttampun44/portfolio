@@ -1,64 +1,99 @@
 name: portfolio
 
 on:
- push:
-   branches:
-     -main
- pull_request:
-   branches:
-     -main
- workflow_dispatch:
-
-  # Allows you to run this multiple os
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+    #sync with main branch
 jobs:
+  branch-sync:
+    name: Sync development with main
+    runs-on: ubuntu-latest
+
+    steps:
+      # Setup Git configuration
+      - name: Setup git
+        run: |
+          git config --global user.name 'uttampun'
+          git config --global user.email 'uttampun62@gmail.com'
+
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Fetch latest code from the development branch
+      - name: Fetch latest code from development branch
+        run: |
+          git fetch origin
+          git checkout development
+
+      # Merge development into main
+      - name: Merge development into main
+        run: |
+          git checkout main
+          git pull origin main
+          git merge origin/development --no-ff -m "Auto-merge development into main"
+
+      # Push changes to the main branch after merge
+      - name: Push changes to main branch
+        run: |
+          git push origin main
+
   frontend:
+    name: Build Frontend
     runs-on: ${{ matrix.os }}
     strategy:
-            matrix:
-                os: [ubuntu-latest, windows-latest, macos-latest]
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
     defaults:
       run:
         working-directory: ./portfolio-frontend
-    steps:
 
-     # Step 1: Checkout the repository
+    steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-        # Step 2 Set up Node.js
+
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
-        working-directory: ./portfolio-frontend
-        
-        # Step 3: Run the build script
-      - name: Run build 
+
+      # Step 4: Run the build script
+      - name: Run build
         run: npm run build
 
   backend:
+    name: Build Backend
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./portfolio-backend
 
     timeout-minutes: 30
-    steps:
 
-     # Step 1: Checkout the repository
+    steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-        # Step 2 copy .env
-      - name: Copy.env
+
+      # Step 2: Copy .env if it doesn't exist
+      - name: Copy .env file
         run: |
           if [ ! -f .env ]; then
             cp .env.example .env
           fi
-       # Step 3 Install PHP and dependencies os
 
+      # Step 3: Install PHP and dependencies
       - name: Install PHP 8.2 and dependencies (Ubuntu)
         if: runner.os == 'Linux'
         run: |
@@ -66,25 +101,22 @@ jobs:
           sudo apt update
           sudo apt install -y php8.2 php8.2-cli php8.2-fpm php8.2-mbstring php8.2-xml php8.2-mysql php8.2-pgsql php8.2-gd php8.2-curl php8.2-zip php8.2-bcmath php8.2-soap php8.2-intl
 
-       # step 4 install dependencies
+      # Step 4: Install Composer dependencies
       - name: Install composer dependencies
         run: composer install -n --prefer-dist
-      
-        # step 5 geneate key
-      - name: Generate key
+
+      # Step 5: Generate app key
+      - name: Generate app key
         run: php artisan key:generate
-    
-        #step 8 storage link
+
+      # Step 6: Create storage symbolic link
       - name: Storage link
         run: php artisan storage:link
 
-        #step 9 permission
-      - name: Permission
+      # Step 7: Set permissions for storage and cache
+      - name: Set permissions for storage and cache
         run: chmod -R 777 storage bootstrap/cache
 
-      # Step 10 run tests
+      # Step 8: Run tests
       - name: Run tests
         run: php artisan test
-
-
-

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\PostRequest;
 use App\Models\Blog\BlogCategory;
 use App\Models\Blog\Post;
-use Faker\Core\File;
+use App\Repositories\PostInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +16,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(public PostInterface $postInterface)
+    {
+        $this->postInterface = $postInterface;
+    }
+
     public function index()
     {
         return response()->json([
@@ -35,24 +41,9 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         try {
+            $data = $this->postInterface->postPosts($request->all());
 
-            $image = null;
-
-            if ($request->hasFile('image')) {
-                $image =  $request->image->storeAs('image', 'public');
-            }
-
-            $blogs = Post::create([
-                'title' => $request->title,
-                'mini_title' => $request->mini_title,
-                'content' => $request->content,
-                'tags' => $request->tags,
-                'image' => $image,
-                'blog_category_id' => $request->blog_category_id,
-            ]);
-            return response()->json([
-                'data' => $blogs,
-            ], 201);
+            return response()->json($data, 201);
         } catch (\Throwable $th) {
             Log::error("error while creating blog: " . $th->getMessage());
             return response()->json([
@@ -94,26 +85,12 @@ class PostController extends Controller
 
                 $newImage = $request->file('image')->store('images', 'public');
 
-
                 if ($image) {
                     Storage::disk('public')->delete($image);
                 }
 
                 $image = $newImage;
             }
-
-            if (!$request->has('title') || empty($request->title)) {
-                throw new \Exception("The title field is required and cannot be null.");
-            }
-
-            if (!$request->has('content') || empty($request->content)) {
-                throw new \Exception("The content field is required and cannot be null.");
-            }
-
-            if (!$request->has('blog_category_id') || empty($request->blog_category_id)) {
-                throw new \Exception("The blog_category_id field is required and cannot be null.");
-            }
-
 
             $post->update([
                 'title' => $request->title,
@@ -140,12 +117,16 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $posts = Post::find($id);
-        if ($posts) {
-            $posts->delete();
-        }
-        return response()->json([
-            'message' => 'Post deleted successfully',
-        ], 200);
+       $data = $this->postInterface->deletePosts($this->postInterface->getPosts()->find($id));
+
+       if ($data) {
+           return response()->json([
+               'message' => 'Post deleted successfully',
+           ], 200);
+       } else {
+           return response()->json([
+               'message' => 'Post not found',
+           ], 404);
+       }
     }
 }
