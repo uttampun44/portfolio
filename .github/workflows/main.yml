@@ -10,7 +10,8 @@ jobs:
   branch-sync:
     name: Sync development with main
     runs-on: ubuntu-latest
-
+    needs: [frontend, backend]
+    
     steps:
       # Setup Git configuration
       - name: Setup git
