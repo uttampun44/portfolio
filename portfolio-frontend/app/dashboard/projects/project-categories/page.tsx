@@ -6,7 +6,7 @@ import useGet from "hooks/api/useGet";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import { useState } from "react";
-import { BiEditAlt } from "react-icons/bi";
+import { BiEditAlt, BiTrash} from "react-icons/bi";
 import { Cell, Column, HeaderCell, Table } from "rsuite-table";
 
 
@@ -37,7 +37,6 @@ export default function ProjectCategory() {
         queryFn: fetchUsers,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        staleTime: 30000
     })
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
@@ -52,7 +51,6 @@ export default function ProjectCategory() {
                     <Table
                         loading={isLoading}
                         data={projectCategory?.project_categories}
-                     
                         loadAnimation={true}
                         cellBordered
                         bordered
@@ -70,7 +68,18 @@ export default function ProjectCategory() {
                             <Cell>
                                 {(rowData: project_categories) => {
                                     return (
-                                        <BiEditAlt className="cursor-pointer text-lg" key={rowData.id} />
+                                        <BiEditAlt className="cursor-pointer text-lg text-blue-600" key={rowData.id} />
+                                    )
+                                }}
+                            </Cell>
+                        </Column>
+
+                        <Column minWidth={120} width={100} flexGrow={1} align="center"> 
+                            <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
+                            <Cell>
+                                {(rowData: project_categories) => {
+                                    return (
+                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
                                     )
                                 }}
                             </Cell>

@@ -20,8 +20,13 @@ class ProjectRepository implements ProjectInterface
     public function getProjects()
     {
         $project_categories = ProjectCategory::select('id', 'name')->get();
+        $projects = Project::with(['projectCategory' => function ($query) {
+                                          $query->select('id', 'name');
+                             }])->select('id', 'name', 'image', 'link', 'project_category_id')->get();
+
         return response()->json([
             'project_categories' => $project_categories,
+            'projects' => $projects,
         ], 200);
     }
 

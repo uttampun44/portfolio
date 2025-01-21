@@ -7,6 +7,19 @@ import { SidebarData } from "data/BackendNavData/SidebarData";
 import Icon from "components/Icon";
 import Image from "next/image";
 import ProfilePic from "public/images/ProfilePic.png";
+import useGet from "hooks/api/useGet";
+import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+
+
+type usersResponse = {
+  users: number | undefined
+  auth_user: {
+    id: number,
+    name: string,
+  }
+}
+
 
 export default function AuthenticateSidebar() {
   
@@ -15,6 +28,29 @@ export default function AuthenticateSidebar() {
   const handleToggle = (id: number) => {
     setSelectedData(prev => (prev === id ? null : id));
   };
+
+  const url = process.env.NEXT_PUBLIC_API_URL;
+
+  const { getData } = useGet<usersResponse | undefined>(`${url}/api/dashboard`);
+  const [users, setUsers] = useState<usersResponse | undefined>(undefined);
+
+
+  const fetchUsers = async (): Promise<usersResponse | undefined> => {
+    const response = await getData();
+    setUsers(response);
+    toast.success("Successfully fetched users");
+    return response;
+  }
+
+  // refetching on windows focus will not rerender the data on the page
+
+    useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    refetchOnWindowFocus: false,
+    staleTime: 30000
+  });
+
 
   return (
     <aside>
@@ -69,7 +105,7 @@ export default function AuthenticateSidebar() {
             objectFit="contain"
           />
           <h6 className="text-backend-primary-color text-base font-medium">
-            Uttam Pun
+            {users?.auth_user?.name}
           </h6>
         </div>
       </div>

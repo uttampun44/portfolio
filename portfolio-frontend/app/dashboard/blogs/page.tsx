@@ -41,7 +41,7 @@ type postResponse = {
     mini_title: string,
     tags: string,
     content: string,
-    image: string,  
+    image: string,
     blog_category_id: number,
 }
 
@@ -128,14 +128,14 @@ export default function Blogs() {
         return response;
     }
 
-   const {isLoading} =  useQuery({
+    const { isLoading } = useQuery({
         queryFn: fetchBlogCategories,
         queryKey: ["blog_categories"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
     })
 
-  
+
     return <div>
         {
             token && (
@@ -210,8 +210,8 @@ export default function Blogs() {
                                                 )}
                                             />
 
-                                            <select className="my-2 border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
-                                                <option>Blog Category</option>
+                                            <select className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
+                                                <option>Select Blog Category</option>
                                                 {
                                                     blogCategory?.blog_categories?.map((category: blogCategories,) => {
                                                         return (
@@ -243,63 +243,56 @@ export default function Blogs() {
 
                             <div className="tableBox">
                                 <Table
-                                 data={blogCategory?.posts}
+                                    data={blogCategory?.posts}
                                     cellBordered
                                     bordered
-                                  loading={isLoading}
-                                  loadAnimation={true}
-                                
+                                    loading={isLoading}
+                                    loadAnimation={true}
+
                                 >
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">ID</HeaderCell>
-                                        <Cell>1</Cell>
+                                    <Column minWidth={120} width={100} flexGrow={1}>
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
+                                        <Cell dataKey="id" align="center" />
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Title</HeaderCell>
-                                        <Cell dataKey="id" />
+                                    <Column minWidth={120} width={100} flexGrow={1}>
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Title</HeaderCell>
+                                        <Cell dataKey="title" align="center" />
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Semi Title</HeaderCell>
-                                        <Cell dataKey="mini_title" />
+
+                                    <Column minWidth={120} width={100} flexGrow={1}>
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Tags</HeaderCell>
+                                       <Cell dataKey="tags" align="center" />
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Tags</HeaderCell>
-                                        <Cell dataKey="tags" />
+
+                                    <Column minWidth={150} width={200} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Content</HeaderCell>
+                                        <Cell dataKey="content" align="center" />
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Image</HeaderCell>
-                                        <Cell dataKey="image" />
+
+                                    <Column minWidth={150} width={200} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Blog Category</HeaderCell>
+                                        <Cell dataKey="blog_category.name" align="center" />
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Content</HeaderCell>
-                                        <Cell dataKey="content" />
-                                    </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Blog Category</HeaderCell>
-                                        <Cell>1</Cell>
-                                    </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Edit</HeaderCell>
-                                        <Cell>
-                                            {
-                                                (rowData: postResponse) => {
-                                                    return (
-                                                        <BiEditAlt className="cursor-pointer text-lg" key={rowData.id} />
-                                                    )
-                                                }
-                                            }
+
+                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
+                                        <Cell className="cursor-pointer">
+                                           {
+                                             ((rowData) => (
+                                                <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id} />
+                                             ))
+                                           }
                                         </Cell>
+
                                     </Column>
-                                    <Column>
-                                        <HeaderCell className="text-primary-text-color">Delete</HeaderCell>
-                                        <Cell>
-                                            {
-                                                (rowData: postResponse) => {
-                                                    return (
-                                                        <BiTrash className="cursor-pointer text-lg" key={rowData.id} />
-                                                    )
-                                                }
-                                            }
+                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
+                                        <Cell className="cursor-pointer">
+                                           {
+                                             ((rowData) => (
+                                                <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
+                                             ))
+                                           }
                                         </Cell>
                                     </Column>
                                 </Table>
