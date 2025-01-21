@@ -45,7 +45,7 @@ export default function Login() {
   const { postData } = usePost<loginForm>(`${url}/api/login`)
 
   const mutation = useMutation({
-    mutationFn: (data: loginForm) => postData(data,),
+    mutationFn: (data: loginForm) => postData(data),
     onSuccess: (response) => {
    
          toast.success("Login Successfully");
