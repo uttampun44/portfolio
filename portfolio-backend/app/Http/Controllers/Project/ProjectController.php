@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Project;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\ProjectRequest;
+use App\Models\Project;
 use App\Repositories\ProjectInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -36,9 +37,24 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
 
+    
+        Log::info("project store");
+
         try {
 
-            return response()->json($this->projectInterface->postProjects($request->all()), 201);
+           $image = null;
+
+           if($request->hasFile('image')){
+               $image = $request->file('image')->storeAs('images', 'public');
+           }
+
+        return response()->json([
+               'name' => $request->name,
+               'image' => $image,
+               'link' => $request->link,
+               'project_category_id' => $request->project_category_id,
+           ], 201);
+
         } catch (\Throwable $th) {
             
             Log::error("error" . $th->getMessage());

@@ -7,20 +7,24 @@ import Label from "components/Label";
 import Modal from "components/Modal";
 import Overlary from "components/Overlary";
 import Title from "components/Title";
+import useDelete from "hooks/api/useDelete";
 import useGet from "hooks/api/useGet";
 import usePost from "hooks/api/usePost";
 import useToggle from "hooks/useToggle";
+import Cookies from "js-cookie";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
+import { register } from "module";
+import Image from "next/image";
 import React, { useState } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, Form, FormProvider, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { Cell, Column, HeaderCell, Table } from "rsuite-table";
 import { toast } from "sonner";
 
 type projectPost = {
     name: string,
-    image: string,
+    image: File,
     link: string
     project_category_id: number,
 }
@@ -47,68 +51,85 @@ type projectCategoryResponse = {
 export default function Projects() {
 
     const [projectCategory, setProjectCategory] = useState<projectCategoryResponse | undefined>(undefined);
-    const [projects, setProjects] = useState(undefined);
+    const [isEditingMode, setEditingMode] = useState(false);
+    const [projectId, setProjectId] = useState<number | undefined>(undefined);
   
-    console.log(projects);
+    const token = Cookies.get("token");
 
     const { isOpen, setIsOpen, } = useToggle();
 
-    const methods = useForm<projectPost>({
-        defaultValues: {
-            name: "",
-            image: "",
-            link: "",
-            project_category_id: 0
-        }
-    });
+    const methods = useForm<projectPost>();
 
     const url = process.env.NEXT_PUBLIC_API_URL;
 
     const { getData } = useGet<projectCategoryResponse | undefined>(`${url}/api/projects`);
 
-    const {postData} = usePost<projectPost>(`${url}/api/projects`);
+    const { postData } = usePost<projectPost>(`${url}/api/projects`);
+    
+   
 
-    const mutations  = useMutation({
-        mutationFn: (data: projectPost) => postData(data),
+    const mutations = useMutation({
+        mutationFn: (data: projectPost) => postData(data, {
+            Authorization: `Bearer ${token}`,
+
+        }),
         onSuccess: (response) => {
-            if(!response?.data) return;
-           toast.success("Project Created");
+            if (!response?.data) return;
+            toast.success("Project Created");
         },
         onError: () => {
             toast.error("Project Creation Failed");
         }
 
     })
-    const onSubmit: SubmitHandler<projectPost> = async (data) => {
-           
-     try {
-        mutations.mutate(data);
 
-     } catch (error) {
-        if (error instanceof Error) {
-        toast.error(`Error fetching data:${error.message}`);
-      } else {
-        toast.error('Unknown error occurred while fetching data.');
-      }
-     }
+  
+    // form submit 
+    const onSubmit: SubmitHandler<projectPost> = async (data) => {
+
+        try {
+            mutations.mutate(data, {
+                onSuccess: (response) => {
+                    console.log(response)
+                    if (!response?.data) return;
+                    toast.success("Project Created");
+                },
+                onError: () => {
+                    toast.error("Project Creation Failed");
+                }
+            });
+
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error fetching data:${error.message}`);
+            } else {
+                toast.error('Unknown error occurred while fetching data.');
+            }
+        }
     }
 
-    const fetchProjects = async (): Promise<projectCategoryResponse  | undefined> => {
+    const fetchProjects = async (): Promise<projectCategoryResponse | undefined> => {
         const response = await getData();
-        setProjects(response?.projects as undefined);
         setProjectCategory(response);
         return response;
     }
 
-   const {isLoading} = useQuery({
+    const { isLoading } = useQuery({
         queryFn: fetchProjects,
         queryKey: ["project_categories"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
     })
     const handleModal = () => {
-        setIsOpen(true);
+       setIsOpen(true)
     }
+
+    const {deleteData} = useDelete(`${url}/api/projects`);
+
+    console.log(deleteData)
+    const handleDelete = async () => {
+       
+    };
 
     return (
         <AuthenticateNavLink>
@@ -120,32 +141,35 @@ export default function Projects() {
                         <Modal className={{
                             modalContainer: "max-w-md w-full mx-auto bg-white rounded-md p-5 min-h-fit translate-y-1/2"
                         }}>
-                           <Label name="Project Name" htmlFor="name" className="text-lg font-bold" />
+                            <Label name="Project Name" htmlFor="name" className="text-lg font-bold" />
                             <FormProvider {...methods}>
                                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-y-2 w-full mt-2">
                                     <Input
                                         type="text"
-
-                                        name="name"
+                                        {...methods.register("name")}
                                         placeholder="Project Name"
                                         className={{
                                             input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                             label: "text-backend-primary-text-color"
                                         }}
                                     />
+
                                     <Input
                                         type="file"
+                                        accept="image/*"
+                                        {...methods.register("image")}
 
-                                        name="image"
                                         placeholder="Project Image"
                                         className={{
                                             input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                             label: "text-backend-primary-text-color"
                                         }}
+
                                     />
+
                                     <Input
                                         type="text"
-                                        name="link"
+                                        {...methods.register("link")}
                                         placeholder="Project Link"
                                         className={{
                                             input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -153,15 +177,15 @@ export default function Projects() {
                                         }}
 
                                     />
-                                  
-                                    <select className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md">
+
+                                    <select {...methods.register("project_category_id")} className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md">
                                         <option className="p-2">Select Project</option>
                                         {
                                             projectCategory?.project_categories.map((category: project_categories,) => {
                                                 return (
-                                                  
-                                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                                    
+
+                                                    <option key={category.id} value={category.id}>{category.name}</option>
+
                                                 )
                                             })
                                         }
@@ -185,8 +209,8 @@ export default function Projects() {
                         <Button className="bg-bg-backend-secondary-color rounded-md text-white cursor-pointer" onClick={handleModal}>Create Project</Button>
                     </div>
                     <Table
-                    data={projectCategory?.projects}
-                       loading={isLoading}
+                        data={projectCategory?.projects}
+                        loading={isLoading}
                         loadAnimation={true}
                         cellBordered
                         bordered
@@ -207,28 +231,35 @@ export default function Projects() {
                                 <img src={`${url}/storage/${projectCategory?.projects[0].image}`} alt="project" className="w-full h-full object-contain" height="400" />
                             </Cell>
                         </Column>
-                        
-                        <Column minWidth={150} width={200}  align="center">
+
+                        <Column minWidth={150} width={200} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Project Category</HeaderCell>
                             <Cell dataKey="project_category.name" align="center" />
                         </Column>
                         <Column minWidth={120} width={100} flexGrow={1} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
                             <Cell className="cursor-pointer">
-                               {
-                                 ((rowData) => (
-                                    <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id} />
-                                 ))
-                               }
+                                {
+                                    ((rowData) => (
+                                        <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
+                                        
+                                        onClick={() =>{
+                                            setEditingMode(true);
+                                         }}
+                                        />
+                                    ))
+                                }
                             </Cell>
-                           
+
                         </Column>
                         <Column minWidth={120} width={100} flexGrow={1} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
                             <Cell className="cursor-pointer">
                                 {
                                     ((rowData) => (
-                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
+                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
+                                         onClick={handleDelete}
+                                        />
                                     ))
                                 }
                             </Cell>

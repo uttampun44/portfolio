@@ -74,9 +74,12 @@ export interface InputProps {
         input?: string;
         label?: string;
     };
+    accept?: string;
+    value?: string;
     errors?: Record<string, string>;
     compulsaryField?: boolean,
     autocomplete?: string;
     required?: boolean;
     readonly?: boolean;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

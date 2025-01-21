@@ -19,6 +19,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import usePost from "hooks/api/usePost";
 import { toast } from "sonner";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
+import useDelete from "hooks/api/useDelete";
 
 
 type blogPost = {
@@ -135,6 +136,13 @@ export default function Blogs() {
         refetchOnMount: false,
     })
 
+    const {deleteData} = useDelete(`${url}/api/posts`);
+
+    console.log(deleteData)
+    const handleDelete = async () => {
+        
+    };
+
 
     return <div>
         {
@@ -186,7 +194,7 @@ export default function Blogs() {
                                             <Input
                                                 type="file"
                                                 {...methods.register("image")}
-
+                                                accept="image/*"
                                                 placeholder="Semi Title"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
@@ -290,7 +298,9 @@ export default function Blogs() {
                                         <Cell className="cursor-pointer">
                                            {
                                              ((rowData) => (
-                                                <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
+                                                <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
+                                                  onClick={handleDelete}
+                                                />
                                              ))
                                            }
                                         </Cell>

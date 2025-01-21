@@ -26,6 +26,7 @@ class PostRequest extends FormRequest
             'mini_title' => 'required|string|max:255',
             'tags' => 'required|string|max:255',
             'content' => 'required',
+            'image' => 'required',
             'blog_category_id' => 'required',
         ];
     }

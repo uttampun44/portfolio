@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Repositories\ProjectInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class ProjectRepository implements ProjectInterface
 {
@@ -32,7 +33,7 @@ class ProjectRepository implements ProjectInterface
 
     public function postProjects(array $data): Project
     {
-      
+
         if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
 
            $data['image'] = $data['image']->store('images', 'public');
