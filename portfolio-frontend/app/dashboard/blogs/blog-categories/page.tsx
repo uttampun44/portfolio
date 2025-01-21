@@ -16,6 +16,7 @@ import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { Cell, Column, HeaderCell, Table } from "rsuite-table";
 import { toast } from "sonner";
 
@@ -52,7 +53,7 @@ export default function BlogCategoryIndex() {
 
     const mutate = useMutation({
         mutationFn: (data: blogCategoryForm) => postData(data, {
-                Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         }),
         onSuccess: (response) => {
             if (!response) return
@@ -146,28 +147,29 @@ export default function BlogCategoryIndex() {
                                     loading={isLoading}
                                     cellBordered
                                     bordered
-                               
-                                  loadAnimation={true}
+                                    loadAnimation={true}
                                 >
-                                    <Column>
-                                        <HeaderCell align="center" >S.No</HeaderCell>
-                                        <Cell dataKey="id" />
+                                    <Column minWidth={120} width={100} flexGrow={1}>
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
+                                        <Cell dataKey="id" align="center" />
+                                    </Column>
+                                    <Column minWidth={120} width={100} flexGrow={1}>
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Name</HeaderCell>
+                                        <Cell dataKey="name" align="center" />
                                     </Column>
 
-
-                                    <Column>
-                                        <HeaderCell align="center" className="text-primary-text-color">Title</HeaderCell>
-                                        <Cell dataKey="name" />
-                                    </Column>
-                                    <Column>
-                                        <HeaderCell align="center" className="text-primary-text-color">Edit</HeaderCell>
-                                        <Cell>
-
+                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
+                                        <Cell className="cursor-pointer">
+                                            <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={blogCategory?.blogs[0].id} />
                                         </Cell>
+
                                     </Column>
-                                    <Column>
-                                        <HeaderCell align="center" className="text-primary-text-color">Delete</HeaderCell>
-                                        <Cell>1</Cell>
+                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
+                                        <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
+                                        <Cell className="cursor-pointer">
+                                            <BiTrash className="cursor-pointer text-lg text-red-700" key={blogCategory?.blogs[0].id} />
+                                        </Cell>
                                     </Column>
                                 </Table>
 

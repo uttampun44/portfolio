@@ -25,7 +25,10 @@ class PostController extends Controller
     public function index()
     {
         return response()->json([
-            'posts' => Post::select('id', 'title', 'semin_title', 'content', 'image', 'blog_category_id')->get(),
+            'posts' => Post::with(['blog_category' => function ($query) {
+                $query->select('id', 'name');
+            }])->select('id', 'title', 'mini_title', 'tags', 'content', 'image', 'blog_category_id')->get(),
+            
             'blog_categories' => BlogCategory::select('id', 'name')->get(),
         ], 200);
     }

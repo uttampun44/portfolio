@@ -14,6 +14,7 @@ import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { Cell, Column, HeaderCell, Table } from "rsuite-table";
 import { toast } from "sonner";
 
@@ -29,14 +30,27 @@ type project_categories = {
     name: string,
 }
 
+type projectResponse = {
+    id: number,
+    name: string,
+    image: string,
+    link: string,
+    project_category_id: number,
+}
 type projectCategoryResponse = {
     project_categories: project_categories[]
+    projects: projectResponse[]
 }
+
+
 
 export default function Projects() {
 
     const [projectCategory, setProjectCategory] = useState<projectCategoryResponse | undefined>(undefined);
+    const [projects, setProjects] = useState(undefined);
   
+    console.log(projects);
+
     const { isOpen, setIsOpen, } = useToggle();
 
     const methods = useForm<projectPost>({
@@ -79,13 +93,14 @@ export default function Projects() {
      }
     }
 
-    const fetchProjects = async (): Promise<projectCategoryResponse | undefined> => {
+    const fetchProjects = async (): Promise<projectCategoryResponse  | undefined> => {
         const response = await getData();
+        setProjects(response?.projects as undefined);
         setProjectCategory(response);
         return response;
     }
 
-    useQuery({
+   const {isLoading} = useQuery({
         queryFn: fetchProjects,
         queryKey: ["project_categories"],
         refetchOnWindowFocus: false,
@@ -170,35 +185,52 @@ export default function Projects() {
                         <Button className="bg-bg-backend-secondary-color rounded-md text-white cursor-pointer" onClick={handleModal}>Create Project</Button>
                     </div>
                     <Table
-                      
+                    data={projectCategory?.projects}
+                       loading={isLoading}
                         loadAnimation={true}
                         cellBordered
                         bordered
+                        height={500}
                     >
                         <Column minWidth={120} width={100} flexGrow={1}>
                             <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
                             <Cell dataKey="id" align="center" />
                         </Column>
                         <Column minWidth={120} width={100} flexGrow={1}>
-                            <HeaderCell align="center" className="text-backend-primary-text-color">Image</HeaderCell>
+                            <HeaderCell align="center" className="text-backend-primary-text-color">Name</HeaderCell>
                             <Cell dataKey="name" align="center" />
                         </Column>
-                        <Column minWidth={120} width={100} flexGrow={1} align="center">
-                            <HeaderCell align="center" className="text-backend-primary-text-color">Project Category</HeaderCell>
-                            <Cell>
 
+                        <Column minWidth={120} width={100} flexGrow={1}>
+                            <HeaderCell align="center" className="text-backend-primary-text-color">Image</HeaderCell>
+                            <Cell className="w-full h-auto">
+                                <img src={`${url}/storage/${projectCategory?.projects[0].image}`} alt="project" className="w-full h-full object-contain" height="400" />
                             </Cell>
+                        </Column>
+                        
+                        <Column minWidth={150} width={200}  align="center">
+                            <HeaderCell align="center" className="text-backend-primary-text-color">Project Category</HeaderCell>
+                            <Cell dataKey="project_category.name" align="center" />
                         </Column>
                         <Column minWidth={120} width={100} flexGrow={1} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
-                            <Cell>
-
+                            <Cell className="cursor-pointer">
+                               {
+                                 ((rowData) => (
+                                    <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id} />
+                                 ))
+                               }
                             </Cell>
+                           
                         </Column>
                         <Column minWidth={120} width={100} flexGrow={1} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
-                            <Cell>
-
+                            <Cell className="cursor-pointer">
+                                {
+                                    ((rowData) => (
+                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
+                                    ))
+                                }
                             </Cell>
                         </Column>
                     </Table>
