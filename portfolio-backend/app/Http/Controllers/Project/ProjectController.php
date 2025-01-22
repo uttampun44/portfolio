@@ -43,9 +43,8 @@ class ProjectController extends Controller
            $image = null;
 
            if($request->hasFile('image')){
-               $image = $request->file('image')->storeAs('images', 'public');
+               $image = $request->file('image')->store('images', 'public');
 
-               Log::info("image path" . $image);
            }
 
            Project::create([

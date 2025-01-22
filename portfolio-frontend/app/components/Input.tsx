@@ -66,7 +66,7 @@ import { InputProps } from "utils/InputTypes";
  */
 
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label,placeholder, type, name, readonly, className, required,  compulsaryField, autocomplete, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label,placeholder,defaultValue, type, name, readonly, className, required,  compulsaryField, autocomplete, ...props }, ref) => {
 
     const {formState: { errors }, register } = useFormContext();
     return (
@@ -84,6 +84,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label,placeholde
              autoComplete={autocomplete}
              required={required}
              readOnly={readonly}
+            defaultValue={defaultValue as any}
             />
         
              {

@@ -10,7 +10,7 @@ import useToggle from "hooks/useToggle";
 import Cookies from "js-cookie";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
-import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, FormProvider, set, SubmitHandler, useForm } from "react-hook-form";
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import React, { useMemo, useRef, useState } from "react";
 import dynamic from 'next/dynamic';
@@ -23,11 +23,12 @@ import useDelete from "hooks/api/useDelete";
 
 
 type blogPost = {
+    id?: number,
     title: string,
     mini_title: string,
     tags: string,
     content: string,
-    image: string,
+    image: File,
     blog_category_id: string,
 }
 
@@ -51,6 +52,16 @@ type blogCategoryResponse = {
     blog_categories: blogCategories[]
 }
 
+type editBlogResponse = {
+    id: number,
+    title: string,
+    mini_title: string,
+    tags: string,
+    content: string,
+    image: string | File,
+    blog_category_id: string,
+}
+
 
 export default function Blogs() {
 
@@ -60,6 +71,9 @@ export default function Blogs() {
 
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
+ 
+
+    const [editData, setEditData] = useState<blogPost | undefined>(undefined);
 
     const editor = useRef(null);
 
@@ -77,16 +91,7 @@ export default function Blogs() {
 
 
 
-    const methods = useForm<blogPost>({
-        defaultValues: {
-            title: "",
-            mini_title: "",
-            tags: "",
-            content: "",
-            image: "",
-            blog_category_id: ""
-        }
-    });
+    const methods = useForm<blogPost>();
 
     const { postData } = usePost<blogPost>(`${url}/api/posts`);
 
@@ -94,8 +99,7 @@ export default function Blogs() {
         mutationFn: (data: blogPost) => postData(data, {
             Authorization: `Bearer ${token}`,
         }),
-        onSuccess: (response) => {
-            if (!response?.data) return;
+        onSuccess: () => {
             toast.success("Blog Created");
         },
         onError: () => {
@@ -136,7 +140,7 @@ export default function Blogs() {
         refetchOnMount: false,
     })
 
-    const {deleteData} = useDelete(`${url}/api/posts`);
+    const { deleteData } = useDelete(`${url}/api/posts`);
 
     const mutate = useMutation({
         mutationFn: (id: number) => deleteData(id, {
@@ -152,17 +156,34 @@ export default function Blogs() {
     });
 
     const handleDelete = async (id: number) => {
-         try {
-             mutate.mutate(id);
-         } catch (error) {
-             if (error instanceof Error) {
-                 toast.error(`Error deleting Blog: ${error.message}`);
-             } else {
-                 toast.error("Unknown error occurred while deleting Blog.");
-             }
-         }
+        try {
+            mutate.mutate(id);
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error deleting Blog: ${error.message}`);
+            } else {
+                toast.error("Unknown error occurred while deleting Blog.");
+            }
+        }
     };
 
+    const handleEditBlogPost = (rowData: editBlogResponse) => {
+       
+        setIsOpen(true)
+        setEditData({
+            title: rowData.title,
+            mini_title: rowData.mini_title,
+            tags: rowData.tags,
+            content: rowData.content,
+            image: rowData.image as File,
+            blog_category_id: rowData.blog_category_id,
+        })
+    }
+
+    function stripHtmlTags(content: string): string {
+        return content.replace(/<\/?[^>]+(>|$)/g, "");
+      }
+      
 
     return <div>
         {
@@ -174,7 +195,7 @@ export default function Blogs() {
                             <React.Fragment>
                                 <Overlary />
                                 <Modal className={{
-                                    modalContainer: "max-w-xl w-full mx-auto bg-white rounded-md p-5 min-h-fit top-10"
+                                    modalContainer: "max-w-3xl w-full mx-auto bg-white rounded-md p-5 min-h-fit top-10"
                                 }}>
                                     <Label name="Blogs" htmlFor="name" className="text-lg font-bold" />
                                     <FormProvider {...methods}>
@@ -188,6 +209,7 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
+                                                defaultValue={editData?.title as string}
                                             />
                                             <Input
                                                 type="text"
@@ -198,6 +220,7 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
+                                                defaultValue={editData?.mini_title as string}
                                             />
 
                                             <Input
@@ -209,24 +232,47 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
+                                                defaultValue={editData?.tags as string}
                                             />
 
                                             <Input
                                                 type="file"
-                                                {...methods.register("image")}
                                                 accept="image/*"
-                                                placeholder="Semi Title"
+                                                name="image"
+                                                placeholder="Image Filed"
                                                 className={{
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
+
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0]
+
+                                                    if (file) {
+                                                        methods.setValue("image", file, {
+                                                            shouldValidate: true
+                                                        })
+                                                    }
+                                                }}
+
                                             />
+                                            {editData?.image && typeof editData.image === "string" && (
+                                                <img
+                                                    src={`${url}/storage/${editData.image}`}
+                                                    alt="Blog Image"
+                                                    width={100}
+                                                    height={100}
+                                                    style={{ objectFit: "cover", borderRadius: "8px" }}
+                                                />
+                                            )}
+
 
 
                                             <Controller
 
                                                 control={methods.control}
                                                 name="content"
+                                                defaultValue={editData?.content as string}
                                                 render={({ field }) => (
                                                     <JoditEditor
                                                         ref={editor}
@@ -234,11 +280,12 @@ export default function Blogs() {
                                                         config={config}
                                                         onBlur={(newContent) => field.onChange(newContent)}
                                                         onChange={(newContent) => field.onChange(newContent)}
+
                                                     />
                                                 )}
                                             />
 
-                                            <select className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
+                                            <select defaultValue={editData?.blog_category_id as string} className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
                                                 <option>Select Blog Category</option>
                                                 {
                                                     blogCategory?.blog_categories?.map((category: blogCategories,) => {
@@ -276,7 +323,7 @@ export default function Blogs() {
                                     bordered
                                     loading={isLoading}
                                     loadAnimation={true}
-
+                                    height={600}
                                 >
                                     <Column minWidth={120} width={100} flexGrow={1}>
                                         <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
@@ -289,12 +336,14 @@ export default function Blogs() {
 
                                     <Column minWidth={120} width={100} flexGrow={1}>
                                         <HeaderCell align="center" className="text-backend-primary-text-color">Tags</HeaderCell>
-                                       <Cell dataKey="tags" align="center" />
+                                        <Cell dataKey="tags" align="center" />
                                     </Column>
 
-                                    <Column minWidth={150} width={200} align="center">
+                                    <Column minWidth={250} width={300} align="center">
                                         <HeaderCell align="center" className="text-backend-primary-text-color">Content</HeaderCell>
-                                        <Cell dataKey="content" align="center" />
+                                        <Cell dataKey="content" align="center">
+                                        {rowData => stripHtmlTags(rowData.content)}
+                                        </Cell>    
                                     </Column>
 
                                     <Column minWidth={150} width={200} align="center">
@@ -305,27 +354,30 @@ export default function Blogs() {
                                     <Column minWidth={120} width={100} flexGrow={1} align="center">
                                         <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
                                         <Cell className="cursor-pointer">
-                                           {
-                                             ((rowData) => (
-                                                <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id} />
-                                             ))
-                                           }
+                                            {
+                                                ((rowData) => (
+                                                    <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
+                                                        onClick={() => {
+                                                            handleEditBlogPost(rowData as editBlogResponse)
+                                                        }}
+                                                    />
+                                                ))
+                                            }
                                         </Cell>
 
                                     </Column>
                                     <Column minWidth={120} width={100} flexGrow={1} align="center">
                                         <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
                                         <Cell className="cursor-pointer">
-                                           {
-                                             ((rowData) => (
-                                                <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
-                                                  onClick={() =>{
-                                                    console.log(rowData.id)
-                                                    handleDelete(rowData.id)
-                                                  }}
-                                                />
-                                             ))
-                                           }
+                                            {
+                                                ((rowData) => (
+                                                    <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
+                                                        onClick={() => {
+                                                            handleDelete(rowData.id)
+                                                        }}
+                                                    />
+                                                ))
+                                            }
                                         </Cell>
                                     </Column>
                                 </Table>

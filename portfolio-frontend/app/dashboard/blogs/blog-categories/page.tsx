@@ -178,6 +178,7 @@ export default function BlogCategoryIndex() {
                                     cellBordered
                                     bordered
                                     loadAnimation={true}
+                                    height={600}
                                 >
                                     <Column minWidth={120} width={100} flexGrow={1}>
                                         <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
