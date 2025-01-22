@@ -24,7 +24,7 @@ import { toast } from "sonner";
 
 type projectPost = {
     name: string,
-    image: File,
+    image: File | null,
     link: string
     project_category_id: number,
 }
@@ -53,7 +53,10 @@ export default function Projects() {
     const [projectCategory, setProjectCategory] = useState<projectCategoryResponse | undefined>(undefined);
     const [isEditingMode, setEditingMode] = useState(false);
     const [projectId, setProjectId] = useState<number | undefined>(undefined);
-  
+
+
+    console.log(projectCategory?.projects.map(project => project.image))
+
     const token = Cookies.get("token");
 
     const { isOpen, setIsOpen, } = useToggle();
@@ -65,17 +68,14 @@ export default function Projects() {
     const { getData } = useGet<projectCategoryResponse | undefined>(`${url}/api/projects`);
 
     const { postData } = usePost<projectPost>(`${url}/api/projects`);
-    
-   
+
+
 
     const mutations = useMutation({
         mutationFn: (data: projectPost) => postData(data, {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-
         }),
-        onSuccess: (response) => {
-            if (!response?.data) return;
+        onSuccess: () => {
             toast.success("Project Created");
         },
         onError: () => {
@@ -84,17 +84,16 @@ export default function Projects() {
 
     })
 
-  
+
     // form submit 
     const onSubmit: SubmitHandler<projectPost> = async (data) => {
 
-        
+
         try {
             mutations.mutate(data, {
-                onSuccess: (response) => {
-                    console.log(response)
-                    if (!response?.data) return;
+                onSuccess: () => {
                     toast.success("Project Created");
+                    setIsOpen(false)
                 },
                 onError: () => {
                     toast.error("Project Creation Failed");
@@ -123,10 +122,10 @@ export default function Projects() {
         refetchOnMount: false,
     })
     const handleModal = () => {
-       setIsOpen(true)
+        setIsOpen(true)
     }
 
-    const {deleteData} = useDelete(`${url}/api/projects`);
+    const { deleteData } = useDelete(`${url}/api/projects`);
 
     const deleteMutation = useMutation({
         mutationFn: (id: number) => deleteData(id, {
@@ -179,12 +178,21 @@ export default function Projects() {
                                     <Input
                                         type="file"
                                         accept="image/*"
-                                        {...methods.register("image")}
-
+                                        name="image"
                                         placeholder="Project Image"
                                         className={{
                                             input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                             label: "text-backend-primary-text-color"
+                                        }}
+
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0]
+                                            if (file) {
+                                                methods.setValue("image", file, {
+                                                    shouldValidate: true
+                                                })
+                                            }
+
                                         }}
 
                                     />
@@ -249,8 +257,15 @@ export default function Projects() {
 
                         <Column minWidth={120} width={100} flexGrow={1}>
                             <HeaderCell align="center" className="text-backend-primary-text-color">Image</HeaderCell>
-                            <Cell className="w-full h-auto">
-                                <img src={`${url}/storage/${projectCategory?.projects[0].image}`} alt="project" className="w-full h-full object-contain" height="400" />
+                            <Cell>
+                                {rowData => (
+                                    <img
+                                        src={`${url}/storage/${rowData.image}`}
+                                        alt={rowData.name}
+                                        className="w-full h-full object-contain"
+                                        height="400"
+                                    />
+                                )}
                             </Cell>
                         </Column>
 
@@ -264,10 +279,11 @@ export default function Projects() {
                                 {
                                     ((rowData) => (
                                         <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
-                                        
-                                        onClick={() =>{
-                                            setEditingMode(true);
-                                         }}
+
+                                            onClick={() => {
+                                                setProjectId(rowData.id);
+                                                setEditingMode(true);
+                                            }}
                                         />
                                     ))
                                 }
@@ -280,9 +296,9 @@ export default function Projects() {
                                 {
                                     ((rowData) => (
                                         <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
-                                         onClick={() => {
-                                             handleDelete(rowData.id);
-                                         }}
+                                            onClick={() => {
+                                                handleDelete(rowData.id);
+                                            }}
                                         />
                                     ))
                                 }

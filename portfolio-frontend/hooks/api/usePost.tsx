@@ -24,7 +24,8 @@ export default function usePost<Type>(apiUrl:string){
                //  just pass the token in the header 
                // Authorization : `Bearer ${token}` for example not need to define headers
                headers:{
-                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Content-Type": "multipart/form-data",
                   ...customHeaders
                },
                ...customHeaders

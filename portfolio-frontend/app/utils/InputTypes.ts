@@ -81,5 +81,6 @@ export interface InputProps {
     autocomplete?: string;
     required?: boolean;
     readonly?: boolean;
+    defaultValue?: string | number | boolean | File | undefined;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
