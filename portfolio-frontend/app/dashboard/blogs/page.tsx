@@ -138,9 +138,29 @@ export default function Blogs() {
 
     const {deleteData} = useDelete(`${url}/api/posts`);
 
-    console.log(deleteData)
-    const handleDelete = async () => {
-        
+    const mutate = useMutation({
+        mutationFn: (id: number) => deleteData(id, {
+            Authorization: `Bearer ${token}`,
+        }),
+        onSuccess: () => {
+            toast.success("Blog deleted successfully");
+            fetchBlogCategories();
+        },
+        onError: () => {
+            toast.error("Failed to delete Blog");
+        }
+    });
+
+    const handleDelete = async (id: number) => {
+         try {
+             mutate.mutate(id);
+         } catch (error) {
+             if (error instanceof Error) {
+                 toast.error(`Error deleting Blog: ${error.message}`);
+             } else {
+                 toast.error("Unknown error occurred while deleting Blog.");
+             }
+         }
     };
 
 
@@ -299,7 +319,10 @@ export default function Blogs() {
                                            {
                                              ((rowData) => (
                                                 <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
-                                                  onClick={handleDelete}
+                                                  onClick={() =>{
+                                                    console.log(rowData.id)
+                                                    handleDelete(rowData.id)
+                                                  }}
                                                 />
                                              ))
                                            }

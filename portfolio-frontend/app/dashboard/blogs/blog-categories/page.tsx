@@ -8,6 +8,7 @@ import Label from "components/Label";
 import Modal from "components/Modal";
 import Overlary from "components/Overlary";
 import Title from "components/Title";
+import useDelete from "hooks/api/useDelete";
 import useGet from "hooks/api/useGet";
 import usePost from "hooks/api/usePost";
 import useToggle from "hooks/useToggle";
@@ -37,8 +38,6 @@ export default function BlogCategoryIndex() {
     const { isOpen, setIsOpen } = useToggle();
     const [blogCategory, setBlogCategory] = useState<blogCategoryResponse | null>(null);
 
-
-    console.log(blogCategory?.blogs)
     const url = process.env.NEXT_PUBLIC_API_URL;
     const methods = useForm<blogCategoryForm>({
         defaultValues: {
@@ -55,11 +54,12 @@ export default function BlogCategoryIndex() {
         mutationFn: (data: blogCategoryForm) => postData(data, {
             Authorization: `Bearer ${token}`,
         }),
-        onSuccess: (response) => {
-            if (!response) return
+        onSuccess: () => {
+
             toast.success("Blog Category Post successfully")
             setIsOpen(false)
             methods.reset()
+
         },
         onError: () => {
             toast.error("Failed to Post")
@@ -92,6 +92,36 @@ export default function BlogCategoryIndex() {
             }
         }
     }
+
+    const { deleteData } = useDelete(`${url}/api/blog-categories`);
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => deleteData(id, {
+            Authorization: `Bearer ${token}`,
+        }),
+        onSuccess: () => {
+            toast.success("Blog Category deleted successfully");
+            fetchBlogCategory();
+        },
+        onError: () => {
+            toast.error("Failed to delete Blog Category");
+        }
+    });
+
+
+    const handleDelete = (id: number) => {
+
+        console.log(id)
+        try {
+            deleteMutation.mutate(id); 
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error deleting Blog Category: ${error.message}`);
+            } else {
+                toast.error("Unknown error occurred while deleting Blog Category.");
+            }
+        }
+    };
 
 
     return (
@@ -167,8 +197,15 @@ export default function BlogCategoryIndex() {
                                     </Column>
                                     <Column minWidth={120} width={100} flexGrow={1} align="center">
                                         <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
-                                        <Cell className="cursor-pointer">
-                                            <BiTrash className="cursor-pointer text-lg text-red-700" key={blogCategory?.blogs[0].id} />
+                                        <Cell>
+                                            {(rowData) => (
+                                                <BiTrash
+                                                    className="cursor-pointer text-lg text-red-700"
+                                                    onClick={() => {
+                                                        handleDelete(rowData.id)
+                                                    }}
+                                                />
+                                            )}
                                         </Cell>
                                     </Column>
                                 </Table>

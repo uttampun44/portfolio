@@ -38,21 +38,25 @@ class ProjectController extends Controller
     {
 
     
-        Log::info("project store");
-
         try {
 
            $image = null;
 
            if($request->hasFile('image')){
                $image = $request->file('image')->storeAs('images', 'public');
+
+               Log::info("image path" . $image);
            }
 
-        return response()->json([
+           Project::create([
                'name' => $request->name,
                'image' => $image,
                'link' => $request->link,
                'project_category_id' => $request->project_category_id,
+           ]);
+
+        return response()->json([
+              'message' => 'Project created successfully',
            ], 201);
 
         } catch (\Throwable $th) {
@@ -75,7 +79,7 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return $this->projectInterface->editProjects($this->projectInterface->project->find($id));
     }
 
     /**
@@ -84,9 +88,21 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
        try {
-        //code...
+           $projects = $this->projectInterface->editProjects($this->projectInterface->project->find($id));
+
+           $projects->update([
+               'name' => $request->name,
+               'image' => $request->image,
+               'link' => $request->link,
+               'project_category_id' => $request->project_category_id,
+           ]);
+
+           return response()->json([
+               'message' => 'Project updated successfully',
+           ], 200);
        } catch (\Throwable $th) {
-        //throw $th;
+         Log::error("error" . $th->getMessage());
+         return response()->json(['error' => $th->getMessage()], 500);
        }
     }
 

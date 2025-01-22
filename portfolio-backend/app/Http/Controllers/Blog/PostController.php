@@ -44,9 +44,25 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         try {
-            $data = $this->postInterface->postPosts($request->all());
+          
+            $image = null;
 
-            return response()->json($data, 201);
+            if($request->hasFile('image')){
+                $image = $request->file('image')->store('images', 'public');
+            }
+
+            Post::create([
+                'title' => $request->title,
+                'mini_title' => $request->mini_title,
+                'tags' => $request->tags,
+                'content' => $request->content,
+                'blog_category_id' => $request->blog_category_id,
+                'image' => $image,
+            ]);
+
+            return response()->json([
+                'message' => 'Post created successfully',
+            ], 201);
         } catch (\Throwable $th) {
             Log::error("error while creating blog: " . $th->getMessage());
             return response()->json([
@@ -68,9 +84,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        return response()->json([
-            'post' => Post::find($id),
-        ], 200);
+        return $this->postInterface->editPosts($this->postInterface->getPosts()->find($id));
+       
     }
 
     /**

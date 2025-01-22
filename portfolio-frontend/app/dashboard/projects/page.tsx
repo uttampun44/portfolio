@@ -71,6 +71,7 @@ export default function Projects() {
     const mutations = useMutation({
         mutationFn: (data: projectPost) => postData(data, {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
 
         }),
         onSuccess: (response) => {
@@ -87,6 +88,7 @@ export default function Projects() {
     // form submit 
     const onSubmit: SubmitHandler<projectPost> = async (data) => {
 
+        
         try {
             mutations.mutate(data, {
                 onSuccess: (response) => {
@@ -126,10 +128,30 @@ export default function Projects() {
 
     const {deleteData} = useDelete(`${url}/api/projects`);
 
-    console.log(deleteData)
-    const handleDelete = async () => {
-       
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => deleteData(id, {
+            Authorization: `Bearer ${token}`,
+        }),
+        onSuccess: () => {
+            toast.success("Project Category deleted successfully");
+        },
+        onError: () => {
+            toast.error("Failed to delete Project Category");
+        }
+    });
+
+    const handleDelete = async (id: number) => {
+        try {
+            deleteMutation.mutate(id);
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error deleting Project Category: ${error.message}`);
+            } else {
+                toast.error("Unknown error occurred while deleting Project Category.");
+            }
+        }
     };
+
 
     return (
         <AuthenticateNavLink>
@@ -258,7 +280,9 @@ export default function Projects() {
                                 {
                                     ((rowData) => (
                                         <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
-                                         onClick={handleDelete}
+                                         onClick={() => {
+                                             handleDelete(rowData.id);
+                                         }}
                                         />
                                     ))
                                 }
