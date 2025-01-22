@@ -1,13 +1,16 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Title from "components/Title";
+import useDelete from "hooks/api/useDelete";
 import useGet from "hooks/api/useGet";
+import Cookies from "js-cookie";
 import AuthenticateNavLink from "layout/authenticatelayout/AuthenticateNavLink";
 import AuthenticateSidebar from "layout/authenticatelayout/AuthenticateSidebar";
 import { useState } from "react";
 import { BiEditAlt, BiTrash} from "react-icons/bi";
 import { Cell, Column, HeaderCell, Table } from "rsuite-table";
+import { toast } from "sonner";
 
 
 
@@ -21,6 +24,7 @@ interface projectCategoryResponse {
 
 export default function ProjectCategory() {
 
+    const token = Cookies.get("token");
     const url = process.env.NEXT_PUBLIC_API_URL;
     const { getData } = useGet<projectCategoryResponse | undefined>(`${url}/api/project-categories`);
 
@@ -38,6 +42,32 @@ export default function ProjectCategory() {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
     })
+
+    const { deleteData } = useDelete(`${url}/api/project-categories`);
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => deleteData(id, {
+            Authorization: `Bearer ${token}`,
+        }),
+        onSuccess: () => {
+            toast.success("Project Category deleted successfully");
+        },
+        onError: () => {
+            toast.error("Failed to delete Project Category");
+        }
+    });
+
+    const handleDelete = async (id: number) => {
+        try {
+            deleteMutation.mutate(id);
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Error deleting Project Category: ${error.message}`);
+            } else {
+                toast.error("Unknown error occurred while deleting Project Category.");
+            }
+        }
+    };
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
@@ -79,7 +109,11 @@ export default function ProjectCategory() {
                             <Cell>
                                 {(rowData: project_categories) => {
                                     return (
-                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} />
+                                        <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id} 
+                                         onClick={() => 
+                                            handleDelete(rowData.id)
+                                         }
+                                        />
                                     )
                                 }}
                             </Cell>

@@ -1,23 +1,33 @@
 import axios from "axios";
-import { useCallback} from "react";
+import { useCallback } from "react";
 
-export default function useDelete<T>(apiUrl:string){
-    
-     const deleteData = useCallback( async () =>{
-        try {
-            const response = await axios.delete<T>(apiUrl);
+export default function useDelete<T>(baseUrl: string) {
 
-            if(response.status === 200){
-                return response.data
+     
+    // custom hooks delete and headers
+    const deleteData = useCallback(async (id: number, headers?: Record<string, string>) => {
+            try {
+                const response = await axios.delete<T>(`${baseUrl}/${id}`, {
+                    headers,
+                });
+
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    throw new Error(`Failed to delete resource. Status: ${response.status}`);
+                }
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    console.error('Error deleting data:', error.message);
+                    throw new Error(error.message); 
+                } else {
+                    console.error('Unknown error occurred while deleting data.');
+                    throw new Error('Unknown error occurred.');
+                }
             }
-        
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                console.error('Error fetching data:', error.message);
-              } else {
-                console.error('Unknown error occurred while fetching data.');
-              }
-        }
-     }, [])
-    return { deleteData }
-}   
+        },
+        [baseUrl] 
+    );
+
+    return { deleteData };
+}

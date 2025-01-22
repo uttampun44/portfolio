@@ -38,7 +38,6 @@ export default function AuthenticateSidebar() {
   const fetchUsers = async (): Promise<usersResponse | undefined> => {
     const response = await getData();
     setUsers(response);
-    toast.success("Successfully fetched users");
     return response;
   }
 

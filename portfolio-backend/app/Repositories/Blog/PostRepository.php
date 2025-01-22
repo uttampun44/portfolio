@@ -24,12 +24,7 @@ class PostRepository implements PostInterface
 
     public function postPosts(array $data): Post
     {
-        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-
-            $data['image'] = $data['image']->store('images', 'public');
-         }
-
-         
+       
         return $this->post->create($data);
     }
 
