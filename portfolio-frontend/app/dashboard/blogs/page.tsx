@@ -63,6 +63,15 @@ type editBlogResponse = {
     blog_category_id: string,
 }
 
+type editBlogPost ={
+    title: string,
+    mini_title: string,
+    tags: string,
+    content: string,
+    image: File,    
+    blog_category_id: string,
+}
+
 
 export default function Blogs() {
 
@@ -74,7 +83,7 @@ export default function Blogs() {
     const { isOpen, setIsOpen, } = useToggle();
  
 
-    const [editData, setEditData] = useState<blogPost | undefined>(undefined);
+    const [editData, setEditData] = useState<editBlogPost | undefined>(undefined);
     const [isEditingMode, setEditingMode] = useState(false);
     const [postsId, setPostsId] = useState<number>()
 
@@ -119,7 +128,7 @@ export default function Blogs() {
         mutationFn: (data: blogPost) => putData(postsId as number, data,
              {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+        
         } ),
         onSuccess: (data) => {
             queryClient.setQueryData(['todo', { id: postsId }], data)
@@ -135,6 +144,7 @@ export default function Blogs() {
     };
  
     const onSubmit: SubmitHandler<blogPost> = async (data) => {
+        console.log(data)
         try {
             if(isEditingMode && postsId){
                 mutationPut.mutate(data)
@@ -197,12 +207,12 @@ export default function Blogs() {
         setEditingMode(true)
         setIsOpen(true)
         setEditData({
-            title: rowData.title,
-            mini_title: rowData.mini_title,
-            tags: rowData.tags,
-            content: rowData.content,
-            image: rowData.image as File,
-            blog_category_id: rowData.blog_category_id,
+            title: rowData.title || "",
+            mini_title: rowData.mini_title || "",
+            tags: rowData.tags || "",
+            content: rowData.content || "",
+            image: rowData.image as File || "",
+            blog_category_id: rowData.blog_category_id || "",
         })
     }
 
@@ -235,7 +245,7 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
-                                                defaultValue={editData?.title as string}
+                                                defaultValue={editData?.title as string || ""}
                                             />
                                             <Input
                                                 type="text"
@@ -246,7 +256,7 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
-                                                defaultValue={editData?.mini_title as string}
+                                                defaultValue={editData?.mini_title as string || ""}
                                             />
 
                                             <Input
@@ -258,7 +268,7 @@ export default function Blogs() {
                                                     input: "w-full focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md",
                                                     label: "text-backend-primary-text-color"
                                                 }}
-                                                defaultValue={editData?.tags as string}
+                                                defaultValue={editData?.tags as string || ""}
                                             />
 
                                             <Input
@@ -298,7 +308,7 @@ export default function Blogs() {
 
                                                 control={methods.control}
                                                 name="content"
-                                                defaultValue={editData?.content as string}
+                                                defaultValue={editData?.content as string || "" }
                                                 render={({ field }) => (
                                                     <JoditEditor
                                                         ref={editor}
@@ -311,7 +321,7 @@ export default function Blogs() {
                                                 )}
                                             />
 
-                                            <select defaultValue={editData?.blog_category_id as string} className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
+                                            <select defaultValue={editData?.blog_category_id as string || ""} className="text-backend-primary-text-color text-lg font-medium focus:outline-none border-[1px] border-backend-primary-text-color p-2 rounded-md" {...methods.register("blog_category_id")}>
                                                 <option>Select Blog Category</option>
                                                 {
                                                     blogCategory?.blog_categories?.map((category: blogCategories,) => {

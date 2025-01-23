@@ -91,7 +91,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
         try {
 
@@ -99,15 +99,23 @@ class PostController extends Controller
 
             $image = $post->image;
 
+            
+        
             if ($request->hasFile('image')) {
-
+                
+                
+                $oldImagePath = 'public/' . $post->image;
+                
+           
+                if (Storage::exists($oldImagePath)) {
+                    Storage::delete($oldImagePath);
+                }
+    
+             
                 $newImage = $request->file('image')->store('images', 'public');
 
-                if ($image) {
-                    Storage::disk('public')->delete($image);
-                }
-
-                $image = $newImage;
+                Log::info($newImage);
+                $image = $newImage; 
             }
 
             $post->update([
