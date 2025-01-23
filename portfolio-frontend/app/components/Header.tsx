@@ -3,7 +3,7 @@
 import { AuthContext } from "context/ContextApi";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 
@@ -12,14 +12,36 @@ export default function Header(){
     
    const {isToggle, setToggle} = useContext(AuthContext);
 
+   const [color, setColor] = useState(false);
 
    const handleClick = () => {
       document.getElementsByTagName("html")[0].classList.add('hamburgerSlide');
     setToggle(true);
    }
 
+ useEffect(() =>{
+   const scroll = () =>{
+      if(window.scrollY >= 80){
+       
+          setColor(true)
+      }else{
+         setColor(false);
+      }
+   }
+
+   window.addEventListener("scroll", scroll)
+
+   return () => {
+      window.removeEventListener("scroll", scroll)
+   }
+ }, [])
+
+   
+
     return(
-        <header>
+        <header   className={`max-md:fixed max-md:w-full max-md:z-50 ${
+         color ? "max-md:bg-bg-secondary" : ""
+       }`}>
              <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:px-6 max-md:py-6 ">
                   <div className="navLink p-5 bg-main-bg rounded-full flex justify-between max-md:hidden">
                        {
@@ -32,8 +54,8 @@ export default function Header(){
                           })
                        }
                     </div>  
-                    <div className="hamBurger  md:hidden flex justify-end">
-                       <GiHamburgerMenu className="w-6 h-6" onClick={handleClick} />
+                    <div className="hamBurger md:hidden flex justify-end">
+                       <GiHamburgerMenu className={`w-6 h-6 text-black`} onClick={handleClick} />
                     </div>
 
              </div>

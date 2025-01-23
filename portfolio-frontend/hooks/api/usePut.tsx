@@ -6,7 +6,10 @@ export default function usePut<T>(apiUrl:string){
     const putData = useCallback( async(id: number, data: T, headers?: Record<string, string>) => {
         try {
              const response = await axios.put<T>(`${apiUrl}/${id}`, data, {
-              headers: headers ,
+               headers:{
+                 "Accept": "application/json",
+                 ...headers
+               }
              });
               if(response.status === 200){
                 return response.data
