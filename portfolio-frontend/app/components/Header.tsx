@@ -3,7 +3,7 @@
 import { AuthContext } from "context/ContextApi";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 
@@ -19,6 +19,7 @@ export default function Header(){
     setToggle(true);
    }
 
+ useEffect(() =>{
    const scroll = () =>{
       if(window.scrollY >= 80){
        
@@ -29,6 +30,13 @@ export default function Header(){
    }
 
    window.addEventListener("scroll", scroll)
+
+   return () => {
+      window.removeEventListener("scroll", scroll)
+   }
+ }, [])
+
+   
 
     return(
         <header   className={`max-md:fixed max-md:w-full max-md:z-50 ${
