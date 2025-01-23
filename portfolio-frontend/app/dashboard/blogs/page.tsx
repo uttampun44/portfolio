@@ -15,11 +15,12 @@ import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import React, { useMemo, useRef, useState } from "react";
 import dynamic from 'next/dynamic';
 import useGet from "hooks/api/useGet";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import usePost from "hooks/api/usePost";
 import { toast } from "sonner";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import useDelete from "hooks/api/useDelete";
+import usePut from "hooks/api/usePut";
 
 
 type blogPost = {
@@ -74,6 +75,10 @@ export default function Blogs() {
  
 
     const [editData, setEditData] = useState<blogPost | undefined>(undefined);
+    const [isEditingMode, setEditingMode] = useState(false);
+    const [postsId, setPostsId] = useState<number>()
+
+    console.log(postsId)
 
     const editor = useRef(null);
 
@@ -94,6 +99,7 @@ export default function Blogs() {
     const methods = useForm<blogPost>();
 
     const { postData } = usePost<blogPost>(`${url}/api/posts`);
+    const {putData} = usePut<blogPost>(`${url}/api/posts`)
 
     const mutation = useMutation({
         mutationFn: (data: blogPost) => postData(data, {
@@ -107,14 +113,34 @@ export default function Blogs() {
         }
     })
 
+    const queryClient = useQueryClient()
+
+    const mutationPut = useMutation({
+        mutationFn: (data: blogPost) => putData(postsId as number, data,
+             {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        } ),
+        onSuccess: (data) => {
+            queryClient.setQueryData(['todo', { id: postsId }], data)
+            toast.success("Blog Updated");
+        },
+        onError: () => {
+            toast.error("Blog Update Failed");
+        }
+    })
 
     const handleClick = () => {
         setIsOpen(true);
     };
-
+ 
     const onSubmit: SubmitHandler<blogPost> = async (data) => {
         try {
-            mutation.mutate(data);
+            if(isEditingMode && postsId){
+                mutationPut.mutate(data)
+            }else{
+                mutation.mutate(data);
+            }
         } catch (error) {
             if (error instanceof Error) {
                 toast.error(`Error fetching data:${error.message}`);
@@ -168,7 +194,7 @@ export default function Blogs() {
     };
 
     const handleEditBlogPost = (rowData: editBlogResponse) => {
-       
+        setEditingMode(true)
         setIsOpen(true)
         setEditData({
             title: rowData.title,
@@ -299,7 +325,7 @@ export default function Blogs() {
                                             </select>
 
                                             <div className="button my-2">
-                                                <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">Submit</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
+                                                <Button type="submit" className="bg-bg-backend-secondary-color text-white rounded-md">{isEditingMode ? "Update" : "Create"}</Button> <Button className="bg-primary-text-color text-white rounded-md" onClick={() => {
                                                     setIsOpen(false);
                                                 }}>Cancel</Button>
                                             </div>
@@ -359,6 +385,7 @@ export default function Blogs() {
                                                     <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
                                                         onClick={() => {
                                                             handleEditBlogPost(rowData as editBlogResponse)
+                                                            setPostsId(rowData.id)
                                                         }}
                                                     />
                                                 ))
