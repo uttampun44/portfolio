@@ -3,9 +3,11 @@ import { useCallback} from "react";
 
 export default function usePut<T>(apiUrl:string){
    
-    const putData = useCallback( async (): Promise<T | undefined> =>{
+    const putData = useCallback( async(id: number, data: T, headers?: Record<string, string>) => {
         try {
-             const response = await axios.put<T>(apiUrl);
+             const response = await axios.put<T>(`${apiUrl}/${id}`, data, {
+              headers: headers ,
+             });
               if(response.status === 200){
                 return response.data
               }
