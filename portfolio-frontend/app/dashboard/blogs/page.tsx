@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import useDelete from "hooks/api/useDelete";
 import usePut from "hooks/api/usePut";
+import Card from "components/Card";
 
 
 type blogPost = {
@@ -44,8 +45,8 @@ type postResponse = {
     mini_title: string,
     tags: string,
     content: string,
-    image: string,
-    blog_category_id: number,
+    image: File,
+    blog_category_id: string,
 }
 
 type blogCategoryResponse = {
@@ -53,22 +54,12 @@ type blogCategoryResponse = {
     blog_categories: blogCategories[]
 }
 
-type editBlogResponse = {
-    id: number,
+type editBlogPost = {
     title: string,
     mini_title: string,
     tags: string,
     content: string,
-    image: string | File,
-    blog_category_id: string,
-}
-
-type editBlogPost ={
-    title: string,
-    mini_title: string,
-    tags: string,
-    content: string,
-    image: File,    
+    image: File,
     blog_category_id: string,
 }
 
@@ -81,7 +72,7 @@ export default function Blogs() {
 
     const token = Cookies.get("token");
     const { isOpen, setIsOpen, } = useToggle();
- 
+
 
     const [editData, setEditData] = useState<editBlogPost | undefined>(undefined);
     const [isEditingMode, setEditingMode] = useState(false);
@@ -108,7 +99,7 @@ export default function Blogs() {
     const methods = useForm<blogPost>();
 
     const { postData } = usePost<blogPost>(`${url}/api/posts`);
-    const {putData} = usePut<blogPost>(`${url}/api/posts`)
+    const { putData } = usePut<blogPost>(`${url}/api/posts`)
 
     const mutation = useMutation({
         mutationFn: (data: blogPost) => postData(data, {
@@ -126,10 +117,10 @@ export default function Blogs() {
 
     const mutationPut = useMutation({
         mutationFn: (data: blogPost) => putData(postsId as number, data,
-             {
-            Authorization: `Bearer ${token}`,
-        
-        } ),
+            {
+                Authorization: `Bearer ${token}`,
+
+            }),
         onSuccess: (data) => {
             queryClient.setQueryData(['todo', { id: postsId }], data)
             toast.success("Blog Updated");
@@ -142,13 +133,13 @@ export default function Blogs() {
     const handleClick = () => {
         setIsOpen(true);
     };
- 
+
     const onSubmit: SubmitHandler<blogPost> = async (data) => {
         console.log(data)
         try {
-            if(isEditingMode && postsId){
+            if (isEditingMode && postsId) {
                 mutationPut.mutate(data)
-            }else{
+            } else {
                 mutation.mutate(data);
             }
         } catch (error) {
@@ -203,23 +194,23 @@ export default function Blogs() {
         }
     };
 
-    const handleEditBlogPost = (rowData: editBlogResponse) => {
+    const handleEditBlogPost = (post: editBlogPost) => {
         setEditingMode(true)
         setIsOpen(true)
         setEditData({
-            title: rowData.title || "",
-            mini_title: rowData.mini_title || "",
-            tags: rowData.tags || "",
-            content: rowData.content || "",
-            image: rowData.image as File || "",
-            blog_category_id: rowData.blog_category_id || "",
+            title: post.title || "",
+            mini_title: post.mini_title || "",
+            tags: post.tags || "",
+            content: post.content || "",
+            image: post.image  as File,
+            blog_category_id: post.blog_category_id || "",
         })
     }
 
     function stripHtmlTags(content: string): string {
         return content.replace(/<\/?[^>]+(>|$)/g, "");
-      }
-      
+    }
+
 
     return <div>
         {
@@ -308,7 +299,7 @@ export default function Blogs() {
 
                                                 control={methods.control}
                                                 name="content"
-                                                defaultValue={editData?.content as string || "" }
+                                                defaultValue={editData?.content as string || ""}
                                                 render={({ field }) => (
                                                     <JoditEditor
                                                         ref={editor}
@@ -352,73 +343,56 @@ export default function Blogs() {
                                 <Title title="Blogs" /> <Button onClick={handleClick} className="bg-bg-backend-secondary-color p-5 rounded-md text-white font-medium">Create Blog</Button>
                             </div>
 
-                            <div className="tableBox">
-                                <Table
-                                    data={blogCategory?.posts}
-                                    cellBordered
-                                    bordered
-                                    loading={isLoading}
-                                    loadAnimation={true}
-                                    height={600}
-                                >
-                                    <Column minWidth={120} width={100} flexGrow={1}>
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">ID</HeaderCell>
-                                        <Cell dataKey="id" align="center" />
-                                    </Column>
-                                    <Column minWidth={120} width={100} flexGrow={1}>
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Title</HeaderCell>
-                                        <Cell dataKey="title" align="center" />
-                                    </Column>
-
-                                    <Column minWidth={120} width={100} flexGrow={1}>
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Tags</HeaderCell>
-                                        <Cell dataKey="tags" align="center" />
-                                    </Column>
-
-                                    <Column minWidth={250} width={300} align="center">
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Content</HeaderCell>
-                                        <Cell dataKey="content" align="center">
-                                        {rowData => stripHtmlTags(rowData.content)}
-                                        </Cell>    
-                                    </Column>
-
-                                    <Column minWidth={150} width={200} align="center">
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Blog Category</HeaderCell>
-                                        <Cell dataKey="blog_category.name" align="center" />
-                                    </Column>
-
-                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
-                                        <Cell className="cursor-pointer">
-                                            {
-                                                ((rowData) => (
-                                                    <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
-                                                        onClick={() => {
-                                                            handleEditBlogPost(rowData as editBlogResponse)
-                                                            setPostsId(rowData.id)
-                                                        }}
-                                                    />
-                                                ))
-                                            }
-                                        </Cell>
-
-                                    </Column>
-                                    <Column minWidth={120} width={100} flexGrow={1} align="center">
-                                        <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
-                                        <Cell className="cursor-pointer">
-                                            {
-                                                ((rowData) => (
-                                                    <BiTrash className="cursor-pointer text-lg text-red-700" key={rowData.id}
-                                                        onClick={() => {
-                                                            handleDelete(rowData.id)
-                                                        }}
-                                                    />
-                                                ))
-                                            }
-                                        </Cell>
-                                    </Column>
-                                </Table>
-                            </div>
+                            {
+                                blogCategory?.posts.length === 0 ? (
+                                    <>
+                                        No blogs Yet
+                                    </>
+                                ) : (
+                                    <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-12 gap-4">
+                                    {
+                                        blogCategory?.posts.map((post: postResponse) => {
+                                            return (
+                                                <Card className="bg-white rounded-md p-5 border-[1px] shadow-sm" key={post.id}>
+    
+                                                    <div className="flex flex-col">
+                                                        <h1 className="text-2xl font-bold">{post.title}</h1>
+                                                        <h6 className="text-lg font-medium">{post.mini_title}</h6>
+                                                    </div>
+                                                    <div className="flex items-center my-1">
+                                                        <h6 className="text-sm font-medium">{post.tags}</h6>
+                                                    </div>
+                                                    <img src={`${url}/storage/${post.image}`} alt="Blog Image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} />
+    
+                                                    <div className="pargraph my-2">
+                                                        <p className="text-sm">{stripHtmlTags(post.content)}</p>
+                                                    </div>
+    
+                                                    <div className="flex my-3 gap-x-5">
+                                                        <div className="edit flex gap-4" onClick={() => {
+                                                            handleEditBlogPost(post as postResponse)
+                                                            setPostsId(post.id)
+                                                        }}>
+                                                            <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={post.id}/> 
+                                                            edit
+                                                        </div>
+    
+                                                        <div className="delete flex gap-4" onClick={() => {
+                                                            handleDelete(post.id)
+                                                        }}>
+                                                            <BiTrash className="cursor-pointer text-lg text-red-700" key={post.id}
+                                                               
+                                                            />Delete
+                                                        </div>
+                                                    </div>
+                                                </Card>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                )
+                            }
+                           
                         </div>
                     </div>
                 </AuthenticateNavLink>

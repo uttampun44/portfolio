@@ -53,7 +53,7 @@ export default function AuthenticateSidebar() {
 
   return (
     <aside>
-      <div className="sideContainer w-56 absolute top-0 h-full z-50 bg-white border-r-[1px] pt-9 pb-20">
+      <div className="sideContainer w-56 fixed top-0 h-screen z-50 bg-white border-r-[1px] pt-9 pb-20">
         {/* Dashboard Title */}
         <div className="image flex px-4 items-center gap-x-3">
           <Icon iconName="dashboardIcon" className="w-8 h-auto" />
