@@ -10,9 +10,61 @@ import Link from "next/link";
 import Title from "components/Title";
 import Card from "components/Card";
 import Button from "components/Button";
+import { useState } from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+
+type reactResponse = {
+    id: number,
+    name: string,
+    image: string,
+    link: string,
+}
+
+type laravelResponse = {
+    id: number,
+    name: string,
+    image: string,
+    link: string,
+}
+
+type allProjectsResponse = {
+    id: number,
+    name: string,
+    image: string,
+    link: string,
+}
+
 
 
 export default function Project() {
+
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
+    const [react, setReact] = useState<reactResponse[]>([]);
+    const [laravel, setLaravel] = useState<laravelResponse[]>([]);
+    const [all_projects, setAllProjects] = useState<allProjectsResponse[]>([]);
+
+    console.log(react)
+    const fetchUsers = async () => {
+        const response = await axios.get(`${url}/api/home`);
+
+        setReact(response.data.react);
+        setLaravel(response.data.laravel);
+        setAllProjects(response.data.all_projects);
+        return response;
+    }
+
+
+
+    const { isLoading, isError, error } = useQuery({
+        queryFn: fetchUsers,
+        queryKey: ["react", "laravel", "all_projects"],
+        refetchOnWindowFocus: false,
+        staleTime: 30000
+    })
+
     return (
         <section className="my-32">
             <div className="projectContainer max-w-main-max-width mx-auto w-full text-center">
@@ -31,125 +83,75 @@ export default function Project() {
                             <TabPanel>
                                 {/* all */}
                                 <div className="projectGrid grid grid-cols-3 gap-4 my-4 max-md:grid max-md:grid-cols-1 max-md:gap-y-4">
-                                   
-                                <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
 
-                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
-                                            <h6 className="text-primary-text-color font-poppins text-lg font-">React / Laravel</h6>
-                                            <p className="text-wrap"> Fullstack Authentication Movie App</p>
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins">  <Link href="https://saintstream-eight.vercel.app/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
+                                    {
+                                        all_projects.map((item: allProjectsResponse, index) => (
+                                            <Card className=" px-4 rounded-md cursor-pointer" key={index}>
 
-
-                                    </Card>
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
-
-                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
-                                            <h6 className="text-primary-text-color font-poppins text-lg font-">React / Node</h6>
-                                            Fullstack Ecommerce
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins">  <Link href="https://exclusivestore-front.onrender.com/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
+                                                <div className="image bg-bg-card" >
+                                                    <img src={`${url}/storage/${item.image}`}  alt="saintstream"   />
+                                                </div>
+                                                <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
+                                                    <h6 className="text-primary-text-color font-poppins text-lg font-">{item.name}</h6>
+                                                    <p className="text-wrap"> Fullstack Authentication Movie App</p>
+                                                    <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins">  <Link href={item.link} aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
+                                                </div>
 
 
-                                    </Card>
-
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
-
-                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
-                                            <h6 className="text-primary-text-color font-poppins text-lg font-">React</h6>
-                                            React Amazon Clone
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins"> <Link href="https://prime-clone-1884d.web.app/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
+                                            </Card>
+                                        ))
+                                    }
 
 
-                                    </Card>
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
 
-                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
-                                            <h6 className="text-primary-text-color font-poppins text-lg font-">Laravel</h6>
-                                            <p className="text-wrap">Laravel CMS</p>
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-normal font-poppins"> <Link href="https://brightit.com.np/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
-
-
-                                    </Card>
                                 </div>
-                                
+
                             </TabPanel>
                             <TabPanel>
 
                                 {/* react */}
                                 <div className="projectGrid grid grid-cols-3 max-md:grid max-md:grid-cols-1 max-md:gap-y-4 gap-x-4 my-4">
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
+                                    {
+                                        react.map((item: reactResponse, index) => (
+                                            <Card className=" px-4 rounded-md cursor-pointer" key={index}>
 
-                                            <Image src={Sainstream} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
-                                            <h6 className="text-primary-text-color font-poppins text-lg font-">React / Laravel</h6>
-                                            <p className="text-wrap"> Fullstack Authentication Movie App</p>
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins">  <Link href="https://saintstream-eight.vercel.app/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
-
-
-                                    </Card>
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
-
-                                            <Image src={Exclusive} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
-                                            <h6 className="text-primary-text-color text-lg font-">React / Node</h6>
-                                            Fullstack Ecommerce
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg">  <Link href="https://exclusivestore-front.onrender.com/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
+                                                <div className="image bg-bg-card" >
+                                                    <img src={`${url}/storage/${item.image}`}  alt="saintstream"  />
+                                                </div>
+                                                <div className="detail grid gap-y-1 text-left my-1 text-2xl font-poppins font-bold">
+                                                    <h6 className="text-primary-text-color font-poppins text-lg font-">{item.name}</h6>
+                                                    <p className="text-wrap"> Fullstack Authentication Movie App</p>
+                                                    <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-poppins">  <Link href={item.link} aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
+                                                </div>
 
 
-                                    </Card>
+                                            </Card>
+                                        ))
+                                    }
 
-                                    <Card className=" px-4 rounded-md cursor-pointer">
-                                        <div className="image bg-bg-card">
 
-                                            <Image src={Amazon} loading="lazy" alt="saintstream" quality={100}  layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
-                                            <h6 className="text-primary-text-color text-lg font-">React</h6>
-                                            React Amazon Clone
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg"> <Link href="https://prime-clone-1884d.web.app/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
-                                    </Card>
                                 </div>
                             </TabPanel>
-                            
+
 
                             <TabPanel>
                                 {/* laravel */}
                                 <div className="projectGrid grid grid-cols-3 max-md:grid max-md:grid-cols-1 max-md:gap-y-4 gap-x-4 my-4">
-                                    <Card className=" px-4 rounded-md">
-                                        <div className="image bg-bg-card">
-
-                                            <Image src={Office} loading="lazy" alt="saintstream" quality={100} layout="responsive" width={200} height={200} />
-                                        </div>
-                                        <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
-                                            <h6 className="text-primary-text-color  text-lg font-">Laravel</h6>
-                                            <p className="text-wrap">Laravel CMS</p>
-                                            <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-normal"> <Link href="https://brightit.com.np/" aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
-                                        </div>
-
-
-                                    </Card>
+                                    {
+                                        laravel.map((item: laravelResponse, index) => (
+                                            <Card className=" px-4 rounded-md" key={index}> 
+                                                <div className="image bg-bg-card" >
+                                                    <img src={`${url}/storage/${item.image}`}  alt="saintstream"  />
+                                                </div>
+                                                <div className="detail grid gap-y-1 text-left my-1 text-2xl font-bold">
+                                                    <h6 className="text-primary-text-color  text-lg font-">{item.name}</h6>
+                                                    <p className="text-wrap">{item.name}</p>
+                                                    <Button className="bg-primary-text-color !p-2 text-white rounded-md w-24 text-lg font-normal"> <Link href={item.link} aria-label="movie-app" className="text-base font-normal" target="__blank">View</Link></Button>
+                                                </div>
+                                            </Card>
+                                        ))
+                                    }
+                                   
                                 </div>
                             </TabPanel>
 
