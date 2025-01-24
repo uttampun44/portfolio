@@ -14,7 +14,11 @@ import Button from "components/Button";
 
 
 
+
 export default function Home() {
+
+
+
   return (
     <>
       <FrontLayout>
@@ -34,20 +38,20 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="img w-1/2 flex flex-col max-md:w-full max-md:mt-5">
-                   <div className="imgProfile">
-                   <Image src={Profile}
-                    alt="profile"
-                    className="w-full h-auto float-right object-contain"
-                    quality={100}
-                    priority={true}
-                    layout="responsive" width={300} height={300}
-              
-                  />
-                   </div>
+                  <div className="imgProfile">
+                    <Image src={Profile}
+                      alt="profile"
+                      className="w-full h-auto float-right object-contain"
+                      quality={100}
+                      priority={true}
+                      layout="responsive" width={300} height={300}
+
+                    />
+                  </div>
                   <div className="iconRow flex align-center justify-center text-xl  gap-x-4 my-4">
-                      <Link href="https://www.linkedin.com/in/uttam-pun-35a533194/" aria-label="icons" target="__blank"><FaLinkedin /></Link>
-                      <Link href="https://github.com/uttampun44/" aria-label="icons" target="__blank"><FaGithub /></Link>
-                      <Link href="https://www.facebook.com/upun3" aria-label="icons" target="__blank"><FaFacebookSquare /></Link>
+                    <Link href="https://www.linkedin.com/in/uttam-pun-35a533194/" aria-label="icons" target="__blank"><FaLinkedin /></Link>
+                    <Link href="https://github.com/uttampun44/" aria-label="icons" target="__blank"><FaGithub /></Link>
+                    <Link href="https://www.facebook.com/upun3" aria-label="icons" target="__blank"><FaFacebookSquare /></Link>
                   </div>
 
                 </div>
@@ -55,9 +59,9 @@ export default function Home() {
             </div>
           </section>
 
-         <About />
-         <Project />
-         <DesignTogether />
+          <About />
+          <Project />
+          <DesignTogether />
         </main>
       </FrontLayout>
     </>

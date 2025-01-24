@@ -5,6 +5,8 @@ use App\Http\Controllers\Blog\BlogCategory;
 use App\Http\Controllers\Blog\BlogCategoryController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Map\MapController;
 use App\Http\Controllers\Project\ProjectCategoryController;
 use App\Http\Controllers\Project\ProjectController;
 use Illuminate\Http\Request;
@@ -16,6 +18,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/sign-up', [AuthenticationController::class, 'signup']);
+Route::get('/home', [HomeController::class, 'home']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboard']);
@@ -24,4 +28,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/projects', ProjectController::class)->only(['index', 'store' ,'edit', 'update', 'destroy']);
     Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
     Route::resource('/posts', PostController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('/map-locations', MapController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
 });
