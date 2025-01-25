@@ -29,9 +29,9 @@ export const navData = [
      name: "Login",
      link: "login"
    },
-   {
-     id: 6,
-     name: "Sign Up",
-     link: "sign-up"
-   }
+   // {
+   //   id: 6,
+   //   name: "Sign Up",
+   //   link: "sign-up"
+   // }
 ]

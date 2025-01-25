@@ -60,7 +60,7 @@ export default function Header(){
 
              </div>
 
-             <div className={`menuMobile h-screen bg-main-bg fixed inset-0 z-10 overflow-hidden ${isToggle ? 'transform translate-y-36 ease-out duration-300 delay-75' : 'translate-y-full ease-out duration-300 delay-75'}`}>
+             <div className={`menuMobile h-screen bg-main-bg fixed inset-0 z-10 overflow-hidden ${isToggle ? 'transform translate-y-72 ease-out duration-300 delay-75' : 'translate-y-full ease-out duration-300 delay-75'}`}>
 
                <IoIosClose onClick={() => {
                   setToggle(false)
