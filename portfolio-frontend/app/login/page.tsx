@@ -119,7 +119,9 @@ export default function Login() {
               <div className="checkbox my-5">
                 <Input type="checkbox" className={{
                   input: "border-2 border-bg-secondary"
-                }} /> <span className="font-medium">I agree to the terms & policy</span>
+                }} 
+                required={true}
+                /> <span className="font-medium">I agree to the terms & policy</span>
               </div>
 
               <div className="button">

@@ -99,7 +99,7 @@ export default function SignUp() {
               <div className="checkbox my-5">
                 <Input type="checkbox" className={{
                   input: "border-2 border-bg-secondary"
-                }} /> <span className="font-medium">I agree to the terms & policy</span>
+                }} required /> <span className="font-medium">I agree to the terms & policy</span>
               </div>
 
               <div className="button">

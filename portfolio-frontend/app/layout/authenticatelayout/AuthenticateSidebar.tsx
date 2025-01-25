@@ -23,7 +23,7 @@ type usersResponse = {
 
 
 export default function AuthenticateSidebar() {
-  
+
   const [selectedData, setSelectedData] = useState<number | null>(null);
 
   const handleToggle = (id: number) => {
@@ -44,7 +44,7 @@ export default function AuthenticateSidebar() {
 
   // refetching on windows focus will not rerender the data on the page
 
-    useQuery({
+  useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
     refetchOnWindowFocus: false,
@@ -65,21 +65,26 @@ export default function AuthenticateSidebar() {
         <div className="menu px-4 py-10">
           <ul className="menuList">
             {SidebarData.map((item, index: number) => (
-              <li key={index} className="menuItem gap-4 my-2">
-                {/* Parent Item */}
-                <Link
-                  href={item.href}
-                  className="text-base font-medium text-backend-primary-text-color"
-                  onClick={() => handleToggle(item.id)}
-                >
-                  {item.name}
-                </Link>
-
-                {/* Submenu */}
+              <React.Fragment key={index}>
+                <li  className="menuItem gap-4 my-2 flex items-center">
+                  {/* Parent Item */}
+                  {
+                    item.iconName && (
+                      <Icon iconName={item.iconName} className="w-8 h-auto" />
+                    )
+                  }
+                  <Link
+                    href={item.href}
+                    className="text-base font-medium text-backend-primary-text-color"
+                    onClick={() => handleToggle(item.id)}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
                 {selectedData === item.id && item.subNav && (
-                  <ul className="subMenu pl-6 mt-2">
-                    {item.subNav.map((subItem, subIndex: number) => (
-                      <li key={subIndex} className="subMenuItem my-1">
+                  <React.Fragment >
+                    {item.subNav.map((subItem, index: number) => (
+                      <li  className="subMenuItem my-1" key={index}>
                         <Link
                           href={subItem.href}
                           className="text-sm font-medium text-backend-primary-text-color"
@@ -88,9 +93,10 @@ export default function AuthenticateSidebar() {
                         </Link>
                       </li>
                     ))}
-                  </ul>
+                  </React.Fragment>
                 )}
-              </li>
+
+              </React.Fragment>
             ))}
           </ul>
         </div>
