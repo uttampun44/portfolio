@@ -29,4 +29,9 @@ class ContactMeRepository implements ContactMeInterface
     {
         return $contactMe->delete();
     }
+
+    public function find(int $id): ?ContactMe
+    {
+        return $this->contatMe->find($id);
+    }
 }

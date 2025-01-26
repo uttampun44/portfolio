@@ -20,6 +20,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/sign-up', [AuthenticationController::class, 'signup']);
 Route::get('/home', [HomeController::class, 'home']);
+Route::post('/contact-me', [ContactmeController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -34,6 +35,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/post/{id}', [MapController::class, 'update']);
     Route::delete('/post/{id}', [MapController::class, 'destroy']);
     Route::get('/contact-me', [ContactmeController::class, 'index']);
-    Route::post('/contact-me', [ContactmeController::class, 'store']);
     Route::delete('/contact-me/{id}', [ContactmeController::class, 'destroy']);
 });

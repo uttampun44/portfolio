@@ -11,4 +11,6 @@ interface ContactMeInterface
     public function postContactMe(array $data):ContactMe;
 
     public function deleteContactMe(ContactMe $contactMe);
+
+    public function find(int $id):?ContactMe;
 }
