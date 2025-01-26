@@ -31,8 +31,19 @@ class ContactmeController extends Controller
    public function destroy($id)
    {
     try {
-        $contactme = $this->contactmeInterface->deleteContactMe($id);
-        if(!$contactme)
+       
+        $contact = $this->contactmeInterface->find($id);
+
+    
+        if (!$contact) {
+            return response()->json(['error' => 'Contact not found'], 404);
+        }
+
+    
+        $this->contactmeInterface->deleteContactMe($contact);
+
+
+        if(!$contact)
         {
             return response()->json(['error' => 'Contact me not found'], 404);
         }

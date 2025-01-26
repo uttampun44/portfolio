@@ -1,19 +1,21 @@
 "use client"
 
+import { useMutation } from "@tanstack/react-query";
 import Button from "components/Button";
 import Input from "components/Input";
 import Title from "components/Title";
 import usePost from "hooks/api/usePost";
 import FrontLayout from "layout/FrontLayout";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 
 type contatcForm={
     contact_name:string,
     street:string,
     city:string,
-    postal:string,
-    phone:number,
+    postal_code:string,
+    phone_number:string,
     email:string,
     message:string
 }
@@ -24,18 +26,29 @@ export default function ContactMe() {
           contact_name: "",
           street: "",
           city: "",
-          postal: "",
-          phone: 9814436510,
+          postal_code: "",
+          phone_number: "",
           email: "",
         }
     })
     
-    const {postData} = usePost<contatcForm>(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`);
+    const {postData} = usePost<contatcForm>(`${process.env.NEXT_PUBLIC_API_URL}/api/contact-me`);
+
+    const mutation = useMutation({
+        mutationFn: (data: contatcForm) => postData(data),
+        onSuccess: () => {
+            toast.success("Message sent successfully");
+        },
+        onError: () => {
+            toast.error("Message not sent");
+        }
+    })
 
     const onSubmit: SubmitHandler<contatcForm> = async (data) => {
+        console.log(data)
          try {
-            const response = await postData(data);
-             return response?.data
+            mutation.mutate(data);
+             
          } catch (error) {
             if (error instanceof Error) {
                 console.error('Error fetching data:', error.message);
@@ -78,14 +91,14 @@ export default function ContactMe() {
                                     <Input type="text" placeholder="Postal" className={{
                                         input: "focus:outline-none border-b-2 w-full text-lg"
                                     }} 
-                                    {...methods.register("postal")}
+                                    {...methods.register("postal_code")}
                                     />
 
                                 </div>
                                 <Input type="number" placeholder="Contact Phone" className={{
                                     input: "focus:outline-none border-b-2 w-full text-lg my-4"
                                 }} 
-                                {...methods.register("phone")}
+                                {...methods.register("phone_number")}
                                 />
                                 <Input type="email" placeholder="Email"
                                  className={{

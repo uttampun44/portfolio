@@ -5,8 +5,6 @@ import LoginImage from "public/images/loginImage.png";
 import Image from "next/image";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
-import Google from "public/images/google.png";
-import Github from "public/images/github.png";
 import Title from "components/Title";
 import Input from "components/Input";
 import Button from "components/Button";
@@ -63,17 +61,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
 
     try {
-      mutation.mutate(data, {
-        onSuccess: (response) => {
-          if(!response?.data) return;
-          document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
-          toast.success("Login Successfully");
-          router.push("/dashboard");
-        },
-        onError: () => {
-          toast.error("Login Failed");
-        }
-      });
+      mutation.mutate(data)
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error fetching data:', error.message);
@@ -127,18 +115,11 @@ export default function Login() {
               <div className="button">
                 <Button type="submit" className="bg-primary-text-color text-white py-1 px-2 rounded-md">Login</Button>
               </div>
-
-              <div className="or flex items-center gap-x-1 my-10 max-md:my-5">
-                <hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr><span>or</span><hr className="h-[1px] border-2 border-bg-bg-fourth w-full"></hr>
-              </div>
-              <div className="login flex justify-between gap-x-2  max-md:grid max-md:grid-cols-1 max-md:gap-y-5">
-                <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2" ><Image src={Google} alt="google" />Signup with Google</Button>
-                <Button className="flex gap-x-1 items-center border-2 border-bg-bg-fourth rounded-md md:w-1/2"><Image src={Github} alt="google" width={24} height={24} objectFit="contain" />Signup with Github</Button>
-              </div>
+          
             </form>
           </FormProvider>
-          <div className="haveAccount text-center my-2 text-primary-text-color text-lg font-medium">
-            <span>Have an account ? </span><Link href="/sign-up" className="text-blue-700">Signup</Link> Or <Link href="/" aria-label="home" className=" text-blue-700 text-center">Home</Link>
+          <div className="haveAccount my-2 text-primary-text-color text-lg font-medium">
+          <Link href="/" aria-label="home" className=" text-blue-700 text-center">Home</Link>
           </div>
 
 

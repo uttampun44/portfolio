@@ -61,4 +61,10 @@ export const SidebarData:SideNav[]   = [
             }
         ]
     },
+    {
+        id: 10,
+        name: "Contact Me",
+        href: "/dashboard/contact-message",
+       
+    }
 ];          
