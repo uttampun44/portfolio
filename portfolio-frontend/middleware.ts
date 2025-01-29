@@ -6,7 +6,9 @@ const middleware = (request: NextRequest) => {
   
   const token = request.cookies.get("token");
 
-  if (!token || !token === undefined) {
+  console.log(token?.value);
+
+  if (!token?.value) {
    
     return NextResponse.redirect(new URL("/login", request.url));
   }
