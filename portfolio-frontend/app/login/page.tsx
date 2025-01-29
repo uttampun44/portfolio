@@ -46,16 +46,18 @@ export default function Login() {
     mutationFn: (data: loginForm) => postData(data),
     onSuccess: (response) => {
    
-         toast.success("Login Successfully");
-
          document.cookie = `token=${response?.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
    
          dispatch(setToken(response?.token || ""));
-         router.push("/dashboard");
+        
+         if(response?.token){
+           router.push("/dashboard");  
+           toast.success("Login Successfully");
+         }else{
+           toast.error("Login Failed");
+         }
     },
-    onError: () => {
-      toast.error("Login Failed");
-    }
+   
   })
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {

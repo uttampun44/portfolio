@@ -6,7 +6,7 @@ type methodType = "POST" | "PUT";
 interface postData<T> {
     data: T,
     status: number,
-    token:string,
+    token?:string,
     method?: methodType
     headers?: Record<string, string>
    
