@@ -52,9 +52,6 @@ export default function Projects() {
     const [isEditingMode, setEditingMode] = useState(false);
     const [projectId, setProjectId] = useState<number | undefined>(undefined);
 
-
-    console.log(projectCategory?.projects.map(project => project.image))
-
     const token = Cookies.get("token");
 
     const { isOpen, setIsOpen, } = useToggle();

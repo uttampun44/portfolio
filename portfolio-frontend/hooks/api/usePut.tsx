@@ -3,7 +3,7 @@ import { useCallback} from "react";
 
 export default function usePut<T>(apiUrl:string){
    
-    const putData = useCallback( async(id: number, data: T, headers?: Record<string, string>) => {
+    const putData =  async(id: number, data: T, headers?: Record<string, string>) => {
         try {
              const response = await axios.put<T>(`${apiUrl}/${id}`, data, {
                headers:{
@@ -21,7 +21,7 @@ export default function usePut<T>(apiUrl:string){
                 console.error('Unknown error occurred while fetching data.');
               }
         }
-      }, []) 
+      }
 
       return { putData }    
 }

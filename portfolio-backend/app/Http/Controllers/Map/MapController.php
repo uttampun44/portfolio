@@ -11,7 +11,7 @@ class MapController extends Controller
 {
     public function index()
     {
-
+      return response()->json(MapLocation::select('id', 'map_link')->get(), 200);
     }
 
     public function store(Request $request)
@@ -42,16 +42,5 @@ class MapController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            MapLocation::destroy($id);
-            return response()->json([
-                'message' => 'Map location deleted successfully',
-            ], 200);
-        } catch (\Throwable $th) {
-            Log::error("error" . $th->getMessage());
-            return response()->json(['error' => $th->getMessage()], 500);
-        }
-    }
+ 
 }
