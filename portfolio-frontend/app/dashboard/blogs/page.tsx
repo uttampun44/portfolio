@@ -77,9 +77,7 @@ export default function Blogs() {
     const [editData, setEditData] = useState<editBlogPost | undefined>(undefined);
     const [isEditingMode, setEditingMode] = useState(false);
     const [postsId, setPostsId] = useState<number>()
-
-    console.log(postsId)
-
+    
     const editor = useRef(null);
 
     const [blogCategory, setBlogCategory] = useState<blogCategoryResponse | undefined>(undefined);
@@ -122,7 +120,7 @@ export default function Blogs() {
 
             }),
         onSuccess: (data) => {
-            queryClient.setQueryData(['todo', { id: postsId }], data)
+            queryClient.setQueryData(['blogs', { id: postsId }], data)
             toast.success("Blog Updated");
         },
         onError: () => {
@@ -211,6 +209,7 @@ export default function Blogs() {
         return content.replace(/<\/?[^>]+(>|$)/g, "");
     }
 
+    if (isLoading) return toast.error("Loading...");
 
     return <div>
         {

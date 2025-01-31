@@ -31,9 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/blog-categories', BlogCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
     Route::resource('/posts', PostController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
     Route::get('/map', [MapController::class, 'index']);
-    Route::post('/post', [MapController::class, 'store']);
-    Route::put('/post/{id}', [MapController::class, 'update']);
-    Route::delete('/post/{id}', [MapController::class, 'destroy']);
+    Route::post('/map-links', [MapController::class, 'store']);
+    Route::put('/map/{id}', [MapController::class, 'update']);
     Route::get('/contact-me', [ContactmeController::class, 'index']);
     Route::delete('/contact-me/{id}', [ContactmeController::class, 'destroy']);
 });

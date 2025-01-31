@@ -66,5 +66,11 @@ export const SidebarData:SideNav[]   = [
         name: "Contact Me",
         href: "/dashboard/contact-message",
        
+    },
+    {
+        id: 11,
+        name: "Map Link",
+        href: "/dashboard/map",
+       
     }
 ];          
