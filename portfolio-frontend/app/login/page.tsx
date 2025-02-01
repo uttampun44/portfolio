@@ -3,7 +3,7 @@
 
 import LoginImage from "public/images/loginImage.png";
 import Image from "next/image";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, set, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import Title from "components/Title";
 import Input from "components/Input";
@@ -15,6 +15,7 @@ import usePost from "hooks/api/usePost";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useState } from "react";
 
 
 interface loginForm {
@@ -28,6 +29,8 @@ export default function Login() {
 
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>()
+
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
 
 
@@ -54,6 +57,7 @@ export default function Login() {
            router.push("/dashboard");  
            toast.success("Login Successfully");
          }else{
+            setErrorMessage("Invalid Credentials");
            toast.error("Login Failed");
          }
     },
@@ -104,8 +108,11 @@ export default function Login() {
                 autocomplete="current-password"
                 required={true}
               />
-
-
+          
+             {
+               errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>
+             }
+                
               <div className="checkbox my-5">
                 <Input type="checkbox" className={{
                   input: "border-2 border-bg-secondary"

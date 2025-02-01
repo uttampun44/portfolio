@@ -9,7 +9,6 @@ interface postData<T> {
     token?:string,
     method?: methodType
     headers?: Record<string, string>
-   
 }
 
 export default function usePost<Type>(apiUrl:string){
