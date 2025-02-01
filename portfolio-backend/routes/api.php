@@ -6,6 +6,7 @@ use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Contactme\ContactmeController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\FrontMapController;
 use App\Http\Controllers\Frontend\HomeController;
 
 use App\Http\Controllers\Map\MapController;
@@ -23,6 +24,7 @@ Route::post('/sign-up', [AuthenticationController::class, 'signup']);
 Route::get('/home', [HomeController::class, 'home']);
 Route::post('/contact-me', [ContactmeController::class, 'store']);
 Route::get('/blogs', [BlogController::class, 'posts']);
+Route::get('/map-link', [FrontMapController::class, 'map']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboard']);
