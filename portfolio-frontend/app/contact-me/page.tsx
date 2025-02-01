@@ -1,11 +1,13 @@
 "use client"
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Button from "components/Button";
 import Input from "components/Input";
 import Title from "components/Title";
 import usePost from "hooks/api/usePost";
 import FrontLayout from "layout/FrontLayout";
+import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -19,7 +21,31 @@ type contatcForm={
     email:string,
     message:string
 }
+
+type mapResponse = {
+    id: number,
+    map_link: string,
+}
+
 export default function ContactMe() {
+
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
+    const [map, setMap] = useState<mapResponse[]>([]);
+
+    const fetchMap = async (): Promise<mapResponse[]> => {
+        const response = await axios.get(`${url}/api/map-link`);
+        setMap(response.data.map);
+        return response.data;
+    }
+
+    useQuery({
+        queryKey: ["map"],
+        queryFn: fetchMap,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+    });
+
 
     const methods = useForm<contatcForm>({
         defaultValues:{
@@ -74,24 +100,26 @@ export default function ContactMe() {
                                     input: "focus:outline-none border-b-2 w-full text-lg mb-4"
                                 }}
                                  {...methods.register("contact_name")}
-                            
+                                 required={true}
                                 />
                                 <Input type="text" placeholder="Street"
                                  className={{
                                     input: "focus:outline-none border-b-2 w-full text-lg my-4" }}
                                   {...methods.register("street")}
-                                   
+                                  required={true}
                                   />
                                 <div className="flex gap-x-8 my-4">
                                     <Input type="text" placeholder="City" className={{
                                         input: "focus:outline-none border-b-2 w-full text-lg"
                                     }} 
                                     {...methods.register("city")}
+                                    required={true}
                                     />
                                     <Input type="text" placeholder="Postal" className={{
                                         input: "focus:outline-none border-b-2 w-full text-lg"
                                     }} 
                                     {...methods.register("postal_code")}
+                                    required={true}
                                     />
 
                                 </div>
@@ -99,12 +127,14 @@ export default function ContactMe() {
                                     input: "focus:outline-none border-b-2 w-full text-lg my-4"
                                 }} 
                                 {...methods.register("phone_number")}
+                                required={true}
                                 />
                                 <Input type="email" placeholder="Email"
                                  className={{
                                     input: "focus:outline-none border-b-2 w-full text-lg my-4"
                                 }} 
                                 {...methods.register("email")}
+                                required={true}
                                 />
 
                                 <Input type="text"
@@ -112,13 +142,20 @@ export default function ContactMe() {
                                     input: "focus:outline-none border-b-2 w-full text-lg my-4"
                                 }} 
                                 {...methods.register("message")}
+                                required={true}
                                 />
                                 <Button type="submit" className="bg-primary-text-color text-white rounded-md">Submit</Button>
                             </form>
                             </FormProvider>
                         </div>
                         <div className="map">
-
+                             {
+                                 map.map((item: mapResponse) => (
+                                     <React.Fragment key={item.id}>
+                                        <iframe src={item.map_link} title="map" className="w-full h-full" allowFullScreen></iframe>
+                                     </React.Fragment>
+                                 ))
+                             }
                         </div>
                     </div>
                 </div>
