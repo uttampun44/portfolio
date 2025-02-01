@@ -46,7 +46,6 @@ export default function Project() {
     const [laravel, setLaravel] = useState<laravelResponse[]>([]);
     const [all_projects, setAllProjects] = useState<allProjectsResponse[]>([]);
 
-    console.log(react)
     const fetchUsers = async () => {
         const response = await axios.get(`${url}/api/home`);
 

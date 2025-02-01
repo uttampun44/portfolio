@@ -26,4 +26,6 @@ class HomeController extends Controller
             'all_projects' => $all,
         ], 200);
     }
+
+    
 }

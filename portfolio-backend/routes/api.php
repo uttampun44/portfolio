@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Authentication\AuthenticationController;
-use App\Http\Controllers\Blog\BlogCategory;
 use App\Http\Controllers\Blog\BlogCategoryController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Contactme\ContactmeController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
+
 use App\Http\Controllers\Map\MapController;
 use App\Http\Controllers\Project\ProjectCategoryController;
 use App\Http\Controllers\Project\ProjectController;
@@ -21,7 +22,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/sign-up', [AuthenticationController::class, 'signup']);
 Route::get('/home', [HomeController::class, 'home']);
 Route::post('/contact-me', [ContactmeController::class, 'store']);
-
+Route::get('/blogs', [BlogController::class, 'posts']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboard']);
