@@ -74,7 +74,9 @@ export default function Header(){
                          navData.map((data, index) => {
                            return(
                               <div className="menuLink " key={index}>
-                                 <Link href={`${data.link}`} aria-label={data.name} className="text-white font-poppins text-2xl font-medium">{data.name}</Link>
+                                 <Link href={`${data.link}`} onClick={() => {
+                                    if(data.link) setToggle(false)
+                                 }} aria-label={data.name} className="text-white font-poppins text-2xl font-medium">{data.name}</Link>
                               </div>
                            )
                          })
