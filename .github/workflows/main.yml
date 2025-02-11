@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - development
+      - 'SCRUM-*'
+      - 'feature-*'
+      - 'bugfix-*'
+  pull_request:
+    branches:
+      - development
+      
   workflow_dispatch:
     #sync with main branch
 jobs:
@@ -17,7 +24,7 @@ jobs:
       - name: Setup git
         run: |
           git config --global user.name 'uttampun'
-          git config --global user.email 'uttampun62@gmail.com'
+          git config --global user.email 'uttampun50@gmail.com'
 
       # Checkout code
       - name: Checkout repository
