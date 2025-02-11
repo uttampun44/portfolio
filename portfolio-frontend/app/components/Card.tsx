@@ -33,7 +33,7 @@ interface cardProps {
 
 const Card:React.FC<cardProps> = ({children, className}) =>{
     return(
-        <div className={`cardContainer min-w-96 min-h-fit, ${className}`}>
+        <div role="region" className={`cardContainer min-w-96 min-h-fit, ${className}`}>
            {children}
         </div>
     )
