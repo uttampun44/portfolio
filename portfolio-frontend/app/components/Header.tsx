@@ -4,8 +4,10 @@ import { AuthContext } from "context/ContextApi";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import { BiStar } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
+import Icon from "./Icon";
 
 
 export default function Header(){
@@ -43,7 +45,7 @@ export default function Header(){
          color ? "max-md:bg-bg-secondary" : ""
        }`}>
              <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:px-6 max-md:py-6 ">
-                  <div className="navLink p-5 bg-main-bg rounded-full flex justify-between max-md:hidden">
+                  <div className="navLink p-5 bg-main-bg rounded-full flex items-center justify-between max-md:hidden">
                        {
                           navData.map((data, index) => {
                             return(
@@ -53,7 +55,11 @@ export default function Header(){
                             )
                           })
                        }
-                    </div>  
+                     <div className="themeClick">
+                      <Icon iconName="star" className="text-white" />
+                      {/* <Icon iconName="darkStar" className="text-white" /> */}
+                     </div>
+                    </div> 
                     <div className="hamBurger md:hidden flex justify-end">
                        <GiHamburgerMenu className={`w-6 h-6 text-black`} onClick={handleClick} />
                     </div>
