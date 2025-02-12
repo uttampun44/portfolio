@@ -1,14 +1,16 @@
    "use client";
     import React, {createContext, ReactNode, useState} from "react";
 
+    type ThemeType = "light" | "dark";
+
     interface ThemeValue {
-      isDark: boolean;
-      setDark: React.Dispatch<React.SetStateAction<boolean>>;
+      theme: ThemeType;
+      toggleTheme: () => void;
     }
   
     export const ThemeContext = createContext<ThemeValue>({
-      isDark: false,
-      setDark: () => {},
+      theme: "light",
+      toggleTheme: () => {},
     });
   
     interface ThemeProviderProps {
@@ -17,10 +19,18 @@
   
     export default function ThemeProvider({children}: ThemeProviderProps){
   
-      const [isDark, setDark] = useState(false);
+      const [theme, setDark] = useState<ThemeType>("light");
   
+      console.log(theme);
+      function toggleTheme(){
+        setDark((prev) => {
+          const newTheme = prev === "light" ? "dark" : "light";
+          document.documentElement.classList.toggle("dark", newTheme === "dark");
+          return newTheme;
+        });
+      }
       return (
-          <ThemeContext.Provider value={{isDark, setDark}}>
+          <ThemeContext.Provider value={{theme, toggleTheme}}>
              {children}
           </ThemeContext.Provider>
       )
