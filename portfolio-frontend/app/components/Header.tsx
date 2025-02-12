@@ -4,22 +4,26 @@ import { AuthContext } from "context/ContextApi";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import { BiStar } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 import Icon from "./Icon";
+
+import { ThemeContext } from "context/ThemeProvider";
 
 
 export default function Header(){
     
    const {isToggle, setToggle} = useContext(AuthContext);
-
+   const {theme, toggleTheme}  = useContext(ThemeContext);
+   
    const [color, setColor] = useState(false);
 
    const handleClick = () => {
       document.getElementsByTagName("html")[0].classList.add('hamburgerSlide');
     setToggle(true);
    }
+
+  
 
  useEffect(() =>{
    const scroll = () =>{
@@ -50,14 +54,19 @@ export default function Header(){
                           navData.map((data, index) => {
                             return(
                                 <div className="menuLink" key={index}>
-                                   <Link href={`${data.link}`} aria-label={data.name} className="text-white font-poppins font-poppins-light">{data.name}</Link>
+                                   <Link href={`${data.link}`} aria-label={data.name} className="text-white dark:text-red-500 font-poppins font-poppins-light">{data.name}</Link>
                                 </div>
                             )
                           })
                        }
-                     <div className="themeClick">
-                      <Icon iconName="star" className="text-white" />
-                      {/* <Icon iconName="darkStar" className="text-white" /> */}
+                     <div className="themeClick cursor-pointer" onClick={() => toggleTheme()}>
+                      {
+                        theme === "light" ? (
+                          <Icon iconName="darkStar" className="text-white min-w-8 min-h-8 object-contain" />
+                        ) : (
+                          <Icon iconName="star" className="text-white min-w-8 min-h-8 object-contain" />
+                        )
+                      }
                      </div>
                     </div> 
                     <div className="hamBurger md:hidden flex justify-end">

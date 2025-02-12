@@ -81,11 +81,11 @@ export default function About(){
 
                   <div className="technologyIcon my-8 ">
                     <ul className="flex justify-center items-center gap-x-4 max-md:grid max-md:grid-cols-2 max-md:justify-items-center max-md:gap-4">
-                       <li> <Image src={Js} alt="js" width={80} height={80} quality={100} /></li>
-                       <li> <Image src={React} alt="js" width={80} height={80} quality={100} /></li>
-                       <li> <Image src={Php} alt="js" width={80} height={80} quality={100} /></li>
-                       <li> <Image src={Mysql} alt="js" width={80} height={80} quality={100} /></li>
-                       <li> <Image src={Wordpress} alt="js" width={80} height={80} quality={100} /></li>
+                       <li> <Image src={Js} alt="js" width={50} height={50} quality={100} /></li>
+                       <li> <Image src={React} alt="js" width={50} height={50} quality={100} /></li>
+                       <li> <Image src={Php} alt="js" width={50} height={50} quality={100} /></li>
+                       <li> <Image src={Mysql} alt="js" width={50} height={50} quality={100} /></li>
+                       <li> <Image src={Wordpress} alt="js" width={50} height={50} quality={100} /></li>
                     </ul>
                      
                   </div>
