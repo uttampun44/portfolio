@@ -97,20 +97,20 @@ export default function ContactMe() {
                                 <Input
                                  type="text" placeholder="Contact Name" 
                                  className={{
-                                    input: "focus:outline-none border-b-2 w-full text-lg mb-4"
+                                    input: "focus:outline-none border-b-2 w-full text-lg mb-4 rounded-sm p-1"
                                 }}
                                  {...methods.register("contact_name")}
                                  required={true}
                                 />
                                 <Input type="text" placeholder="Street"
                                  className={{
-                                    input: "focus:outline-none border-b-2 w-full text-lg my-4" }}
+                                    input: "focus:outline-none border-b-2 w-full text-lg my-4 rounded-sm p-1" }}
                                   {...methods.register("street")}
                                   required={true}
                                   />
                                 <div className="flex gap-x-8 my-4">
                                     <Input type="text" placeholder="City" className={{
-                                        input: "focus:outline-none border-b-2 w-full text-lg"
+                                        input: "focus:outline-none border-b-2 w-full text-lg rounded-sm p-1"
                                     }} 
                                     {...methods.register("city")}
                                     required={true}
@@ -124,14 +124,14 @@ export default function ContactMe() {
 
                                 </div>
                                 <Input type="number" placeholder="Contact Phone" className={{
-                                    input: "focus:outline-none border-b-2 w-full text-lg my-4"
+                                    input: "focus:outline-none border-b-2 w-full text-lg my-4 rounded-sm p-1"
                                 }} 
                                 {...methods.register("phone_number")}
                                 required={true}
                                 />
                                 <Input type="email" placeholder="Email"
                                  className={{
-                                    input: "focus:outline-none border-b-2 w-full text-lg my-4"
+                                    input: "focus:outline-none border-b-2 w-full text-lg my-4 rounded-sm p-1"
                                 }} 
                                 {...methods.register("email")}
                                 required={true}
@@ -139,7 +139,7 @@ export default function ContactMe() {
 
                                 <Input type="text"
                                  placeholder="Let's talk about your idea" className={{
-                                    input: "focus:outline-none border-b-2 w-full text-lg my-4"
+                                    input: "focus:outline-none border-b-2 w-full text-lg my-4 rounded-sm p-1"
                                 }} 
                                 {...methods.register("message")}
                                 required={true}

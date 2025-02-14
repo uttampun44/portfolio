@@ -9,7 +9,7 @@ export default function Footer(){
     return(
         <>
            <footer>
-              <section className="footer-section bg-bg-fourth py-16">
+              <section className="footer-section bg-bg-fourth dark:bg-black py-16">
               <div className="footerContainer max-w-[809px] mx-auto w-full ">
                   <div className="link flex justify-between items-center font-poppins font-medium max-md:grid max-md:grid-cols-3 max-md:justify-items-center">
                      {
