@@ -35,7 +35,7 @@ export default function Blog() {
     return (
         <FrontLayout>
             <div className="blogContainer max-w-main-max-width mx-auto">
-                <div className="row flex">
+                <div className="row flex mb-10">
 
                     <div className="blogBox  bg-white rounded-md p-5">
                         <div className="grid grid-cols-3 gap-4">

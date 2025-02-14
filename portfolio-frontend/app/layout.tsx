@@ -39,7 +39,7 @@ export default function RootLayout({
         <meta name='description' content='Uttam pun developer' />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white`}
       >
         <Provider store={store}>
           <AuthProvider>
