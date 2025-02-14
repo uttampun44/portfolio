@@ -71,7 +71,7 @@ export default function Project() {
                 <p className="my-4 font-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, harum.</p>
 
                 <div className="projectTab">
-                    <div className="tabsRow">
+                    <div className="tabsRow dark:text-black">
                         <Tabs >
                             <TabList className="flex justify-center gap-x-4 cursor-pointer font-medium" >
                                 <Tab className="bg-bg-secondary py-1 px-4 rounded-md ">All</Tab>

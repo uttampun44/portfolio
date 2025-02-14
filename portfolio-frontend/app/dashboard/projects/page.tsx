@@ -268,23 +268,7 @@ export default function Projects() {
                             <HeaderCell align="center" className="text-backend-primary-text-color">Project Category</HeaderCell>
                             <Cell dataKey="project_category.name" align="center" />
                         </Column>
-                        <Column minWidth={120} width={100} flexGrow={1} align="center">
-                            <HeaderCell align="center" className="text-backend-primary-text-color">Edit</HeaderCell>
-                            <Cell className="cursor-pointer">
-                                {
-                                    ((rowData) => (
-                                        <BiEditAlt className="cursor-pointer text-lg text-blue-700" key={rowData.id}
-
-                                            onClick={() => {
-                                                setProjectId(rowData.id);
-                                                setEditingMode(true);
-                                            }}
-                                        />
-                                    ))
-                                }
-                            </Cell>
-
-                        </Column>
+                       
                         <Column minWidth={120} width={100} flexGrow={1} align="center">
                             <HeaderCell align="center" className="text-backend-primary-text-color">Delete</HeaderCell>
                             <Cell className="cursor-pointer">
