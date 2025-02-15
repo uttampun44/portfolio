@@ -6,7 +6,7 @@ import "./globals.css";
 import "./index.css"
 import 'rsuite-table/dist/css/rsuite-table.css';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthProvider from "context/ContextApi";
+import AuthProvider from "context/AuthContext";
 import { Provider } from "react-redux";
 import { store } from "store/store";
 import { Toaster } from "sonner";
