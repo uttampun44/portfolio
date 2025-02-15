@@ -86,7 +86,7 @@ export default function ContactMe() {
     return (
         <FrontLayout>
             <section className="py-16">
-                <div className="contactContainer max-w-main-max-width mx-auto w-full">
+                <div className="contactContainer max-w-main-max-width mx-auto w-full max-md:my-24">
                     <Title title="Contact Us" className="text-5xl font-bold text-center" />
                     <div className="contactForm grid grid-cols-2 gap-x-10 max-md:grid-cols-1 max-md:p-5 my-6">
                         <div className="form">
@@ -116,7 +116,7 @@ export default function ContactMe() {
                                     required={true}
                                     />
                                     <Input type="text" placeholder="Postal" className={{
-                                        input: "focus:outline-none border-b-2 w-full text-lg"
+                                        input: "focus:outline-none border-b-2 w-full text-lg rounded-sm p-1"
                                     }} 
                                     {...methods.register("postal_code")}
                                     required={true}
@@ -148,7 +148,7 @@ export default function ContactMe() {
                             </form>
                             </FormProvider>
                         </div>
-                        <div className="map ml-10">
+                        <div className="map ml-10 max-md:m-0">
                              {
                                  map.map((item: mapResponse) => (
                                      <React.Fragment key={item.id}>
