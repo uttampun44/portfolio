@@ -49,28 +49,28 @@ export const SidebarData:SideNav[]   = [
         ]
     },
   
-    {   id:8,
-        name: "Settings",
-        href: "#",
-        subNav:[
-           
-            {
-                id:9,
-                name: "Backup",
-                href: "/dashboard/settings/back-up",
-            }
-        ]
-    },
     {
-        id: 10,
+        id: 8,
         name: "Contact Me",
         href: "/dashboard/contact-message",
        
     },
     {
-        id: 11,
+        id: 9,
         name: "Map Link",
         href: "/dashboard/map",
        
+    },
+    {   id: 10,
+        name: "Settings",
+        href: "#",
+        subNav:[
+           
+            {
+                id:11,
+                name: "Backup",
+                href: "/dashboard/settings/back-up",
+            }
+        ]
     }
 ];          

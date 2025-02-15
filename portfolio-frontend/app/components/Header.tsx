@@ -1,6 +1,6 @@
 'use client'
 
-import { AuthContext } from "context/ContextApi";
+import { AuthContext } from "context/AuthContext";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
