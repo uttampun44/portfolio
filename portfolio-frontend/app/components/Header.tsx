@@ -45,10 +45,10 @@ export default function Header() {
 
 
    return (
-      <header className={`max-md:fixed max-md:w-full max-md:z-50 ${color ? "max-md:bg-bg-secondary" : ""
+      <header className={`fixed w-full z-50 ${color ? "max-md:bg-bg-secondary bg-white border-b-2" : ""
          }`}>
          <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:hidden">
-            <div className="navLink p-5 bg-main-bg rounded-full flex items-center justify-between max-md:hidden">
+            <div className={`navLink p-5 bg-main-bg rounded-full flex items-center justify-between max-md:hidden`}>
                {
                   navData.map((data, index) => {
                      return (
