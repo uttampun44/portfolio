@@ -21,8 +21,11 @@
   
       const [theme, setTheme] = useState<ThemeType>(() => {
        
-        const savedTheme = localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme") as string) : null;
-        return (savedTheme as ThemeType) || "light"; 
+        if(typeof window !== "undefined"){
+          const savedTheme = localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme") as string):null;
+          return (savedTheme as ThemeType) || "light"; 
+        }
+        return "light";
       });
 
 
