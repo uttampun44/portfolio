@@ -3,12 +3,12 @@
 import { AuthContext } from "context/AuthContext";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 import Icon from "./Icon";
 
-import { ThemeContext } from "context/ThemeProvider";
+import { ThemeContext } from "context/ThemeContext";
 
 
 export default function Header() {
@@ -25,7 +25,7 @@ export default function Header() {
 
 
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       const scroll = () => {
          if (window.scrollY >= 80) {
 
@@ -45,7 +45,7 @@ export default function Header() {
 
 
    return (
-      <header className={`fixed w-full z-50 ${color ? "max-md:bg-bg-secondary bg-white border-b-2" : ""
+      <header className={`fixed w-full z-50 ${color ? "max-md:bg-bg-secondary bg-white dark:bg-black border-b-2" : ""
          }`}>
          <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:hidden">
             <div className={`navLink p-5 bg-main-bg rounded-full flex items-center justify-between max-md:hidden`}>

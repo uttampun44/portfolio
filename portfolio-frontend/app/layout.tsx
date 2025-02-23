@@ -11,7 +11,8 @@ import { Provider } from "react-redux";
 import { store } from "store/store";
 import { Toaster } from "sonner";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import ThemeProvider from "context/ThemeProvider";
+import ThemeProvider from "context/ThemeContext";
+import CombineContext from "context/CombineContext";
 
 
 const geistSans = Geist({
@@ -42,16 +43,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white`}
       >
         <Provider store={store}>
-          <AuthProvider>
-            <ThemeProvider>
+             <CombineContext>
               <QueryClientProvider client={queryClinet}>
                 <ReactQueryDevtools initialIsOpen={false} />
-
                 {children}
                 <Toaster richColors />
               </QueryClientProvider>
-            </ThemeProvider>
-          </AuthProvider>
+             </CombineContext>
         </Provider>
       </body>
     </html>
