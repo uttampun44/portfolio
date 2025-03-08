@@ -6,12 +6,11 @@ import "./globals.css";
 import "./index.css"
 import 'rsuite-table/dist/css/rsuite-table.css';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthProvider from "context/AuthContext";
 import { Provider } from "react-redux";
 import { store } from "store/store";
 import { Toaster } from "sonner";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import ThemeProvider from "context/ThemeProvider";
+import CombineContext from "context/CombineContext";
 
 
 const geistSans = Geist({
@@ -42,16 +41,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white`}
       >
         <Provider store={store}>
-          <AuthProvider>
-            <ThemeProvider>
+             <CombineContext>
               <QueryClientProvider client={queryClinet}>
                 <ReactQueryDevtools initialIsOpen={false} />
-
                 {children}
                 <Toaster richColors />
               </QueryClientProvider>
-            </ThemeProvider>
-          </AuthProvider>
+             </CombineContext>
         </Provider>
       </body>
     </html>

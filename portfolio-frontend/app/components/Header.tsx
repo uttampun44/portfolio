@@ -3,12 +3,12 @@
 import { AuthContext } from "context/AuthContext";
 import { navData } from "data/NavData/Navdata";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosClose } from "react-icons/io";
 import Icon from "./Icon";
 
-import { ThemeContext } from "context/ThemeProvider";
+import { ThemeContext } from "context/ThemeContext";
 
 
 export default function Header() {
@@ -25,7 +25,7 @@ export default function Header() {
 
 
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       const scroll = () => {
          if (window.scrollY >= 50) {
 
