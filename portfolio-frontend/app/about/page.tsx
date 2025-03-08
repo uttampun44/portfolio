@@ -19,7 +19,7 @@ import Title from "components/Title";
 export default function About(){
     return(
         <FrontLayout>
-           <section>
+           <section className="py-20">
                <div className="aboutHeroSection max-w-main-max-width w-full mx-auto pt-36 pb-24">
                     <div className="heroContent text-center">
                            <h2 className="text-5xl font-bold">Develop your Innovation</h2>

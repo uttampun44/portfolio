@@ -34,15 +34,15 @@ export default function Blog() {
 
     return (
         <FrontLayout>
-            <div className="blogContainer max-w-main-max-width mx-auto">
+            <div className="blogContainer max-w-main-max-width mx-auto lg:py-20">
                 <div className="row flex mb-10">
 
-                    <div className="blogBox  bg-white rounded-md p-5">
+                    <div className="blogBox  bg-white dark:bg-black dark:border-slate-500 rounded-md p-5 lg:my-20">
                         <div className="grid grid-cols-3 gap-4">
                             {
                                 posts.slice(0, 2).map((post: postResponse) => (
                                     <React.Fragment key={post.id}>
-                                        <div className="grid-one">
+                                        <div className="grid-one border-[1px] p-5 rounded-lg hover:scale-100 transition-all cursor-pointer">
                                             <div className="blogRow">
                                                 <img src={`${url}/storage/${post.image}`} alt="blog image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} />
                                             </div>
@@ -55,7 +55,7 @@ export default function Blog() {
 
                                         </div>
 
-                                        <div className="grid-Two">
+                                        <div className="grid-Two border-[1px] p-5 rounded-lg hover:scale-105 transition-all cursor-pointer">
                                             <div className="blogRow">
                                                 <img src={`${url}/storage/${post.image}`} alt="blog image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} />
                                             </div>

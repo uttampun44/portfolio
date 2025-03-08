@@ -27,7 +27,7 @@ export default function Header() {
 
    useLayoutEffect(() => {
       const scroll = () => {
-         if (window.scrollY >= 80) {
+         if (window.scrollY >= 50) {
 
             setColor(true)
          } else {
