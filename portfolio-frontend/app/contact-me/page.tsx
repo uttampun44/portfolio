@@ -86,9 +86,9 @@ export default function ContactMe() {
     return (
         <FrontLayout>
             <section className="py-16">
-                <div className="contactContainer max-w-main-max-width mx-auto w-full max-md:my-24">
-                    <Title title="Contact Us" className="text-5xl font-bold text-center" />
-                    <div className="contactForm grid grid-cols-2 gap-x-10 max-md:grid-cols-1 max-md:p-5 my-6">
+                <div className="contactContainer max-w-main-max-width mx-auto w-full max-md:my-24 lg:py-20">
+                    {/* <Title title="Contact Us" className="text-5xl font-bold text-center" /> */}
+                    <div className="contactForm grid grid-cols-2 gap-x-10 max-md:grid-cols-1 max-md:p-5 my-20">
                         <div className="form">
                             <h2 className="text-3xl font-bold">Get in <span className="text-primary-text-color">touch</span></h2>
                             <p className="max-w-fit  my-1">Enim tempor eget pharetra facilisis sed maecenas adipiscing. Eu leo molestie vel, ornare non id blandit netus.</p>

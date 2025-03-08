@@ -27,7 +27,7 @@ export default function Header() {
 
    useEffect(() => {
       const scroll = () => {
-         if (window.scrollY >= 80) {
+         if (window.scrollY >= 50) {
 
             setColor(true)
          } else {
@@ -45,7 +45,7 @@ export default function Header() {
 
 
    return (
-      <header className={`fixed w-full z-50 ${color ? "max-md:bg-bg-secondary bg-white border-b-2" : ""
+      <header className={`fixed w-full z-50 ${color ? "max-md:bg-bg-secondary bg-white dark:bg-black border-b-2" : ""
          }`}>
          <div className="headerRow max-w-main-max-width mx-auto w-full py-10 max-md:hidden">
             <div className={`navLink p-5 bg-main-bg rounded-full flex items-center justify-between max-md:hidden`}>
