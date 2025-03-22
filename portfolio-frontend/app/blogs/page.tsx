@@ -27,7 +27,6 @@ export default function Blog() {
     useQuery({
         queryKey: ["posts"],
         queryFn: fetchBlogs,
-        refetchOnWindowFocus: false,
         refetchOnMount: false,
     });
 
@@ -40,22 +39,10 @@ export default function Blog() {
                     <div className="blogBox  bg-white dark:bg-black dark:border-slate-500 rounded-md p-5 lg:my-20">
                         <div className="grid grid-cols-3 gap-4">
                             {
-                                posts.slice(0, 2).map((post: postResponse) => (
+                                posts.map((post: postResponse) => (
                                     <React.Fragment key={post.id}>
-                                        <div className="grid-one border-[1px] p-5 rounded-lg hover:scale-100 transition-all cursor-pointer">
-                                            <div className="blogRow">
-                                                <img src={`${url}/storage/${post.image}`} alt="blog image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} />
-                                            </div>
-                                            <div className="title my-2">
-                                                <h1 className="text-2xl font-bold">{post.title}</h1>
-                                            </div>
-                                            <div className="blogRow flex justify-between">
-                                                <p className="text-[#64607D] text-sm font-medium">{post.mini_title}</p>
-                                            </div>
-
-                                        </div>
-
-                                        <div className="grid-Two border-[1px] p-5 rounded-lg hover:scale-105 transition-all cursor-pointer">
+                                       
+                                        <div className="grid-One border-[1px] p-5 rounded-lg hover:scale-105 transition-all cursor-pointer">
                                             <div className="blogRow">
                                                 <img src={`${url}/storage/${post.image}`} alt="blog image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} />
                                             </div>
@@ -69,17 +56,6 @@ export default function Blog() {
                                     </React.Fragment>
                                 ))
                             }
-                            <div className="gridThree">
-                                <div className="blogRow">
-                                    {/* <img src={`${url}/storage/${post.image}`} alt="blog image" className="w-full h-auto" style={{ objectFit: "cover", borderRadius: "8px" }} /> */}
-                                </div>
-                                <div className="title my-2">
-                                    {/* <h1 className="text-2xl font-bold">{post.title}</h1> */}
-                                </div>
-                                <div className="blogRow flex justify-between">
-                                    {/* <p className="text-[#64607D] text-sm font-medium">{post.mini_title}</p> */}
-                                </div>
-                            </div>
                         </div>
                     </div>
 
